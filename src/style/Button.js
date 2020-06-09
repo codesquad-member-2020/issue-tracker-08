@@ -4,13 +4,19 @@ const Button = styled.button`
   background-color: ${({ theme, backgroudColor }) =>
     theme.colors[backgroudColor] || theme.colors.green};
   color: ${({ theme, color }) => theme.colors[color] || theme.colors.white};
-  font-size: ${({ theme, fontSize }) => theme.fontSizes[fontSize]};
+  font-size: ${({ theme, fontSize }) => theme.fontSizes[fontSize] || theme.fontSizes.md};
+  font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
-  border-radius: 10px;
-  border: none;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.lightGray};
   text-align: center;
+  padding: ${({ paddingSize }) => (paddingSize ? paddingSize : "10px 15px")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
 
 export default Button;
