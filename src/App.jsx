@@ -1,10 +1,17 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
+
+import IssueListPage from "@IssueListPage/IssueListPage";
+import GlobalStyle from "@Style/GlobalStyle";
+import theme from "@Style/theme";
 
 const App = () => {
   return (
     <>
-      <div>Hello React!</div>
-      <h1>{process.env.TEST}</h1>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <IssueListPage />
+      </ThemeProvider>
     </>
   );
 };
