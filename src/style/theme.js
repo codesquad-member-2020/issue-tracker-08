@@ -1,4 +1,4 @@
-const color = {
+const colors = {
   blue: "#00adb5",
   skyblue: "#cbf1f5",
   green: "#00b8a9",
@@ -6,7 +6,7 @@ const color = {
   lightGray: "#eee",
   black: "#222831",
   red: "#fc5185",
-  white: "fff",
+  white: "#fff",
 };
 
 const fontSizes = {
@@ -18,7 +18,7 @@ const fontSizes = {
 };
 
 const theme = {
-  color,
+  colors,
   fontSizes,
 };
 
