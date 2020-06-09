@@ -42,22 +42,56 @@ const IssueList = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
+`;
 
-const CheckboxWrapper = styled.div``;
+const CheckboxWrapper = styled.div`
+  padding-right: 10px;
+`;
 
 const Checkbox = styled.input.attrs({ type: "checkbox" })``;
 
-const OpenIcon = styled(ErrorOutlineIcon)``;
+const OpenIcon = styled(ErrorOutlineIcon)`
+  color: ${({ theme }) => theme.colors.green};
+  margin-right: 15px;
+`;
 
 const IssueWrapper = styled.div``;
 
-const Title = styled.div``;
+const Title = styled.div`
+  margin-bottom: 5px;
+`;
 
-const Badge = styled.span``;
+const Badge = styled.span`
+  background-color: ${({ theme }) => theme.colors.green};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: 2px;
+  height: 20px;
+  padding: 0.15em 4px;
+  margin-left: 4px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  line-height: ${({ theme }) => theme.fontSizes.sm};
+`;
 
-const Info = styled.div``;
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    margin-right: 5px;
+  }
+`;
 
-const Milestone = styled.span``;
+const Milestone = styled.span`
+  display: flex;
+  align-items: center;
+  &:hover {
+    color: ${({ theme }) => theme.colors.lightGray};
+    cursor: pointer;
+  }
+`;
 
 export default IssueList;
