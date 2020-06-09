@@ -17,9 +17,17 @@ const fontSizes = {
   xxl: "28px",
 };
 
+const fontWeights = {
+  extraBold: 800,
+  bold: 700,
+  semiBold: 600,
+  regular: 400,
+};
+
 const theme = {
   colors,
   fontSizes,
+  fontWeights,
 };
 
 export default theme;
