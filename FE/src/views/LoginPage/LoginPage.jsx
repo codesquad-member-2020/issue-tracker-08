@@ -7,7 +7,7 @@ import Button from "@Style/Button";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   return (
@@ -21,7 +21,11 @@ const LoginPage = () => {
             <PersonalInputBox title="아이디" />
             <PersonalInputBox title="비밀번호" />
             <ButtonWrap>
-              <Button backgroundColor="blue" style={loginButtonStyle}>
+              <Button
+                backgroundColor="blue"
+                style={loginButtonStyle}
+                onClick={() => props.history.push(`/IssueListPage`)}
+              >
                 로그인
               </Button>
               <Button
