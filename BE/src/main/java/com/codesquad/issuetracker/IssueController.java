@@ -42,7 +42,7 @@ public class IssueController {
         issues.add(issueBE);
         issues.add(issueFE);
 
-        return new GitHub(issues);
+        return new IssueBoard(2, 3, issues);
     }
 
     @GetMapping("/labels")

@@ -7,7 +7,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class GitHub {
+public class IssueBoard {
+
+    private int numberOfOpenIssue;
+
+    private int numberOfClosedIssue;
 
     private List<Issue> issues;
 }
