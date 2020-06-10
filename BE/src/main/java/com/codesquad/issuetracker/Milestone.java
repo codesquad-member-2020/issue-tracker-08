@@ -25,4 +25,10 @@ public class Milestone {
 
     @JsonProperty("isOpen")
     private boolean isOpen;
+
+    private int achievementRate;
+
+    private int numberOfOpenIssue;
+
+    private int numberOfClosedIssue;
 }
