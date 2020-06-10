@@ -9,8 +9,9 @@ import Button from "@Style/Button";
 
 import Issue from "@IssueListPage/Issue/Issue";
 import NavigationButton from "@NavigationButton/NavigationButton";
+import FilterButton from "@FilterButton/FilterButton";
 
-const IssueListPage = () => {
+const IssueListPage = (props) => {
   return (
     <>
       <Header>
@@ -32,7 +33,7 @@ const IssueListPage = () => {
             </SearchBar>
           </SearchBarWrapper>
           <NavigationButton />
-          <Button>New Issue</Button>
+          <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
       <IssueListWrapper>
