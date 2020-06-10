@@ -3,7 +3,7 @@ name: "기타 공통 이슈 템플릿"
 about: 기타 공통 이슈 템플릿
 title: '[Team] Title'
 labels: 'Team'
-assignees: 'choisohyun, hsik0225, hyewon3938'
+assignees: 'choisohyun, hsik0225, beginin15, sally4405'
 
 ---
 
