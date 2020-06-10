@@ -1,32 +1,32 @@
 jasypt:
   encryptor:
-    bean: jasyptStringEncryptor
-    password: ${PASSWORD}
+    password: ${ENCRPYTOR_PASSWORD}
 
 spring:
   profiles:
     active: local
 
-datasource:
-  driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
 
 github:
-  client-id:
-  client-secret:
+  client-id: e75bd1cffaa68832aac4
+  client-secret: ENC(KiLD337Md1ythVW78LXB1B/cQNzNAykOSpPdvLiyaPIFAYgXFJ55uYoz4KFpabWPNqCjuhxPXKvbzoJb0LxpWcw3LpMcbcid0EEw56uFX7E=)
   user-api-url: https://api.github.com/user
   access-token-url: https://github.com/login/oauth/access_token
 
 jwt:
-  key:
+  key: ENC(LN67HOkUC8A4I9n7BVfOyjHzjkpgL9UieVI/HZOY8pPZ/7uYI5a2Ssfie8YGqFyGhWPleM9lFZFd/GjaC6+DZw==)
 ---
 spring:
   profiles: local
 
   datasource:
-    url:
-    username:
-    password:
+    url: ENC(jxb9EPngIYpMlDHCob8ctpBUlSFyCXR1gaX+fvQpg1mPM1eByHuWwYASWunMMYS9GKvRKPr6u1usHaEeeeASBc2vRT17+VJw9/fBWy1Qo5mkz9CCzbHJEd8H7axFLJUupruy6Y9mmKCmJb9Ob1IWaw==)
+    username: ENC(f/VL3zaJSbAqrjdVFbBHxFTaEEGi/O9vrmENuVbv4vioQBE6eke/W4HgWMorc+z2)
+    password: ENC(l514WFmENUs5ICj44POejzeUwIzxJ670btDBUOuc5POL9oVxcCguwMwPYOkDXeWa)
+
 
 logging:
   level:
@@ -41,6 +41,6 @@ spring:
   profiles: production
 
   datasource:
-    url:
-    username:
-    password:
+    url: ENC(a2fs4smti6ZnSmajFS6aSs1iAJqBRtYOzX4s76MrfgRZzahIJa/M8W8YuiKIIDgXX41cqBiiVkRCd5S3GttLT2XTyJN61UEXgmwzA436LQy3ifszU+hKcDCJkxJrOeU2DsoNAc2o9Q7KQLjBX3/SAvJRQp+p+su1HSQSP+ebwbTyfv0R90WHrx/IhK88QC5hIS7VDmWusa4qZOR0R1s1BA==)
+    username: ENC(dWFI/DAXSod1mpm9fOEXhd70DB1D8lOmuYHCA/z7y0CfA5k699XdBzzNQLw5ewHN)
+    password: ENC(kBF9VO2QdavUtJyL2oUkx/vjv+AyevUXEQZ5ZCpvDVk5fU7IpGtg5e/R4kh69YeA)
