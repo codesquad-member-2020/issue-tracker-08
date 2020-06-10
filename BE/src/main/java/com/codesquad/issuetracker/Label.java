@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Tag {
+public class Label {
 
-    private String labelName;
+    private String name;
+
+    private String description;
 
     private String color;
 }

@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,8 @@ public class Issue {
 
     private List<Assignee> assignees;
 
-    private List<Tag> tags;
+    @JsonIgnoreProperties({"description"})
+    private List<Label> labels;
 
     private String createdAt;
 
