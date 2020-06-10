@@ -21,18 +21,10 @@ const LoginPage = (props) => {
             <PersonalInputBox title="아이디" />
             <PersonalInputBox title="비밀번호" />
             <ButtonWrap>
-              <Button
-                backgroundColor="blue"
-                style={loginButtonStyle}
-                onClick={() => props.history.push(`/IssueListPage`)}
-              >
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => props.history.push(`/IssueListPage`)}>
                 로그인
               </Button>
-              <Button
-                backgroundColor="blue"
-                style={loginButtonStyle}
-                onClick={() => setIsSignupOpen(!isSignupOpen)}
-              >
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => setIsSignupOpen(!isSignupOpen)}>
                 회원가입
               </Button>
             </ButtonWrap>
@@ -47,11 +39,7 @@ const LoginPage = (props) => {
             <PersonalInputBox title="비밀번호 확인" />
             <PersonalInputBox title="이름" />
             <SignUpButtonWrap>
-              <Button
-                backgroundColor="blue"
-                style={loginButtonStyle}
-                onClick={() => setIsSignupOpen(!isSignupOpen)}
-              >
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => setIsSignupOpen(!isSignupOpen)}>
                 회원가입
               </Button>
             </SignUpButtonWrap>
