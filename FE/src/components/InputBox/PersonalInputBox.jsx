@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+
 import Text from "@Style/Text";
 
 const PersonalInputBox = ({ title }) => {
   return (
-    <Wrap>
-      <Text children={title} fontWeight="bold" />
-      <InputBox type="text" />
-    </Wrap>
+    <>
+      <Wrap>
+        <Text children={title} fontWeight="bold" />
+        <InputBox type="text" />
+      </Wrap>
+    </>
   );
 };
-
-export default PersonalInputBox;
 
 const Wrap = styled.div`
   text-align: initial;

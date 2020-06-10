@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import GitHubIcon from "@material-ui/icons/GitHub";
+
 import Text from "@Style/Text";
 import Button from "@Style/Button";
-import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-import GitHubIcon from "@material-ui/icons/GitHub";
+import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const LoginPage = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   return (
-    <div>
+    <>
       <LoginPageWrap>
         <Text fontSize="xl" color="black" fontWeight="extraBold">
           이슈 트래커
@@ -41,21 +42,21 @@ const LoginPage = () => {
             <PersonalInputBox title="비밀번호" />
             <PersonalInputBox title="비밀번호 확인" />
             <PersonalInputBox title="이름" />
-            <Button
-              backgroundColor="blue"
-              style={loginButtonStyle}
-              onClick={() => setIsSignupOpen(!isSignupOpen)}
-            >
-              회원가입
-            </Button>
+            <SignUpButtonWrap>
+              <Button
+                backgroundColor="blue"
+                style={loginButtonStyle}
+                onClick={() => setIsSignupOpen(!isSignupOpen)}
+              >
+                회원가입
+              </Button>
+            </SignUpButtonWrap>
           </SignupWrap>
         </BoxWrap>
       </LoginPageWrap>
-    </div>
+    </>
   );
 };
-
-export default LoginPage;
 
 const LoginPageWrap = styled.div`
   padding: 150px;
@@ -85,24 +86,29 @@ const SignupWrap = styled.div`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 32px;
+`;
+
+const SignUpButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 32px;
 `;
 
 const loginButtonStyle = {
   width: "49%",
-  height: "28px",
   textAlign: "center",
 };
 
 const githubButtonStyle = {
   width: "100%",
-  height: "28px",
   margin: "5px 0",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  height: "32px",
 };
 
 const githubLogoStyle = {
   height: "20px",
   margin: "5px",
 };
+
+export default LoginPage;

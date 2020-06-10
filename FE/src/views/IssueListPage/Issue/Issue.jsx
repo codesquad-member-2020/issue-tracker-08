@@ -12,33 +12,35 @@ const formatter = buildFormatter(koreaStrings);
 
 const IssueList = () => {
   return (
-    <Wrapper>
-      <CheckboxWrapper>
-        <Checkbox />
-      </CheckboxWrapper>
-      <OpenIcon />
-      <IssueWrapper>
-        <Title>
-          <Text fontWeight="bold" as="a">
-            목록 보기 구현
-          </Text>
-          <Badge>bug</Badge>
-        </Title>
-        <Info>
-          <Text fontSize="sm">#2 opened</Text>
-          <Text fontSize="sm">
-            <TimeAgo date="May 25, 2020" formatter={formatter} />{" "}
-          </Text>
-          <Text fontSize="sm">by choisohyun</Text>
-          <Text fontSize="sm">
-            <Milestone>
-              <EventNoteIcon style={{ fontSize: 15 }} />
-              스프린트2
-            </Milestone>
-          </Text>
-        </Info>
-      </IssueWrapper>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <CheckboxWrapper>
+          <Checkbox />
+        </CheckboxWrapper>
+        <OpenIcon />
+        <IssueWrapper>
+          <Title>
+            <Text fontWeight="bold" as="a">
+              목록 보기 구현
+            </Text>
+            <Badge>bug</Badge>
+          </Title>
+          <Info>
+            <Text fontSize="sm">#2 opened</Text>
+            <Text fontSize="sm">
+              <TimeAgo date="May 25, 2020" formatter={formatter} />{" "}
+            </Text>
+            <Text fontSize="sm">by choisohyun</Text>
+            <Text fontSize="sm">
+              <Milestone>
+                <EventNoteIcon style={{ fontSize: 15 }} />
+                스프린트2
+              </Milestone>
+            </Text>
+          </Info>
+        </IssueWrapper>
+      </Wrapper>
+    </>
   );
 };
 

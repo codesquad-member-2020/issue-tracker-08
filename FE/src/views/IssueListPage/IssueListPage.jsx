@@ -4,10 +4,11 @@ import SubjectIcon from "@material-ui/icons/Subject";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-import NavigationButton from "@NavigationButton/NavigationButton";
-import Issue from "@IssueListPage/Issue/Issue";
 import Text from "@Style/Text";
 import Button from "@Style/Button";
+
+import Issue from "@IssueListPage/Issue/Issue";
+import NavigationButton from "@NavigationButton/NavigationButton";
 
 const IssueListPage = () => {
   return (
