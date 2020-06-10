@@ -66,11 +66,15 @@ public class IssueController {
 
     @GetMapping("/milestones/{milestone_id}/issues")
     public Object issueListOfMilestone(@PathVariable(value = "milestone_id") Long milestoneId) {
+
         return null;
     }
 
     @GetMapping("/users")
     public Object userList() {
-        return null;
+        List<User> users = new ArrayList<>();
+        users.add(new User(1L, "Ever", "asdqwe1!", "ever@gmail.com"));
+        users.add(new User(2L, "Jay", "jay1234", "jay@gmail.com"));
+        return users;
     }
 }
