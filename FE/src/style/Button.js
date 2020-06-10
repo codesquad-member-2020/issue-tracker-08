@@ -10,7 +10,7 @@ const Button = styled.button`
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   text-align: center;
   padding: ${({ paddingSize }) => (paddingSize ? paddingSize : "10px 15px")};
   display: flex;

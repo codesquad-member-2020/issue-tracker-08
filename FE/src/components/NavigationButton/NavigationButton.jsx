@@ -7,16 +7,18 @@ import Button from "@Style/Button";
 
 const NavigationButton = () => {
   return (
-    <Wrapper>
-      <LeftButton color="gray" backgroudColor="white">
-        <LabelIcon fontSize="small" />
-        Labels
-      </LeftButton>
-      <RightButton color="gray" backgroudColor="white">
-        <EventNoteIcon fontSize="small" />
-        Milestones
-      </RightButton>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <LeftButton color="gray4" backgroundColor="white">
+          <LabelIcon fontSize="small" />
+          Labels
+        </LeftButton>
+        <RightButton color="gray4" backgroundColor="white">
+          <EventNoteIcon fontSize="small" />
+          Milestones
+        </RightButton>
+      </Wrapper>
+    </>
   );
 };
 

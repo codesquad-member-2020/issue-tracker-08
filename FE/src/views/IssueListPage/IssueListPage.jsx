@@ -21,7 +21,7 @@ const IssueListPage = () => {
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
-            <Button backgroudColor="frenchGray" color="black">
+            <Button backgroundColor="gray1" color="black">
               Filters
               <ArrowDropDownIcon />
             </Button>
@@ -56,7 +56,7 @@ const Header = styled.header`
 `;
 
 const HeaderIcon = styled(SubjectIcon)`
-  color: ${({ theme }) => theme.colors.lightGray};
+  color: ${({ theme }) => theme.colors.gray2};
   margin-right: 5px;
 `;
 
@@ -90,12 +90,12 @@ const SearchBar = styled.form`
 
 const SearchInput = styled.input`
   padding-left: 30px;
-  background-color: ${({ theme }) => theme.colors.frenchGray};
-  color: ${({ theme }) => theme.colors.gray};
+  background-color: ${({ theme }) => theme.colors.gray1};
+  color: ${({ theme }) => theme.colors.gray4};
   border-radius: 5px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   outline: none;
   height: inherit;
   width: inherit;
@@ -106,7 +106,7 @@ const SearchInputIcon = styled(SearchIcon)`
   top: 9px;
   left: 8px;
   display: block;
-  color: ${({ theme }) => theme.colors.lightGray};
+  color: ${({ theme }) => theme.colors.gray2};
   text-align: center;
   pointer-events: none;
 `;
@@ -118,15 +118,15 @@ const IssueListWrapper = styled.div`
 `;
 
 const IssueList = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   border-radius: 5px;
   width: 65%;
 `;
 
 const IssueHeader = styled.div`
-  background-color: ${({ theme }) => theme.colors.frenchGray};
+  background-color: ${({ theme }) => theme.colors.gray1};
   height: 50px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
 export default IssueListPage;

@@ -31,12 +31,8 @@ const LoginPage = () => {
                 회원가입
               </Button>
             </ButtonWrap>
-            <Button backgroundColor="gray" style={githubButtonStyle}>
+            <Button backgroundColor="gray4" style={githubButtonStyle}>
               Sign in with Github
-              {/* <GithubLogoImg
-                src="https://pngimg.com/uploads/github/github_PNG40.png"
-                alt="Github logo"
-              /> */}
               <GitHubIcon style={githubLogoStyle} />
             </Button>
           </LoginWrap>
@@ -70,12 +66,12 @@ const LoginPageWrap = styled.div`
 `;
 
 const BoxWrap = styled.div`
-  background-color: ${({ theme }) => theme.colors.frenchGray};
+  background-color: ${({ theme }) => theme.colors.gray1};
   margin: 30px;
   width: 400px;
   padding: 20px;
   /* box-shadow: 0 0 2px 0 ${({ theme }) => theme.colors.black}; */
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
 const LoginWrap = styled.div`
