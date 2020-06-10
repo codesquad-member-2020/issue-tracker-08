@@ -1,25 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import SubjectIcon from "@material-ui/icons/Subject";
 import SearchIcon from "@material-ui/icons/Search";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-import Text from "@Style/Text";
 import Button from "@Style/Button";
 
 import Issue from "@IssueListPage/Issue/Issue";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
+import Header from "@Header/Header";
 
 const IssueListPage = (props) => {
   return (
     <>
-      <Header>
-        <HeaderIcon />
-        <Text color="white" fontWeight="bold" as="h2">
-          ISSUES
-        </Text>
-      </Header>
+      <Header />
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
@@ -53,21 +46,6 @@ const IssueListPage = (props) => {
     </>
   );
 };
-
-const Header = styled.header`
-  width: 100%;
-  height: 80px;
-  background-color: ${({ theme }) => theme.colors.black};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-`;
-
-const HeaderIcon = styled(SubjectIcon)`
-  color: ${({ theme }) => theme.colors.gray2};
-  margin-right: 5px;
-`;
 
 const NavBarWrap = styled.nav`
   display: flex;
