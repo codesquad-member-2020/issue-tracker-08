@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @Getter
@@ -25,6 +27,8 @@ public class Milestone {
 
     @JsonProperty("isOpen")
     private boolean isOpen;
+
+    private List<Issue> issues;
 
     private int achievementRate;
 

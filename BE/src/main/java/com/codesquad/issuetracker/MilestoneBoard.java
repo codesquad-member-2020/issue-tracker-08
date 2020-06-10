@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,5 +14,6 @@ public class MilestoneBoard {
 
     private int numberOfClosedMilestone;
 
+    @JsonIgnoreProperties({"issues"})
     List<Milestone> milestones;
 }

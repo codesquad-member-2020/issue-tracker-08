@@ -58,16 +58,26 @@ public class IssueController {
     @GetMapping("/milestones")
     public Object milestoneList() {
         List<Milestone> milestones = new ArrayList<>();
-        milestones.add(new Milestone(1L, "FE 1주차", "FE 1주차 마일스톤", "2020-06-15 00:00:00", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, 68, 8, 17));
-        milestones.add(new Milestone(2L, "BE 1주차", "BE 1주차 계획", "2020-06-13 00:00:00", LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, 100, 0, 1));
+        milestones.add(new Milestone(1L, "FE 1주차", "FE 1주차 마일스톤", "2020-06-15 00:00:00", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, null, 68, 8, 17));
+        milestones.add(new Milestone(2L, "BE 1주차", "BE 1주차 계획", "2020-06-13 00:00:00", LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, null, 100, 0, 1));
 
         return new MilestoneBoard(2, 1, milestones);
     }
 
     @GetMapping("/milestones/{milestone_id}/issues")
-    public Object issueListOfMilestone(@PathVariable(value = "milestone_id") Long milestoneId) {
+    public Object detailMilestone(@PathVariable(value = "milestone_id") Long milestoneId) {
+        List<Assignee> assignees = new ArrayList<>();
+        assignees.add(new Assignee("Hoo", "hoo.png"));
+        assignees.add(new Assignee("Sally", "sally.jpeg"));
 
-        return null;
+        List<Label> labels = new ArrayList<>();
+        labels.add(new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9"));
+        labels.add(new Label("Feature", "기능 구현", "#f7b4b6"));
+
+        List<Issue> issues = new ArrayList<>();
+        issues.add(new Issue(2L, "Hoo", assignees, labels, "2020-06-07 17:59:32", "[FE] 컨벤션 논의", 3, true));
+
+        return new Milestone(milestoneId, "FE 1주차", "FE 1주차 마일스톤", "2020-06-15 00:00:00", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, issues, 68, 8, 17);
     }
 
     @GetMapping("/users")
