@@ -25,5 +25,7 @@ const InputBox = styled.input`
   height: 28px;
   /* box-shadow: 0 0 2px 0 ${({ theme }) => theme.colors.black}; */
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
+
+export default PersonalInputBox;

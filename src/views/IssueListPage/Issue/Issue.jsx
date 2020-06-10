@@ -45,7 +45,7 @@ const IssueList = () => {
 const Wrapper = styled.div`
   display: flex;
   padding: 15px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
 const CheckboxWrapper = styled.div`
@@ -89,7 +89,7 @@ const Milestone = styled.span`
   display: flex;
   align-items: center;
   &:hover {
-    color: ${({ theme }) => theme.colors.lightGray};
+    color: ${({ theme }) => theme.colors.gray2};
     cursor: pointer;
   }
 `;
