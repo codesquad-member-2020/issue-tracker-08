@@ -40,6 +40,7 @@ module.exports = {
       "@LoginPage": path.resolve(__dirname, "src/views/LoginPage/"),
       "@MilestonePage": path.resolve(__dirname, "src/views/MilestonePage/"),
       "@SignupPage": path.resolve(__dirname, "src/views/SignupPage/"),
+      "@ErrorPage": path.resolve(__dirname, "src/views/ErrorPage/"),
       "@CommentViewBox": path.resolve(__dirname, "src/components/CommentViewBox/"),
       "@FilterButton": path.resolve(__dirname, "src/components/FilterButton/"),
       "@InputBox": path.resolve(__dirname, "src/components/InputBox/"),
