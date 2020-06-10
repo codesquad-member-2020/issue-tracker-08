@@ -21,7 +21,7 @@ const App = () => {
         <GlobalStyle />
         <Router>
           <Switch>
-            <Route path="/LoginPage" exact component={LoginPage} />
+            <Route path="/" exact component={LoginPage} />
             <Route path="/IssueListPage" exact component={IssueListPage} />
             <Route path="/CreateIssuePage" exact component={CreateIssuePage} />
             <Route path="/IssueDetailPage" exact component={IssueDetailPage} />
