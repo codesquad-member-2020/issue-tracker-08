@@ -1,0 +1,46 @@
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: ${PASSWORD}
+
+spring:
+  profiles:
+    active: local
+
+datasource:
+  driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+
+github:
+  client-id:
+  client-secret:
+  user-api-url: https://api.github.com/user
+  access-token-url: https://github.com/login/oauth/access_token
+
+jwt:
+  key:
+---
+spring:
+  profiles: local
+
+  datasource:
+    url:
+    username:
+    password:
+
+logging:
+  level:
+    sql: debug
+    root: info
+    com:
+      codesquad:
+        issuetracker: debug
+
+---
+spring:
+  profiles: production
+
+  datasource:
+    url:
+    username:
+    password:
