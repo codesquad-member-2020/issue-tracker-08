@@ -75,7 +75,6 @@ const BoxWrap = styled.div`
   margin: 30px;
   width: 400px;
   padding: 20px;
-  /* box-shadow: 0 0 2px 0 ${({ theme }) => theme.colors.black}; */
   border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
