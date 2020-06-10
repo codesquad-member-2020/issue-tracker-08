@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
+import LoginPage from "@LoginPage/LoginPage";
 import IssueListPage from "@IssueListPage/IssueListPage";
 import GlobalStyle from "@Style/GlobalStyle";
 import theme from "@Style/theme";
@@ -10,7 +11,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <IssueListPage />
+        <LoginPage />
       </ThemeProvider>
     </>
   );
