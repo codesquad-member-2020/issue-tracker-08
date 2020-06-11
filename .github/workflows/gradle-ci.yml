@@ -48,7 +48,7 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: Upload to S3
-      run: aws deploy push --application-name codesquad-app --s3-location s3://codesquad-ever/$PROJECT_NAME/build.zip --source .
+      run: aws deploy push --application-name codesquad-app --s3-location s3://codesquad-ever/$PROJECT_NAME/build-be.zip --source .
 
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name codesquad-app --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name codesquad-DeployGroup --s3-location bucket=codesquad-ever,bundleType=zip,key=$PROJECT_NAME/build.zip
+      run: aws deploy create-deployment --application-name codesquad-app --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name BE-DeployGroup --s3-location bucket=codesquad-ever,bundleType=zip,key=$PROJECT_NAME/build-be.zip
