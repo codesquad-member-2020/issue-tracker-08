@@ -83,7 +83,8 @@ const FilterButton = ({ filter, title, data }) => {
           renderOption={(option, { selected }) => (
             <React.Fragment>
               <DoneIcon className={classes.iconSelected} style={{ visibility: selected ? "visible" : "hidden" }} />
-              <span className={classes.color} style={{ backgroundColor: option.color }} />
+              {!option.img && <span className={classes.color} style={{ backgroundColor: option.color }} />}
+              {option.img && <img src={option.img} className={classes.color} />}
               <div className={classes.text}>
                 {option.name}
                 <br />
