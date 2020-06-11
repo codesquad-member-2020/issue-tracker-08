@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
+import SettingsIcon from "@material-ui/icons/Settings";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
@@ -36,12 +37,13 @@ const FilterButton = ({ filter, title }) => {
 
   return (
     <React.Fragment>
-      <div className={classes.root}>
+      <div className={classes.root} style={filter ? {} : { width: "221px", paddingBottom: "17px", borderBottom: "1px solid #eee" }}>
         <ButtonBase disableRipple className={classes.button} aria-describedby={id} onClick={handleClick}>
-          <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={filter ? { display: "flex", alignItems: "center", justifyContent: "center" } : {}}>
             {title}
             {filter && <ArrowDropDownIcon />}
           </span>
+          {!filter && <SettingsIcon />}
         </ButtonBase>
         {!filter &&
           value.map((label) => (
