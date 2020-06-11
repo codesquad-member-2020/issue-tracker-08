@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/issue-tracker
+REPOSITORY=/home/ubuntu/issue-tracker/BE
 cd $REPOSITORY
 
 APP_NAME=issue-tracker
