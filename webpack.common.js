@@ -45,6 +45,7 @@ module.exports = {
       "@FilterButton": path.resolve(__dirname, "src/components/FilterButton/"),
       "@InputBox": path.resolve(__dirname, "src/components/InputBox/"),
       "@NavigationButton": path.resolve(__dirname, "src/components/NavigationButton/"),
+      "@Header": path.resolve(__dirname, "src/components/Header/"),
       "@Style": path.resolve(__dirname, "src/style/"),
     },
   },
