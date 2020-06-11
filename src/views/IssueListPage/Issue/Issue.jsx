@@ -7,6 +7,7 @@ import koreaStrings from "react-timeago/lib/language-strings/ko";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 import Text from "@Style/Text";
+import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
@@ -65,18 +66,6 @@ const IssueWrapper = styled.div``;
 
 const Title = styled.div`
   margin-bottom: 5px;
-`;
-
-const Badge = styled.span`
-  background-color: ${({ theme }) => theme.colors.green};
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: 2px;
-  height: 20px;
-  padding: 0.15em 4px;
-  margin-left: 4px;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  line-height: ${({ theme }) => theme.fontSizes.sm};
 `;
 
 const Info = styled.div`
