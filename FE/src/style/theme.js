@@ -1,6 +1,7 @@
 const colors = {
   blue: "#00adb5",
-  skyblue: "#cbf1f5",
+  skyblue: "#c0d3eb",
+  babyblue: "#f1f8ff",
   green: "#00b8a9",
   gray1: "#fafbfc",
   gray2: "#eee",
