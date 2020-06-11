@@ -1,7 +1,13 @@
 import React from "react";
 
+import FilterVerticalList from "@FilterButton/FilterVerticalList";
+
 const CreateIssuePage = () => {
-  return <div></div>;
+  return (
+    <>
+      <FilterVerticalList />
+    </>
+  );
 };
 
 export default CreateIssuePage;
