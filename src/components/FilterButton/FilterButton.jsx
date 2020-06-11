@@ -12,7 +12,7 @@ import InputBase from "@material-ui/core/InputBase";
 const FilterButton = ({ filter, title, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([labels[1], labels[2]]);
+  const [value, setValue] = React.useState([]);
   const [pendingValue, setPendingValue] = React.useState([]);
   const theme = useTheme();
 
@@ -46,6 +46,7 @@ const FilterButton = ({ filter, title, data }) => {
           {!filter && <SettingsIcon />}
         </ButtonBase>
         {!filter &&
+          value.length > 0 &&
           value.map((label) => (
             <div
               key={label.name}
@@ -58,6 +59,7 @@ const FilterButton = ({ filter, title, data }) => {
               {label.name}
             </div>
           ))}
+        {!filter && !value.length && <div className={classes.tag}>No {title}</div>}
       </div>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" className={classes.popper}>
         <div className={classes.header}>Apply labels to this pull request</div>
