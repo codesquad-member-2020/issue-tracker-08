@@ -23,7 +23,7 @@ const CreateLabel = () => {
       <Wrapper>
         <Contents>
           <BadgeWrapper>
-            <Badge big backgroundColor={color} style={{ display: "inline-block" }}>
+            <Badge big backgroundColor={color} color={bDark ? "black" : "white"} style={{ display: "inline-block" }}>
               Label preview
             </Badge>
           </BadgeWrapper>
