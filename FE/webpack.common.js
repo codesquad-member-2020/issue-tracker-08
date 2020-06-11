@@ -46,6 +46,7 @@ module.exports = {
       "@InputBox": path.resolve(__dirname, "src/components/InputBox/"),
       "@NavigationButton": path.resolve(__dirname, "src/components/NavigationButton/"),
       "@Header": path.resolve(__dirname, "src/components/Header/"),
+      "@Table": path.resolve(__dirname, "src/components/Table/"),
       "@Style": path.resolve(__dirname, "src/style/"),
     },
   },

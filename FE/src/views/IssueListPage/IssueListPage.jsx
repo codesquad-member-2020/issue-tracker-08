@@ -5,11 +5,20 @@ import SearchIcon from "@material-ui/icons/Search";
 import Button from "@Style/Button";
 
 import Issue from "@IssueListPage/Issue/Issue";
+import IssueListHeader from "@IssueListPage/IssueListHeader/IssueListHeader";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
+import Table from "@Table/Table";
 
 const IssueListPage = (props) => {
+  const issueList = (
+    <>
+      <Issue></Issue>
+      <Issue></Issue>
+    </>
+  );
+
   return (
     <>
       <Header />
@@ -28,21 +37,7 @@ const IssueListPage = (props) => {
           <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <IssueListWrapper>
-        <IssueList>
-          <IssueHeader>
-            <Checkbox />
-            <FilterButtonWrapper>
-              <FilterButton filter title="Author" data={labels}></FilterButton>
-              <FilterButton filter title="Label" data={labels}></FilterButton>
-              <FilterButton filter title="Milestones" data={labels}></FilterButton>
-              <FilterButton filter title="Assignee" data={labels}></FilterButton>
-            </FilterButtonWrapper>
-          </IssueHeader>
-          <Issue></Issue>
-          <Issue></Issue>
-        </IssueList>
-      </IssueListWrapper>
+      <Table tableHeader={<IssueListHeader />} tableList={issueList} />
     </>
   );
 };
@@ -108,36 +103,6 @@ const SearchInputIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.colors.gray2};
   text-align: center;
   pointer-events: none;
-`;
-
-const IssueListWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 100px;
-`;
-
-const IssueList = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.gray2};
-  border-radius: 5px;
-  width: 65%;
-`;
-
-const IssueHeader = styled.div`
-  background-color: ${({ theme }) => theme.colors.gray1};
-  height: 50px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-`;
-
-const Checkbox = styled.input.attrs({ type: "checkbox" })``;
-
-const FilterButtonWrapper = styled.div`
-  width: 40%;
-  display: flex;
-  justify-content: space-between;
 `;
 
 export default IssueListPage;
