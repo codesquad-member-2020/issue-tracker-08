@@ -5,10 +5,10 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
 
-const IssueDetailPage = () => {
+const IssueDetailPage = (props) => {
   return (
     <>
-      <Header />
+      <Header history={props.history} />
       <ContentWrapper>
         <Content>
           <CommentViewBoxWrapper>

@@ -21,7 +21,7 @@ const IssueListPage = (props) => {
 
   return (
     <>
-      <Header />
+      <Header history={props.history} />
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
