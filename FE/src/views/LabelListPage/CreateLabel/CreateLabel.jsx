@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CachedRoundedIcon from "@material-ui/icons/CachedRounded";
 
@@ -11,9 +11,11 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = () => {
   const [color, setColor] = useState(randomColor);
+  const [bDark, setBDark] = useState(isDark);
 
   const colorReset = () => {
     setColor(randomColor);
+    setBDark(isDark);
   };
 
   return (
@@ -32,7 +34,7 @@ const CreateLabel = () => {
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
                 <ColorResetButton onClick={colorReset} backgroundColor={color}>
-                  <CachedRoundedIcon fontSize="small" />
+                  <CachedRoundedIcon fontSize="small" style={{ color: bDark ? "black" : "white" }} />
                 </ColorResetButton>
                 <PersonalInputBox widthSize="80px" value={color} />
               </ColorInputBoxWrapper>
