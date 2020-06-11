@@ -8,7 +8,7 @@ const PersonalInputBox = ({ title, widthSize, value }) => {
     <>
       <Wrap>
         <Text children={title} fontWeight="bold" />
-        <InputBox type="text" widthSize={widthSize} value={value ? value : ""} />
+        {value ? <InputBox type="text" widthSize={widthSize} value={value} readOnly /> : <InputBox type="text" widthSize={widthSize} />}
       </Wrap>
     </>
   );
