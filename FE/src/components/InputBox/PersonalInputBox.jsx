@@ -23,7 +23,8 @@ const Wrap = styled.div`
 const InputBox = styled.input`
   border: none;
   margin: 5px 0 20px 0;
-  height: 28px;
+  height: 40px;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   width: ${({ widthSize }) => (widthSize ? widthSize : "")};
