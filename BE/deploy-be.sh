@@ -3,7 +3,7 @@
 REPOSITORY=/home/ubuntu/issue-tracker
 cd $REPOSITORY
 
-APP_NAME=airbnb
+APP_NAME=issue-tracker
 JAR_NAME=$(basename $REPOSITORY/build/libs/*.jar)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
@@ -19,4 +19,4 @@ else
 fi
 
 echo "> $JAR_PATH 배포"
-nohup java -jar -Dspring.profiles.active=production $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
+nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
