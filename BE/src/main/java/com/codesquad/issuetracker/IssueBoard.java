@@ -13,5 +13,9 @@ public class IssueBoard {
 
     private int numberOfClosedIssue;
 
+    private int numberOfLabels;
+
+    private int numberOfMilestones;
+
     private List<Issue> issues;
 }
