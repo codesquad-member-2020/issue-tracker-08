@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ title }) => {
+const PersonalInputBox = ({ title, widthSize }) => {
   return (
     <>
       <Wrap>
         <Text children={title} fontWeight="bold" />
-        <InputBox type="text" />
+        <InputBox type="text" widthSize={widthSize} />
       </Wrap>
     </>
   );
@@ -26,6 +26,7 @@ const InputBox = styled.input`
   height: 28px;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray2};
+  width: ${({ widthSize }) => (widthSize ? widthSize : "")};
 `;
 
 export default PersonalInputBox;
