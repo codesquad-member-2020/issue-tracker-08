@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ title, widthSize }) => {
+const PersonalInputBox = ({ title, widthSize, value }) => {
   return (
     <>
       <Wrap>
         <Text children={title} fontWeight="bold" />
-        <InputBox type="text" widthSize={widthSize} />
+        <InputBox type="text" widthSize={widthSize} value={value ? value : ""} />
       </Wrap>
     </>
   );
