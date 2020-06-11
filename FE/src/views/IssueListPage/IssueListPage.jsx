@@ -24,7 +24,7 @@ const IssueListPage = (props) => {
         <NavBar>
           <SearchBarWrapper>
             <SearchBarFilterButton>
-              <FilterButton filter={true} title="Filters"></FilterButton>
+              <FilterButton filter={true} title="Filters" data={labels}></FilterButton>
             </SearchBarFilterButton>
             <SearchBar>
               <SearchInput placeholder="Search all issues" />
@@ -40,10 +40,10 @@ const IssueListPage = (props) => {
           <IssueHeader>
             <Checkbox />
             <FilterButtonWrapper>
-              <FilterButton filter={true} title="Author"></FilterButton>
-              <FilterButton filter={true} title="Label"></FilterButton>
-              <FilterButton filter={true} title="Milestones"></FilterButton>
-              <FilterButton filter={true} title="Assignee"></FilterButton>
+              <FilterButton filter title="Author" data={labels}></FilterButton>
+              <FilterButton filter title="Label" data={labels}></FilterButton>
+              <FilterButton filter title="Milestones" data={labels}></FilterButton>
+              <FilterButton filter title="Assignee" data={labels}></FilterButton>
             </FilterButtonWrapper>
           </IssueHeader>
           <Issue></Issue>
@@ -163,3 +163,31 @@ const FilterButtonWrapper = styled.div`
 `;
 
 export default IssueListPage;
+
+const labels = [
+  {
+    name: "good first issue",
+    color: "#7057ff",
+    description: "Good for newcomers",
+  },
+  {
+    name: "help wanted",
+    color: "#008672",
+    description: "Extra attention is needed",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+];
