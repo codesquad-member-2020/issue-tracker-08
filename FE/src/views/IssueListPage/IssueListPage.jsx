@@ -14,7 +14,7 @@ import Table from "@Table/Table";
 const IssueListPage = (props) => {
   const issueList = (
     <>
-      <Issue></Issue>
+      <Issue history={props.history}></Issue>
       <Issue></Issue>
     </>
   );
