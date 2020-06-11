@@ -9,7 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-const FilterButton = ({ filter, title }) => {
+const FilterButton = ({ filter, title, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState([labels[1], labels[2]]);
@@ -90,12 +90,12 @@ const FilterButton = ({ filter, title }) => {
               <CloseIcon className={classes.close} style={{ visibility: selected ? "visible" : "hidden" }} />
             </React.Fragment>
           )}
-          options={[...labels].sort((a, b) => {
+          options={[...data].sort((a, b) => {
             // Display the selected labels first.
             let ai = value.indexOf(a);
-            ai = ai === -1 ? value.length + labels.indexOf(a) : ai;
+            ai = ai === -1 ? value.length + data.indexOf(a) : ai;
             let bi = value.indexOf(b);
-            bi = bi === -1 ? value.length + labels.indexOf(b) : bi;
+            bi = bi === -1 ? value.length + data.indexOf(b) : bi;
             return ai - bi;
           })}
           getOptionLabel={(option) => option.name}
@@ -212,21 +212,3 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default FilterButton;
-
-const labels = [
-  {
-    name: "good first issue",
-    color: "#7057ff",
-    description: "Good for newcomers",
-  },
-  {
-    name: "help wanted",
-    color: "#008672",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-];
