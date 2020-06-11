@@ -33,7 +33,7 @@ const IssueListPage = (props) => {
               <SearchInputIcon />
             </SearchBar>
           </SearchBarWrapper>
-          <NavigationButton />
+          <NavigationButton history={props.history} />
           <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
