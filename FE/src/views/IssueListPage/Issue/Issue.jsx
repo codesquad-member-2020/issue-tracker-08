@@ -28,7 +28,7 @@ const Issue = (props) => {
           <Info>
             <Text fontSize="sm">#2 opened</Text>
             <Text fontSize="sm">
-              <TimeAgo date="May 25, 2020" formatter={formatter} />{" "}
+              <TimeAgo date="May 25, 2020" formatter={formatter} />
             </Text>
             <Text fontSize="sm">by choisohyun</Text>
             <Text fontSize="sm">
