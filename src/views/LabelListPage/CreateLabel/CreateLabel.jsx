@@ -21,7 +21,7 @@ const CreateLabel = () => {
       <Wrapper>
         <Contents>
           <BadgeWrapper>
-            <Badge big style={{ display: "inline-block" }}>
+            <Badge big backgroundColor={color} style={{ display: "inline-block" }}>
               Label preview
             </Badge>
           </BadgeWrapper>
@@ -31,7 +31,7 @@ const CreateLabel = () => {
             <ColorBoxWrapper>
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
-                <ColorResetButton>
+                <ColorResetButton onClick={colorReset} backgroundColor={color}>
                   <CachedRoundedIcon fontSize="small" />
                 </ColorResetButton>
                 <PersonalInputBox widthSize="80px" value={color} />
@@ -89,7 +89,7 @@ const ColorInputBoxWrapper = styled.div`
 const ColorResetButton = styled.div`
   width: 40px;
   height: 40px;
-  background-color: ${({ theme }) => theme.colors.green};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   border-radius: 3px;
   margin: 5px 3px 20px 0;
