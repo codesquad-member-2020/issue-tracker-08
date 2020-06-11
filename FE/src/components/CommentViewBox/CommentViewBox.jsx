@@ -5,6 +5,7 @@ import engStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 import Text from "@Style/Text";
+import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(engStrings);
 
@@ -22,13 +23,16 @@ const CommentViewBox = ({ owner }) => {
               </Text>
             </CommentText>
             <CommentAction>
-              {owner && <Badge>Owner</Badge>}
+              {owner && (
+                <Badge backgroundColor="babyblue" borderColor="gray3" color="gray4">
+                  Owner
+                </Badge>
+              )}
               <Text color="gray4">Edit</Text>
               <Text color="gray4">Delete</Text>
             </CommentAction>
           </CommentHeader>
-          <CommentContent>
-          </CommentContent>
+          <CommentContent></CommentContent>
         </CommentGroup>
       </Wrapper>
     </>
@@ -115,15 +119,6 @@ const CommentAction = styled.div`
   ${Text} {
     margin-left: 10px;
   }
-`;
-
-const Badge = styled.span`
-  border: 1px solid ${({ theme }) => theme.colors.gray3};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  color: ${({ theme }) => theme.colors.gray4};
-  padding: 3px;
-  border-radius: 3px;
 `;
 
 export default CommentViewBox;
