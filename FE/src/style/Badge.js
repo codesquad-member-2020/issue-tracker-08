@@ -5,10 +5,9 @@ const Badge = styled.span`
   color: ${({ theme, color }) => theme.colors[color] || theme.colors.white};
   border: ${({ theme, borderColor }) => (borderColor ? `1px solid ${theme.colors[borderColor]}` : "")};
   border-radius: 2px;
-  height: 20px;
-  padding: 0.15em 4px;
-  margin-left: 4px;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  padding: ${({ big }) => (big ? "0.5em 0.6em" : "0.15em 4px")};
+  margin-left: ${({ big }) => (big ? "" : "4px")};
+  font-size: ${({ theme, big }) => (big ? theme.fontSizes.md : theme.fontSizes.sm)};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   line-height: ${({ theme }) => theme.fontSizes.sm};
 `;
