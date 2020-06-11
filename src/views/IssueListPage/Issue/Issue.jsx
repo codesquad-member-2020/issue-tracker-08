@@ -10,7 +10,7 @@ import Text from "@Style/Text";
 
 const formatter = buildFormatter(koreaStrings);
 
-const IssueList = () => {
+const Issue = (props) => {
   return (
     <>
       <Wrapper>
@@ -19,7 +19,7 @@ const IssueList = () => {
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
-          <Title>
+          <Title onClick={() => props.history.push(`/IssueDetailPage`)}>
             <Text fontWeight="bold" as="a">
               목록 보기 구현
             </Text>
@@ -96,4 +96,4 @@ const Milestone = styled.span`
   }
 `;
 
-export default IssueList;
+export default Issue;
