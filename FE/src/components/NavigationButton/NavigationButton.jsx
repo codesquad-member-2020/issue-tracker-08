@@ -5,11 +5,11 @@ import EventNoteIcon from "@material-ui/icons/EventNote";
 
 import Button from "@Style/Button";
 
-const NavigationButton = () => {
+const NavigationButton = (props) => {
   return (
     <>
       <Wrapper>
-        <LeftButton color="gray4" backgroundColor="white">
+        <LeftButton color="gray4" backgroundColor="white" onClick={() => props.history.push(`/LabelListPage`)}>
           <LabelIcon fontSize="small" />
           Labels
         </LeftButton>
