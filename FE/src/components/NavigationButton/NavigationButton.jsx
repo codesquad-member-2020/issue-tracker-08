@@ -5,21 +5,21 @@ import EventNoteIcon from "@material-ui/icons/EventNote";
 
 import Button from "@Style/Button";
 
-const NavigationButton = (props, isLabel, isMilestone) => {
+const NavigationButton = (props) => {
   return (
     <>
       <Wrapper>
         <LeftButton
-          color={isLabel ? "white" : "gray4"}
-          backgroundColor={isLabel ? "blue" : "white"}
+          color={props.isLabel ? "white" : "gray4"}
+          backgroundColor={props.isLabel ? "blue" : "white"}
           onClick={() => props.history.push(`/LabelListPage`)}
         >
           <LabelIcon fontSize="small" />
           Labels
         </LeftButton>
         <RightButton
-          color={isMilestone ? "white" : "gray4"}
-          backgroundColor={isMilestone ? "blue" : "white"}
+          color={props.isMilestone ? "white" : "gray4"}
+          backgroundColor={props.isMilestone ? "blue" : "white"}
           onClick={() => props.history.push(`/MileStonePage`)}
         >
           <EventNoteIcon fontSize="small" />
