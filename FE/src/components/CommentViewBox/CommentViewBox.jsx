@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import TimeAgo from "react-timeago";
+import engStrings from "react-timeago/lib/language-strings/en";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 import Text from "@Style/Text";
+
+const formatter = buildFormatter(engStrings);
+
 const CommentViewBox = ({ owner }) => {
   return (
     <>
@@ -12,6 +18,7 @@ const CommentViewBox = ({ owner }) => {
             <CommentText>
               <Text fontWeight="extraBold">choisohyun</Text>
               <Text color="gray4">
+                commented <TimeAgo date="May 25, 2020" formatter={formatter} />
               </Text>
             </CommentText>
             <CommentAction>
