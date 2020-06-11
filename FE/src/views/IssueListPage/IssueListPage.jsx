@@ -26,7 +26,7 @@ const IssueListPage = (props) => {
         <NavBar>
           <SearchBarWrapper>
             <SearchBarFilterButton>
-              <FilterButton filter={true} title="Filters"></FilterButton>
+              <FilterButton filter={true} title="Filters" data={labels}></FilterButton>
             </SearchBarFilterButton>
             <SearchBar>
               <SearchInput placeholder="Search all issues" />
@@ -106,3 +106,31 @@ const SearchInputIcon = styled(SearchIcon)`
 `;
 
 export default IssueListPage;
+
+const labels = [
+  {
+    name: "good first issue",
+    color: "#7057ff",
+    description: "Good for newcomers",
+  },
+  {
+    name: "help wanted",
+    color: "#008672",
+    description: "Extra attention is needed",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+  {
+    name: "priority: critical",
+    color: "#b60205",
+    description: "",
+  },
+];

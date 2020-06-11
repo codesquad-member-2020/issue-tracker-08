@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
+import SettingsIcon from "@material-ui/icons/Settings";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
@@ -8,10 +9,10 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-const FilterButton = ({ filter, title }) => {
+const FilterButton = ({ filter, title, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([labels[1], labels[2]]);
+  const [value, setValue] = React.useState([]);
   const [pendingValue, setPendingValue] = React.useState([]);
   const theme = useTheme();
 
@@ -36,14 +37,16 @@ const FilterButton = ({ filter, title }) => {
 
   return (
     <React.Fragment>
-      <div className={classes.root}>
+      <div className={classes.root} style={filter ? {} : { width: "221px", paddingBottom: "17px", borderBottom: "1px solid #eee" }}>
         <ButtonBase disableRipple className={classes.button} aria-describedby={id} onClick={handleClick}>
-          <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={filter ? { display: "flex", alignItems: "center", justifyContent: "center" } : {}}>
             {title}
             {filter && <ArrowDropDownIcon />}
           </span>
+          {!filter && <SettingsIcon />}
         </ButtonBase>
         {!filter &&
+          value.length > 0 &&
           value.map((label) => (
             <div
               key={label.name}
@@ -56,6 +59,7 @@ const FilterButton = ({ filter, title }) => {
               {label.name}
             </div>
           ))}
+        {!filter && !value.length && <div className={classes.tag}>No {title}</div>}
       </div>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" className={classes.popper}>
         <div className={classes.header}>Apply labels to this pull request</div>
@@ -79,7 +83,8 @@ const FilterButton = ({ filter, title }) => {
           renderOption={(option, { selected }) => (
             <React.Fragment>
               <DoneIcon className={classes.iconSelected} style={{ visibility: selected ? "visible" : "hidden" }} />
-              <span className={classes.color} style={{ backgroundColor: option.color }} />
+              {!option.img && <span className={classes.color} style={{ backgroundColor: option.color }} />}
+              {option.img && <img src={option.img} className={classes.color} />}
               <div className={classes.text}>
                 {option.name}
                 <br />
@@ -88,12 +93,12 @@ const FilterButton = ({ filter, title }) => {
               <CloseIcon className={classes.close} style={{ visibility: selected ? "visible" : "hidden" }} />
             </React.Fragment>
           )}
-          options={[...labels].sort((a, b) => {
+          options={[...data].sort((a, b) => {
             // Display the selected labels first.
             let ai = value.indexOf(a);
-            ai = ai === -1 ? value.length + labels.indexOf(a) : ai;
+            ai = ai === -1 ? value.length + data.indexOf(a) : ai;
             let bi = value.indexOf(b);
-            bi = bi === -1 ? value.length + labels.indexOf(b) : bi;
+            bi = bi === -1 ? value.length + data.indexOf(b) : bi;
             return ai - bi;
           })}
           getOptionLabel={(option) => option.name}
@@ -210,21 +215,3 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default FilterButton;
-
-const labels = [
-  {
-    name: "good first issue",
-    color: "#7057ff",
-    description: "Good for newcomers",
-  },
-  {
-    name: "help wanted",
-    color: "#008672",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-];
