@@ -17,7 +17,33 @@ const Milestone = ({ title, date, description }) => {
           </DueDateWrapper>
           <Text color="gray3">{description}</Text>
         </TitleWrapper>
-        <ProgressWrapper></ProgressWrapper>
+        <ProgressWrapper>
+          <ProgressBar>
+            <Progress></Progress>
+          </ProgressBar>
+          <StatusBar>
+            <Text fontSize="sm" fontWeight="semiBold">
+              <Text>90%</Text> complete
+            </Text>
+            <Text fontSize="sm" fontWeight="semiBold">
+              <Text>3</Text> open
+            </Text>
+            <Text fontSize="sm" fontWeight="semiBold">
+              <Text>28</Text> closed
+            </Text>
+          </StatusBar>
+          <AdminWrapper>
+            <Text color="blue" fontSize="sm">
+              Edit
+            </Text>
+            <Text color="blue" fontSize="sm">
+              Close
+            </Text>
+            <Text color="red" fontSize="sm">
+              Delete
+            </Text>
+          </AdminWrapper>
+        </ProgressWrapper>
       </Wrapper>
     </>
   );
@@ -43,6 +69,38 @@ const DueDateWrapper = styled(Text)`
   margin: 10px 0;
 `;
 
-const ProgressWrapper = styled.div``;
+const ProgressWrapper = styled.div`
+  min-height: inherit;
+  width: 400px;
+  padding: 15px 20px;
+`;
+
+const ProgressBar = styled.div`
+  margin-top: 7px;
+  margin-bottom: 12px;
+  height: 10px;
+  background-color: ${({ theme }) => theme.colors.gray3};
+  border-radius: 3px;
+`;
+
+const Progress = styled.div`
+  width: 50%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.green};
+  border-radius: 3px;
+`;
+
+const StatusBar = styled.div`
+  ${Text} + ${Text} {
+    margin-left: 15px;
+  }
+`;
+
+const AdminWrapper = styled.div`
+  margin-top: 8px;
+  ${Text} + ${Text} {
+    margin-left: 15px;
+  }
+`;
 
 export default Milestone;
