@@ -93,6 +93,15 @@ const SearchInput = styled.input`
   outline: none;
   height: inherit;
   width: inherit;
+  &:focus {
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
+    /* github 색깔과 동일 */
+    /* border-color: #2188ff; */
+    /* box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3); */
+  }
 `;
 
 const SearchInputIcon = styled(SearchIcon)`

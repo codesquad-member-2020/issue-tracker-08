@@ -88,6 +88,9 @@ const Title = styled.input`
   width: -webkit-fill-available;
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   font-size: ${({ theme }) => theme.fontSizes.lg};
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const CommentContent = styled.div`
@@ -126,6 +129,9 @@ const RawContent = styled.textarea`
   max-height: 300px;
   resize: vertical;
   overflow-y: scroll;
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const ButtonWrap = styled.div`

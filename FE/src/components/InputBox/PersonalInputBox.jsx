@@ -33,6 +33,9 @@ const InputBox = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   width: ${({ widthSize }) => (widthSize ? widthSize : "")};
   background-color: ${({ theme, backgroundColor }) => (backgroundColor ? theme.colors[backgroundColor] : "")};
+  &:focus {
+    background-color: white;
+  }
 `;
 
 export default PersonalInputBox;
