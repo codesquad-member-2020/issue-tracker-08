@@ -23,7 +23,7 @@ const CreateLabel = () => {
       <Wrapper>
         <Contents>
           <BadgeWrapper>
-            <Badge big backgroundColor={color} color={bDark ? "black" : "white"} style={{ display: "inline-block" }}>
+            <Badge big backgroundColor={color} color={bDark ? "white" : "black"} style={{ display: "inline-block" }}>
               Label preview
             </Badge>
           </BadgeWrapper>
@@ -34,7 +34,7 @@ const CreateLabel = () => {
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
                 <ColorResetButton onClick={colorReset} backgroundColor={color}>
-                  <CachedRoundedIcon fontSize="small" style={{ color: bDark ? "black" : "white" }} />
+                  <CachedRoundedIcon fontSize="small" style={{ color: bDark ? "white" : "black" }} />
                 </ColorResetButton>
                 <PersonalInputBox widthSize="80px" value={color} />
               </ColorInputBoxWrapper>
