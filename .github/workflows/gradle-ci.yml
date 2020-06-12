@@ -4,7 +4,7 @@ name: CD with Gradle
 # events but only for the master branch
 on: 
   push:
-    branches: [ dev, master, feature_be/action ]
+    branches: [ dev, master ]
 
 env:
     PROJECT_NAME: issue-tracker-08
