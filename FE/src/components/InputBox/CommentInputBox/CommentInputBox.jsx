@@ -68,7 +68,7 @@ const CommentGroup = styled.div`
   z-index: 2;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.gray4};
-  border: 1px solid ${({ theme }) => theme.colors.gray3};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   flex: auto;
   border-radius: 3px;
   margin-left: -16px;
@@ -86,14 +86,14 @@ const Title = styled.input`
   margin: 5px;
   padding: 5px 5px 5px 10px;
   width: -webkit-fill-available;
-  border: 1px solid ${({ theme }) => theme.colors.gray3};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   font-size: ${({ theme }) => theme.fontSizes.lg};
 `;
 
 const CommentContent = styled.div`
   width: 100%;
   padding: 10px;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray3};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray2};
   overflow: visible;
 `;
 
@@ -104,14 +104,14 @@ const ButtonTab = styled.div`
 
 const WriteButton = styled.button`
   padding: 5px 10px;
-  border: 1px ${(props) => (props.isRawOpen ? "solid" : "none")} ${({ theme }) => theme.colors.gray3};
+  border: 1px ${(props) => (props.isRawOpen ? "solid" : "none")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const PreviewButton = styled.button`
   padding: 5px 10px;
-  border: 1px ${(props) => (props.isRawOpen ? "none" : "solid")} ${({ theme }) => theme.colors.gray3};
+  border: 1px ${(props) => (props.isRawOpen ? "none" : "solid")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
   background-color: ${({ theme }) => theme.colors.white};
 `;
@@ -119,7 +119,7 @@ const PreviewButton = styled.button`
 const RawContent = styled.textarea`
   padding: 5px;
   background-color: ${({ theme }) => theme.colors.gray1};
-  border: 1px solid ${({ theme }) => theme.colors.gray3};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
   display: ${(props) => (props.isRawOpen ? "block" : "none")};
   width: -webkit-fill-available;
   min-height: 200px;

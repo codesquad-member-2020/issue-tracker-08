@@ -20,7 +20,7 @@ const NavigationButton = (props) => {
         <RightButton
           color={props.isMilestone ? "white" : "gray4"}
           backgroundColor={props.isMilestone ? "blue" : "white"}
-          onClick={() => props.history.push(`/MileStonePage`)}
+          onClick={() => props.history.push(`/MilestonePage`)}
         >
           <EventNoteIcon fontSize="small" />
           Milestones
