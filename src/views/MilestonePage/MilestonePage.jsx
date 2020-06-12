@@ -24,7 +24,7 @@ const MilestonePage = (props) => {
       <NavBarWrap>
         <NavBar>
           <NavigationButton history={props.history} isMilestone />
-          <Button onClick={() => setIsOpenNewLabel(!isOpenNewLabel)}>New Label</Button>
+          <Button onClick={() => props.history.push(`/CreateIssuePage/isCreate`)}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<MilestoneHeader openCount={5} closeCount={3} />} tableList={MilestoneList} />
