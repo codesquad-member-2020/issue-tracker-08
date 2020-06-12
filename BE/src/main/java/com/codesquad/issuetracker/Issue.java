@@ -39,7 +39,7 @@ public class Issue {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String content;
 
-    private int commentSize;
+    private int numberOfComment;
 
     @JsonProperty("isOpen")
     private boolean isOpen;

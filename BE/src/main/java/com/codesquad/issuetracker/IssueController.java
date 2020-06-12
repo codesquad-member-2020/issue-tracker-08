@@ -31,7 +31,7 @@ public class IssueController {
                         new Label("FE", "FE 이슈", "#72c2c9", false)))
                 .createdAt(LocalDateTime.now())
                 .title("[BE] GitHub OAuth")
-                .commentSize(1)
+                .numberOfComment(1)
                 .isOpen(true)
                 .build();
 
@@ -46,7 +46,7 @@ public class IssueController {
                         new Label("Feature", "기능 구현", "#f7b4b6", false)))
                 .createdAt(LocalDateTime.parse("2020-06-07 17:59:32", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .title("[FE] 컨벤션 논의")
-                .commentSize(3)
+                .numberOfComment(3)
                 .isOpen(true)
                 .build();
 
@@ -135,7 +135,7 @@ public class IssueController {
                         "- GitHub API 사용\n" +
                         "- JWT\n" +
                         "- 인터셉터")
-                .commentSize(comments.size())
+                .numberOfComment(comments.size())
                 .isOpen(true)
                 .build();
     }
