@@ -3,6 +3,7 @@ package com.codesquad.issuetracker.user.ui;
 import com.codesquad.issuetracker.user.domain.GithubProperty;
 import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
+import com.codesquad.issuetracker.utils.GithubApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,11 +40,6 @@ public class UserController {
         githubProperty.setCode(code);
 
         GithubToken githubToken = new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(githubToken.getAccessToken());
-
-        User user = new RestTemplate().exchange(githubProperty.getUserApiUrl(), HttpMethod.GET, new HttpEntity<>(headers), User.class).getBody();
-        return user;
+        return GithubApiUtils.requestApi(githubToken.getAccessToken(), githubProperty.getUserApiUrl(), User.class);
     }
 }
