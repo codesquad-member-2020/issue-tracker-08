@@ -4,7 +4,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
 import Text from "@Style/Text";
 
-const Milestone = ({ title, date, description }) => {
+const Milestone = ({ title, date, description, history }) => {
   return (
     <>
       <Wrapper>
@@ -33,7 +33,7 @@ const Milestone = ({ title, date, description }) => {
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm">
+            <Text color="blue" fontSize="sm" onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
               Edit
             </Text>
             <Text color="blue" fontSize="sm">
