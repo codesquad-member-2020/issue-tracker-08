@@ -27,8 +27,8 @@ public class IssueController {
                         new User("Jay", "https://avatars1.githubusercontent.com/u/33659848?s=460&v=4"),
                         new User("Ever", "https://avatars1.githubusercontent.com/u/56301069?s=460&v=4")))
                 .labels(Arrays.asList(
-                        new Label("BE", "BE 이슈", "#0366d6"),
-                        new Label("FE", "FE 이슈", "#72c2c9")))
+                        new Label("BE", "BE 이슈", "#0366d6", true),
+                        new Label("FE", "FE 이슈", "#72c2c9", false)))
                 .createdAt(LocalDateTime.now())
                 .title("[BE] GitHub OAuth")
                 .commentSize(1)
@@ -42,8 +42,8 @@ public class IssueController {
                         new User("Hoo", "https://avatars2.githubusercontent.com/u/30427711?s=460&u=0f6f414055ea0bec267856e35e8902b9f728fe1a&v=4"),
                         new User("Sally", "https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4")))
                 .labels(Arrays.asList(
-                        new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9"),
-                        new Label("Feature", "기능 구현", "#f7b4b6")))
+                        new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9", true),
+                        new Label("Feature", "기능 구현", "#f7b4b6", false)))
                 .createdAt(LocalDateTime.parse("2020-06-07 17:59:32", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .title("[FE] 컨벤션 논의")
                 .commentSize(3)
@@ -60,10 +60,10 @@ public class IssueController {
     @GetMapping("/labels")
     public List<Label> labelList() {
         List<Label> labels = new ArrayList<>();
-        labels.add(new Label("BE", "BE 이슈", "#0366d6"));
-        labels.add(new Label("FE", "FE 이슈", "#72c2c9"));
-        labels.add(new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9"));
-        labels.add(new Label("Feature", "기능 구현", "#f7b4b6"));
+        labels.add(new Label("BE", "BE 이슈", "#0366d6", true));
+        labels.add(new Label("FE", "FE 이슈", "#72c2c9", false));
+        labels.add(new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9", true));
+        labels.add(new Label("Feature", "기능 구현", "#f7b4b6", false));
         return labels;
     }
 
@@ -84,8 +84,8 @@ public class IssueController {
         assignees.add(new User("Sally", "https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4"));
 
         List<Label> labels = new ArrayList<>();
-        labels.add(new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9"));
-        labels.add(new Label("Feature", "기능 구현", "#f7b4b6"));
+        labels.add(new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9", true));
+        labels.add(new Label("Feature", "기능 구현", "#f7b4b6", false));
 
         List<Issue> issues = new ArrayList<>();
         issues.add(new Issue(2L, author, assignees, labels, null, null, LocalDateTime.parse("2020-06-07 17:59:32", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), "[FE] 컨벤션 논의", null, 3, true));
@@ -124,8 +124,8 @@ public class IssueController {
                         new User("Jay", "https://avatars1.githubusercontent.com/u/33659848?s=460&v=4"),
                         new User("Ever", "https://avatars1.githubusercontent.com/u/56301069?s=460&v=4")))
                 .labels(Arrays.asList(
-                        new Label("BE", "BE 이슈", "#0366d6"),
-                        new Label("FE", "FE 이슈", "#72c2c9")))
+                        new Label("BE", "BE 이슈", "#0366d6", true),
+                        new Label("FE", "FE 이슈", "#72c2c9", false)))
                 .comments(comments)
                 .milestone(milestone)
                 .createdAt(LocalDateTime.parse("2020-06-11 14:30:30", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))

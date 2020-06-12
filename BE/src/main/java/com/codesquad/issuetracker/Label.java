@@ -12,4 +12,6 @@ public class Label {
     private String description;
 
     private String color;
+
+    private boolean isFontColorBlack;
 }
