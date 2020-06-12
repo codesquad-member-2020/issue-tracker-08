@@ -63,7 +63,7 @@ const Contents = styled.form`
   padding: 16px;
   border-radius: 3px;
   background-color: ${({ theme }) => theme.colors.gray1};
-  border: 1px solid ${({ theme }) => theme.colors.gray3};
+  border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
 const BadgeWrapper = styled.div`
