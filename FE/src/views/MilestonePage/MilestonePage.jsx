@@ -12,9 +12,9 @@ import Table from "@Table/Table";
 const MilestonePage = (props) => {
   const MilestoneList = (
     <>
-      <Milestone title="FE 1주차" date="June 12, 2020"></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
+      <Milestone title="FE 1주차" date="June 12, 2020" history={props.history}></Milestone>
+      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다." history={props.history}></Milestone>
+      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다." history={props.history}></Milestone>
     </>
   );
 
