@@ -124,8 +124,7 @@ const RawContent = styled.textarea`
   width: -webkit-fill-available;
   min-height: 200px;
   max-height: 300px;
-  max-width: 100%;
-  min-width: 100%;
+  resize: vertical;
   overflow-y: scroll;
 `;
 
