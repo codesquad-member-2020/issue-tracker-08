@@ -93,6 +93,9 @@ const DescriptionBox = styled.textarea`
   background-color: ${({ theme }) => theme.colors.gray1};
   resize: vertical;
   overflow-y: scroll;
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const ButtonWrapper = styled.div`

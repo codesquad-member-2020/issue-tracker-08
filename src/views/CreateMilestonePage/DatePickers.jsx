@@ -8,10 +8,6 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     margin: "5px 0 20px 0",
   },
-  inputBase: {
-    backgroundColor: "red",
-    padding: 0,
-  },
   textField: {
     width: "50%",
     backgroundColor: "#fafbfc",
