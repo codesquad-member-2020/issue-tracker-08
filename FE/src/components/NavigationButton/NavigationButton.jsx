@@ -9,11 +9,19 @@ const NavigationButton = (props) => {
   return (
     <>
       <Wrapper>
-        <LeftButton color="gray4" backgroundColor="white" onClick={() => props.history.push(`/LabelListPage`)}>
+        <LeftButton
+          color={props.isLabel ? "white" : "gray4"}
+          backgroundColor={props.isLabel ? "blue" : "white"}
+          onClick={() => props.history.push(`/LabelListPage`)}
+        >
           <LabelIcon fontSize="small" />
           Labels
         </LeftButton>
-        <RightButton color="gray4" backgroundColor="white">
+        <RightButton
+          color={props.isMilestone ? "white" : "gray4"}
+          backgroundColor={props.isMilestone ? "blue" : "white"}
+          onClick={() => props.history.push(`/MileStonePage`)}
+        >
           <EventNoteIcon fontSize="small" />
           Milestones
         </RightButton>

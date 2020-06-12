@@ -4,12 +4,12 @@ import SubjectIcon from "@material-ui/icons/Subject";
 
 import Text from "@Style/Text";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <>
       <Wrapper>
         <HeaderIcon />
-        <Text color="white" fontWeight="bold" as="h2">
+        <Text color="white" fontWeight="bold" as="h2" onClick={() => props.history.push(`/IssueListPage`)}>
           ISSUES
         </Text>
       </Wrapper>

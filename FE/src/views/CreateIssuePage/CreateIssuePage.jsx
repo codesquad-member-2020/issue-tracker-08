@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import Header from "@Header/Header";
-import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 
 const CreateIssuePage = (props) => {
   const passIssueListPage = () => {
@@ -12,7 +12,7 @@ const CreateIssuePage = (props) => {
 
   return (
     <>
-      <Header />
+      <Header history={props.history} />
       <ContentWrapper>
         <Content>
           <IssueBoxWrapper>
