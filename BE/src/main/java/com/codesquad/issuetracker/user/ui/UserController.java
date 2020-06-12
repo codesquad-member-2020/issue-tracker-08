@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 
 @RestController
@@ -36,10 +37,12 @@ public class UserController {
     }
 
     @GetMapping("/oauth")
-    public Object oauth(@RequestParam String code) {
+    public Object oauth(@RequestParam String code, HttpServletResponse response) {
         githubProperty.setCode(code);
-
         GithubToken githubToken = new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
-        return GithubApiUtils.requestApi(githubToken.getAccessToken(), githubProperty.getUserApiUrl(), User.class);
+
+        User user = GithubApiUtils.requestApi(githubToken.getAccessToken(), githubProperty.getUserApiUrl(), User.class);
+
+
     }
 }
