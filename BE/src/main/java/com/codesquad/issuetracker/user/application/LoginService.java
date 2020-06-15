@@ -73,6 +73,6 @@ public class LoginService {
             response.addCookie(cookie);
         });
 
-        response.sendRedirect("/");
+        response.sendRedirect("/issueListPage");
     }
 }
