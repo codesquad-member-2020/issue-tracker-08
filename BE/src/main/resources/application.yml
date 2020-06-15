@@ -13,6 +13,7 @@ spring:
 github:
   client-id: e75bd1cffaa68832aac4
   client-secret: ENC(KiLD337Md1ythVW78LXB1B/cQNzNAykOSpPdvLiyaPIFAYgXFJ55uYoz4KFpabWPNqCjuhxPXKvbzoJb0LxpWcw3LpMcbcid0EEw56uFX7E=)
+  code-url: https://github.com/login/oauth/authorize
   user-api-url: https://api.github.com/user
   access-token-url: https://github.com/login/oauth/access_token
 
@@ -35,7 +36,6 @@ logging:
     com:
       codesquad:
         issuetracker: debug
-
 ---
 spring:
   profiles: production
