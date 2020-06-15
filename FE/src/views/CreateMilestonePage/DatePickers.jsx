@@ -1,4 +1,5 @@
 import React from "react";
+// import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
@@ -14,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #eee",
     padding: 10,
     borderRadius: 5,
+    "&:focus": {
+      backgroundColor: "white",
+      outline: "none",
+      backgroundColor: "white",
+      borderColor: "#00adb5",
+      boxShadow: "inset 0 1px 2px #f1f8ff, 0 0 0 0.2em #c0d3eb",
+    },
   },
 }));
 
@@ -30,9 +38,27 @@ const DatePickers = ({ defaultValue }) => {
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
+            // FormLabelClasses: {
+            //   root: css`
+            //     &.focused {
+            //       color: red;
+            //     }
+            //   `,
+            //   focused: "focused",
+            // },
           }}
           inputProps={{
-            style: { padding: 0, fontSize: "13px" },
+            style: {
+              padding: 0,
+              fontSize: "13px",
+              "&:focus": {
+                backgroundColor: "white",
+                outline: "none",
+                backgroundColor: "white",
+                borderColor: "#00adb5",
+                boxShadow: "inset 0 1px 2px #f1f8ff, 0 0 0 0.2em #c0d3eb",
+              },
+            },
           }}
           InputProps={{ disableUnderline: true }}
         />

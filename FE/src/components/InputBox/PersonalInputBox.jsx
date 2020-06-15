@@ -35,6 +35,10 @@ const InputBox = styled.input`
   background-color: ${({ theme, backgroundColor }) => (backgroundColor ? theme.colors[backgroundColor] : "")};
   &:focus {
     background-color: white;
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
   }
 `;
 
