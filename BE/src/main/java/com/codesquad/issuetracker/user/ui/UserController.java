@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.user.ui;
 
+import com.codesquad.issuetracker.user.application.LoginService;
 import com.codesquad.issuetracker.user.domain.GithubProperty;
 import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
@@ -28,43 +29,17 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
-    private final GithubProperty githubProperty;
+    private final LoginService loginService;
 
     @GetMapping("/oauth/code")
-    public Object getCode() {
-        HttpHeaders headers = new HttpHeaders();
-        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
-                .queryParam("client_id", githubProperty.getClientId())
-                .queryParam("scope", "user")
-                .build()
-                .toUri();
-
-        headers.setLocation(uri);
+    public ResponseEntity<Void> getCode() {
+        HttpHeaders headers = loginService.getGithubCode();
         return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/oauth")
-    public Object oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
-        githubProperty.setCode(code);
-        GithubToken githubToken = new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
-
-        User user = GithubApiUtils.requestApi(githubToken.getAccessToken(), githubProperty.getUserApiUrl(), User.class);
-
-        Map<String, Object> userMap = new ObjectMapper().convertValue(user, Map.class);
-
-        String jwtToken = JwtUtils.createToken(userMap);
-
-        List<Cookie> cookies = new ArrayList<>();
-        cookies.add(new Cookie("jwt", jwtToken));
-        cookies.add(new Cookie("nickname", user.getNickname()));
-        cookies.add(new Cookie("avatarUrl", user.getAvatarUrl()));
-
-        cookies.forEach(cookie -> {
-            cookie.setPath("/");
-            response.addCookie(cookie);
-        });
-
-        response.sendRedirect("/");
+    public ResponseEntity<Void> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
+        loginService.login(code, response);
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
 }

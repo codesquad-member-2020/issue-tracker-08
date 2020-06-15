@@ -2,8 +2,10 @@ package com.codesquad.issuetracker.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class User {
 
     @JsonProperty("id")
