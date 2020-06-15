@@ -5,9 +5,7 @@ import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.utils.GithubApiUtils;
 import com.codesquad.issuetracker.utils.JwtUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -69,6 +65,6 @@ public class LoginService {
             response.addCookie(cookie);
         });
 
-        response.sendRedirect("/issueListPage");
+        response.sendRedirect("/api/issues");
     }
 }
