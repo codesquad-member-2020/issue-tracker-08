@@ -13,6 +13,7 @@ const NavigationButton = (props) => {
           color={props.isLabel ? "white" : "gray4"}
           backgroundColor={props.isLabel ? "blue" : "white"}
           onClick={() => props.history.push(`/LabelListPage`)}
+          isLabel={props.isLabel}
         >
           <LabelIcon fontSize="small" />
           Labels
@@ -21,6 +22,7 @@ const NavigationButton = (props) => {
           color={props.isMilestone ? "white" : "gray4"}
           backgroundColor={props.isMilestone ? "blue" : "white"}
           onClick={() => props.history.push(`/MilestonePage`)}
+          isMilestone={props.isMilestone}
         >
           <EventNoteIcon fontSize="small" />
           Milestones
@@ -38,11 +40,17 @@ const Wrapper = styled.div`
 const LeftButton = styled(Button)`
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  &:hover {
+    background-color: ${(props) => (props.isLabel ? "" : props.theme.colors.gray1)};
+  }
 `;
 
 const RightButton = styled(Button)`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  &:hover {
+    background-color: ${(props) => (props.isMilestone ? "" : props.theme.colors.gray1)};
+  }
 `;
 
 export default NavigationButton;
