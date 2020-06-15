@@ -1,60 +1,62 @@
 package com.codesquad.issuetracker.issue.ui;
 
+import com.codesquad.issuetracker.issue.domain.Filter;
 import com.codesquad.issuetracker.issue.domain.IssueBoard;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/issues")
 public class IssueController {
 
     @GetMapping("")
-    public IssueBoard listIssue() {
+    public IssueBoard listIssue(Filter filter) {
+        log.info("filter : {}", filter);
         return null;
     }
 
-    @GetMapping("")
+    @PostMapping("")
     public IssueBoard createIssue() {
         return null;
     }
 
-    @GetMapping("")
+    @PatchMapping("")
     public IssueBoard changeStatusOfIssues() {
         return null;
     }
 
-    @GetMapping("")
+    @GetMapping("/{issue_id}")
     public IssueBoard readIssue() {
         return null;
     }
 
-    @GetMapping("")
+    @PatchMapping("/{issue_id}")
     public IssueBoard changeStatus() {
         return null;
     }
 
-    @GetMapping("")
+    @PatchMapping("/{issue_id}/titles")
     public IssueBoard editTitle() {
         return null;
     }
 
-    @GetMapping("")
+    @PatchMapping("/{issue_id}/content")
     public IssueBoard editContent() {
         return null;
     }
 
-    @GetMapping("")
+    @PutMapping("/{issue_id}/assignees")
     public IssueBoard modifyAssignees() {
         return null;
     }
 
-    @GetMapping("")
+    @PutMapping("/{issue_id}/labels")
     public IssueBoard modifyLabels() {
         return null;
     }
 
-    @GetMapping("")
+    @PutMapping("/{issue_id}/milestone")
     public IssueBoard modifyMilestone() {
         return null;
     }
