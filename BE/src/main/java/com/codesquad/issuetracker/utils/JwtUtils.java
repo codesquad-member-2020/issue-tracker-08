@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +17,8 @@ import java.util.Map;
 @Component
 public class JwtUtils {
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     public static String jwtKey;
 
     @Value("${jwt.key}")
@@ -23,7 +26,8 @@ public class JwtUtils {
         jwtKey = key;
     }
 
-    public static String createToken(Map<String, Object> payloads) {
+    public static String createToken(Object object) {
+        Map<String, Object> payloads = objectMapper.convertValue(object, Map.class);
         Date expirationDate = new Date(System.currentTimeMillis() + (1000 * 60 * 60));
 
         Map<String, Object> header = new HashMap<>();
