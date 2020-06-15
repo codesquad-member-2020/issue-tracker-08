@@ -8,7 +8,16 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    platform: mysql
+
+  # API 호출시, SQL 문을 콘솔에 출력한다
+  jpa:
+    show-sql: true
+
+    hibernate:
+      ddl-auto: create-drop
+
+    # MySQL 을 사용할 것.
+    database: mysql
 
 github:
   client-id: e75bd1cffaa68832aac4
@@ -24,10 +33,9 @@ spring:
   profiles: local
 
   datasource:
-    url: ENC(jxb9EPngIYpMlDHCob8ctpBUlSFyCXR1gaX+fvQpg1mPM1eByHuWwYASWunMMYS9GKvRKPr6u1usHaEeeeASBc2vRT17+VJw9/fBWy1Qo5mkz9CCzbHJEd8H7axFLJUupruy6Y9mmKCmJb9Ob1IWaw==)
-    username: ENC(f/VL3zaJSbAqrjdVFbBHxFTaEEGi/O9vrmENuVbv4vioQBE6eke/W4HgWMorc+z2)
-    password: ENC(l514WFmENUs5ICj44POejzeUwIzxJ670btDBUOuc5POL9oVxcCguwMwPYOkDXeWa)
-
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
 
 logging:
   level:
