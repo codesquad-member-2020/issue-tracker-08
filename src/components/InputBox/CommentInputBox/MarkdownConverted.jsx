@@ -22,16 +22,16 @@ const ConvertedText = styled.div`
   width: -webkit-fill-available;
   height: 100%;
   min-height: 200px;
+  & pre {
+    background-color: #f6f8fa;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  & code {
+    background-color: #f3f4f4;
+    padding: 5px;
+    border-radius: 3px;
+  }
 `;
 
 export default MarkdownConverted;
-
-// string 형태의 changedText를 html 형태로 decode해주는 함수 (현재는 사용하지 않지만 혹시 필요할 수도 있어서 남겨둠)
-
-//   const htmlDecode = (input) => {
-//     var e = document.createElement("div");
-//     e.innerHTML = input;
-//     return e.childNodes.length === 0 ? "" : e.childNodes[0];
-//   };
-
-//   const changedHtml = htmlDecode(changedText);
