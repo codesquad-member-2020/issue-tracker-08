@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @Getter
 @ToString
+@Entity
 public class User {
 
     @JsonProperty("id")
+    @Id
     private Long id;
 
     @JsonProperty("login")
