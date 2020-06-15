@@ -53,6 +53,7 @@ const Wrapper = styled.div`
   display: flex;
   min-height: 100px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
+  justify-content: space-between;
 `;
 
 const TitleWrapper = styled.div`

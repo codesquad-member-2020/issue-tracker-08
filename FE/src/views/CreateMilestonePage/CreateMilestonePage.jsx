@@ -64,6 +64,7 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 65%;
+  max-width: 1000px;
   flex-direction: column;
 `;
 
