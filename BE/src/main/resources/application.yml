@@ -39,8 +39,3 @@ logging:
 ---
 spring:
   profiles: production
-
-  datasource:
-    url: ENC(a2fs4smti6ZnSmajFS6aSs1iAJqBRtYOzX4s76MrfgRZzahIJa/M8W8YuiKIIDgXX41cqBiiVkRCd5S3GttLT2XTyJN61UEXgmwzA436LQy3ifszU+hKcDCJkxJrOeU2DsoNAc2o9Q7KQLjBX3/SAvJRQp+p+su1HSQSP+ebwbTyfv0R90WHrx/IhK88QC5hIS7VDmWusa4qZOR0R1s1BA==)
-    username: ENC(dWFI/DAXSod1mpm9fOEXhd70DB1D8lOmuYHCA/z7y0CfA5k699XdBzzNQLw5ewHN)
-    password: ENC(kBF9VO2QdavUtJyL2oUkx/vjv+AyevUXEQZ5ZCpvDVk5fU7IpGtg5e/R4kh69YeA)
