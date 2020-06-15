@@ -95,6 +95,10 @@ const DescriptionBox = styled.textarea`
   overflow-y: scroll;
   &:focus {
     background-color: white;
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
   }
 `;
 

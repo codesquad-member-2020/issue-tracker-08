@@ -5,8 +5,6 @@ import MarkdownConverted from "./MarkdownConverted";
 
 import Button from "@Style/Button";
 
-import "./CommentInputBox.css";
-
 const MarkdownInputBox = ({ isIssue, onPass }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState("");
@@ -87,9 +85,14 @@ const Title = styled.input`
   padding: 5px 5px 5px 10px;
   width: -webkit-fill-available;
   border: 1px solid ${({ theme }) => theme.colors.gray2};
+  border-radius: 5px;
   font-size: ${({ theme }) => theme.fontSizes.lg};
   &:focus {
     background-color: white;
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.1em ${({ theme }) => theme.colors.skyblue};
   }
 `;
 
@@ -123,6 +126,7 @@ const RawContent = styled.textarea`
   padding: 5px;
   background-color: ${({ theme }) => theme.colors.gray1};
   border: 1px solid ${({ theme }) => theme.colors.gray2};
+  border-radius: 5px;
   display: ${(props) => (props.isRawOpen ? "block" : "none")};
   width: -webkit-fill-available;
   min-height: 200px;
@@ -131,6 +135,10 @@ const RawContent = styled.textarea`
   overflow-y: scroll;
   &:focus {
     background-color: white;
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
   }
 `;
 
