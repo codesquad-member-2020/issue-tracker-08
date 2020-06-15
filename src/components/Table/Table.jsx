@@ -24,6 +24,7 @@ const TableWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   border-radius: 5px;
   width: 65%;
+  max-width: 1000px;
 `;
 
 const Header = styled.div`
