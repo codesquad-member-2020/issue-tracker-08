@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
-const Milestone = ({ title, date, description, history }) => {
+const Milestone = ({ title, date, description }) => {
   let history = useHistory();
   return (
     <>
