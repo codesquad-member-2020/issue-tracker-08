@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
@@ -11,18 +11,27 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
+import { getIssue } from "@Modules/issue";
 
-const IssueListPage = (props) => {
-  const issueList = (
-    <>
-      <Issue history={props.history}></Issue>
-      <Issue></Issue>
-    </>
-  );
+export const IssueList = ({ issues, loadingIssue }) => (
+  <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>
+);
+
+const IssueListPage = ({ history, getIssue, issues, loadingIssue }) => {
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getIssue();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getIssue]);
 
   return (
     <>
-      <Header history={props.history} />
+      <Header history={history} />
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
@@ -34,11 +43,11 @@ const IssueListPage = (props) => {
               <SearchInputIcon />
             </SearchBar>
           </SearchBarWrapper>
-          <NavigationButton history={props.history} />
-          <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
+          <NavigationButton history={history} />
+          <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={issueList} />
+      <Table tableHeader={<IssueListHeader />} tableList={<IssueList issues={issues} loadingIssue={loadingIssue} />} />
     </>
   );
 };
