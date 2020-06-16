@@ -7,12 +7,11 @@ import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
 
-const IssueDetailPage = (props) => {
+const IssueDetailPage = () => {
   const { issueId } = useParams();
-  console.log(issueId);
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <ContentWrapper>
         <Content>
           <CommentViewBoxWrapper>

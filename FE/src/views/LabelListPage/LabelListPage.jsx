@@ -10,7 +10,7 @@ import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
 
-const LabelListPage = (props) => {
+const LabelListPage = () => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
 
   const labelList = (
@@ -22,10 +22,10 @@ const LabelListPage = (props) => {
 
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <NavBarWrap>
         <NavBar>
-          <NavigationButton history={props.history} isLabel />
+          <NavigationButton isLabel />
           <Button onClick={() => setIsOpenNewLabel(!isOpenNewLabel)}>New Label</Button>
         </NavBar>
       </NavBarWrap>
