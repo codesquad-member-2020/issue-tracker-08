@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
@@ -7,6 +8,8 @@ import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
 
 const IssueDetailPage = (props) => {
+  const { issueId } = useParams();
+  console.log(issueId);
   return (
     <>
       <Header history={props.history} />
