@@ -14,7 +14,6 @@ const formatter = buildFormatter(koreaStrings);
 
 const Issue = ({ issue }) => {
   let history = useHistory();
-  const { issueId } = useParams();
 
   const badgeList = issue.labels.map((label) => (
     <Badge key={label.name} backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
