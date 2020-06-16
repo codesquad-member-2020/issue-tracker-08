@@ -10,7 +10,7 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
 
-const CreateMilestonePage = (props) => {
+const CreateMilestonePage = ({ title, date, description }) => {
   let history = useHistory();
   const { state } = useParams();
   return (
@@ -31,11 +31,11 @@ const CreateMilestonePage = (props) => {
             )}
           </InfoWrapper>
           <Content>
-            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" value={props.title}></PersonalInputBox>
+            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" value={title}></PersonalInputBox>
             <Text fontWeight="bold">Due date (optional)</Text>
-            <DatePickers defaultValue={props.date || "연도-월-일"}></DatePickers>
+            <DatePickers defaultValue={date || "연도-월-일"}></DatePickers>
             <Text fontWeight="bold">Description (optional)</Text>
-            <DescriptionBox value={props.description} />
+            <DescriptionBox value={description} />
           </Content>
           <ButtonWrapper>
             {state === "isEdit" ? (
