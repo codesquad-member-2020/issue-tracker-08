@@ -6,6 +6,7 @@ const Text = styled.span`
   font-size: ${({ theme, fontSize }) => theme.fontSizes[fontSize] || theme.fontSizes.md};
   font-weight: ${({ theme, fontWeight }) => theme.fontWeights[fontWeight] || theme.fontWeights.regular};
   line-height: ${({ lineHeight }) => lineHeight};
+  cursor: ${({ isClick }) => (isClick ? "pointer" : "default")};
 `;
 
 export default Text;
