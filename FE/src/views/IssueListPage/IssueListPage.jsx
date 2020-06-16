@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -13,11 +14,11 @@ import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
 
-export const IssueList = ({ issues, loadingIssue }) => (
-  <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>
-);
+const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
+  let history = useHistory();
 
-const IssueListPage = ({ history, getIssue, issues, loadingIssue }) => {
+  const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
+
   useEffect(() => {
     const fn = async () => {
       try {
@@ -31,7 +32,7 @@ const IssueListPage = ({ history, getIssue, issues, loadingIssue }) => {
 
   return (
     <>
-      <Header history={history} />
+      <Header />
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
@@ -43,7 +44,7 @@ const IssueListPage = ({ history, getIssue, issues, loadingIssue }) => {
               <SearchInputIcon />
             </SearchBar>
           </SearchBarWrapper>
-          <NavigationButton history={history} />
+          <NavigationButton />
           <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
