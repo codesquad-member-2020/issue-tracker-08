@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import TimeAgo from "react-timeago";
@@ -11,9 +12,12 @@ import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const Issue = (props) => {
-  const badgeList = props.issue.labels.map((label) => (
-    <Badge backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
+const Issue = ({ issue }) => {
+  let history = useHistory();
+  const { issueId } = useParams();
+
+  const badgeList = issue.labels.map((label) => (
+    <Badge key={label.name} backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
       {label.name}
     </Badge>
   ));
@@ -26,20 +30,20 @@ const Issue = (props) => {
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
-          <Title onClick={() => props.history.push(`/IssueDetailPage`)}>
+          <Title onClick={() => history.push(`/IssueDetailPage/${issue.id}`)}>
             <Text fontWeight="bold" as="a">
-              {props.issue.title}
+              {issue.title}
             </Text>
             {badgeList}
           </Title>
           <Info>
             <Text fontSize="sm">
-              #{props.issue.id} {props.issue.isOpen ? "opened" : "closed"}
+              #{issue.id} {issue.isOpen ? "opened" : "closed"}
             </Text>
             <Text fontSize="sm">
-              <TimeAgo date={props.issue.createdAt} formatter={formatter} />
+              <TimeAgo date={issue.createdAt} formatter={formatter} />
             </Text>
-            <Text fontSize="sm">by {props.issue.author.nickname}</Text>
+            <Text fontSize="sm">by {issue.author.nickname}</Text>
             <Text fontSize="sm">
               <Milestone>
                 <EventNoteIcon style={{ fontSize: 15 }} />
