@@ -10,15 +10,15 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
 
 const CreateMilestonePage = (props) => {
-  const isEdit = props.match.params.state === "isEdit";
+  const { state } = useParams();
   return (
     <>
       <Header history={props.history} />
       <Wrapper>
         <ContentWrapper>
           <InfoWrapper>
-            {isEdit ? (
-              <NavigationButton history={props.history} isMilestone />
+            {state === "isEdit" ? (
+              <NavigationButton isMilestone />
             ) : (
               <>
                 <Text fontSize="xl" fontWeight="bold">
@@ -36,7 +36,7 @@ const CreateMilestonePage = (props) => {
             <DescriptionBox value={props.description} />
           </Content>
           <ButtonWrapper>
-            {isEdit ? (
+            {state === "isEdit" ? (
               <>
                 <Button backgroundColor="gray1" color="black" onClick={() => props.history.push(`/MilestonePage`)}>
                   Cancel
