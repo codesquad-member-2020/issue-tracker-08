@@ -124,7 +124,10 @@ const WriteButton = styled.button`
   border: 1px ${(props) => (props.isRawOpen ? "solid" : "none")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
   background-color: ${(props) => (props.isRawOpen ? props.theme.colors.white : props.theme.colors.gray1)};
+<<<<<<< HEAD:src/components/InputBox/CommentInputBox/CommentInputBox.jsx
   cursor: pointer;
+=======
+>>>>>>> 04f2404... hotfix: 마일스톤 달력 포커스 스타일, 커맨트 인풋 박스 스타일 수정:FE/src/components/InputBox/CommentInputBox/CommentInputBox.jsx
 `;
 
 const PreviewButton = styled.button`
@@ -132,7 +135,10 @@ const PreviewButton = styled.button`
   border: 1px ${(props) => (props.isRawOpen ? "none" : "solid")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
   background-color: ${(props) => (props.isRawOpen ? props.theme.colors.gray1 : props.theme.colors.white)};
+<<<<<<< HEAD:src/components/InputBox/CommentInputBox/CommentInputBox.jsx
   cursor: pointer;
+=======
+>>>>>>> 04f2404... hotfix: 마일스톤 달력 포커스 스타일, 커맨트 인풋 박스 스타일 수정:FE/src/components/InputBox/CommentInputBox/CommentInputBox.jsx
 `;
 
 const RawContent = styled.textarea`
