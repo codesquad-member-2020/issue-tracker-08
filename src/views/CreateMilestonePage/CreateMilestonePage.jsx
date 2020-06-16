@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
 import Text from "@Style/Text";
@@ -10,10 +11,11 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
 
 const CreateMilestonePage = (props) => {
+  let history = useHistory();
   const { state } = useParams();
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <Wrapper>
         <ContentWrapper>
           <InfoWrapper>
@@ -38,16 +40,16 @@ const CreateMilestonePage = (props) => {
           <ButtonWrapper>
             {state === "isEdit" ? (
               <>
-                <Button backgroundColor="gray1" color="black" onClick={() => props.history.push(`/MilestonePage`)}>
+                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
                   Cancel
                 </Button>
-                <Button backgroundColor="gray1" color="black" onClick={() => props.history.push(`/MilestonePage`)}>
+                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
                   Close milestone
                 </Button>
-                <Button onClick={() => props.history.push(`/MilestonePage`)}>Save changes</Button>
+                <Button onClick={() => history.push(`/MilestonePage`)}>Save changes</Button>
               </>
             ) : (
-              <Button onClick={() => props.history.push(`/MilestonePage`)}>Create milestone</Button>
+              <Button onClick={() => history.push(`/MilestonePage`)}>Create milestone</Button>
             )}
           </ButtonWrapper>
         </ContentWrapper>

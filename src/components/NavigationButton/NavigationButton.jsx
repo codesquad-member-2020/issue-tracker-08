@@ -2,18 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import LabelIcon from "@material-ui/icons/Label";
 import EventNoteIcon from "@material-ui/icons/EventNote";
+import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
 
 const NavigationButton = (props) => {
+  let history = useHistory();
   return (
     <>
       <Wrapper>
         <LeftButton
           color={props.isLabel ? "white" : "gray4"}
           backgroundColor={props.isLabel ? "blue" : "white"}
-          onClick={() => props.history.push(`/LabelListPage`)}
           isLabel={props.isLabel}
+          onClick={() => history.push(`/LabelListPage`)}
         >
           <LabelIcon fontSize="small" />
           Labels
@@ -21,8 +23,8 @@ const NavigationButton = (props) => {
         <RightButton
           color={props.isMilestone ? "white" : "gray4"}
           backgroundColor={props.isMilestone ? "blue" : "white"}
-          onClick={() => props.history.push(`/MilestonePage`)}
           isMilestone={props.isMilestone}
+          onClick={() => history.push(`/MilestonePage`)}
         >
           <EventNoteIcon fontSize="small" />
           Milestones

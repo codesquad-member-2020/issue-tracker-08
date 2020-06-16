@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -9,22 +10,23 @@ import Milestone from "@MilestonePage/Milestone/Milestone";
 import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
 
-const MilestonePage = (props) => {
+const MilestonePage = () => {
+  let history = useHistory();
   const MilestoneList = (
     <>
-      <Milestone title="FE 1주차" date="June 12, 2020" history={props.history}></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다." history={props.history}></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다." history={props.history}></Milestone>
+      <Milestone title="FE 1주차" date="June 12, 2020"></Milestone>
+      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
+      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
     </>
   );
 
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <NavBarWrap>
         <NavBar>
-          <NavigationButton history={props.history} isMilestone />
-          <Button onClick={() => props.history.push(`/CreateMilestonePage/isCreate`)}>New Milestone</Button>
+          <NavigationButton isMilestone />
+          <Button onClick={() => history.push(`/CreateMilestonePage/isCreate`)}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<MilestoneHeader openCount={5} closeCount={3} />} tableList={MilestoneList} />

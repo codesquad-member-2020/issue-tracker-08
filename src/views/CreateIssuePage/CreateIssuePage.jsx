@@ -1,18 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import Header from "@Header/Header";
 
-const CreateIssuePage = (props) => {
+const CreateIssuePage = () => {
+  let history = useHistory();
   const passIssueListPage = () => {
-    props.history.push(`/IssueListPage`);
+    history.push(`/IssueListPage`);
   };
 
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <ContentWrapper>
         <Content>
           <IssueBoxWrapper>
