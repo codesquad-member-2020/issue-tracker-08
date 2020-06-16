@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
 const Milestone = ({ title, date, description, history }) => {
+  let history = useHistory();
   return (
     <>
       <Wrapper>
