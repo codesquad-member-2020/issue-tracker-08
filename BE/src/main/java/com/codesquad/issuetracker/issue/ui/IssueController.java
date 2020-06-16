@@ -12,7 +12,6 @@ public class IssueController {
 
     @GetMapping("")
     public IssueBoard listIssue(Filter filter) {
-        log.info("filter : {}", filter);
         return null;
     }
 
