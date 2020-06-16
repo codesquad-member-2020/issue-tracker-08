@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
 
 import Button from "@Style/Button";
 
@@ -112,7 +113,15 @@ const SearchInputIcon = styled(SearchIcon)`
   pointer-events: none;
 `;
 
-export default IssueListPage;
+export default connect(
+  ({ issue, loading }) => ({
+    issues: issue.issues,
+    loadingIssue: loading["issue/GET_ISSUE"],
+  }),
+  {
+    getIssue,
+  }
+)(IssueListPage);
 
 const labels = [
   {
