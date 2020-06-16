@@ -30,7 +30,7 @@ const Issue = ({ issue }) => {
         <OpenIcon />
         <IssueWrapper>
           <Title onClick={() => history.push(`/IssueDetailPage/${issue.id}`)}>
-            <Text fontWeight="bold" as="a">
+            <Text fontWeight="bold" isClick as="a">
               {issue.title}
             </Text>
             {badgeList}

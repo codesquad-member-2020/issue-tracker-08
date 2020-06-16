@@ -11,7 +11,7 @@ const Milestone = ({ title, date, description }) => {
     <>
       <Wrapper>
         <TitleWrapper>
-          <Text fontSize="xl" as="a">
+          <Text fontSize="xl" isClick as="a">
             {title}
           </Text>
           <DueDateWrapper color="gray4">
@@ -35,13 +35,13 @@ const Milestone = ({ title, date, description }) => {
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
               Edit
             </Text>
-            <Text color="blue" fontSize="sm">
+            <Text color="blue" fontSize="sm" isClick>
               Close
             </Text>
-            <Text color="red" fontSize="sm">
+            <Text color="red" fontSize="sm" isClick>
               Delete
             </Text>
           </AdminWrapper>

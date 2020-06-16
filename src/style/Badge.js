@@ -10,6 +10,7 @@ const Badge = styled.span`
   font-size: ${({ theme, big }) => (big ? theme.fontSizes.md : theme.fontSizes.sm)};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   line-height: ${({ theme }) => theme.fontSizes.sm};
+  cursor: default;
 `;
 
 export default Badge;
