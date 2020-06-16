@@ -13,27 +13,12 @@ import LabelListPage from "@LabelListPage/LabelListPage";
 import MilestonePage from "@MilestonePage/MilestonePage";
 import CreateMilestonePage from "@CreateMilestonePage/CreateMilestonePage";
 import ErrorPage from "@ErrorPage/ErrorPage";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as getIssue from "@/modules/issue";
 
 const App = () => {
-  const PostActions = getIssue;
-  const getPost2 = async () => {
-    try {
-      await PostActions.getPost();
-      console.log("요청이 완료 된 다음에 실행됨");
-    } catch (e) {
-      console.log("에러가 발생!");
-      console.error(e);
-    }
-  };
-
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <button onClick={PostActions.getIssue()}>hi</button>
         <Router>
           <Switch>
             <Route path="/" exact component={LoginPage} />
@@ -51,15 +36,4 @@ const App = () => {
   );
 };
 
-// export default App;
-
-export default connect(
-  (state) => ({
-    issue: state.issue.data,
-    loading: state.issue.pending,
-    error: state.issue.error,
-  }),
-  (dispatch) => ({
-    PostActions: bindActionCreators(getIssue, dispatch),
-  })
-)(App);
+export default App;

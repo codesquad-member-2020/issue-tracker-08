@@ -52,6 +52,10 @@ module.exports = {
       "@Header": path.resolve(__dirname, "src/components/Header/"),
       "@Table": path.resolve(__dirname, "src/components/Table/"),
       "@Style": path.resolve(__dirname, "src/style/"),
+      "@Lib": path.resolve(__dirname, "src/lib/"),
+      "@Constants": path.resolve(__dirname, "src/constants/"),
+      "@Modules": path.resolve(__dirname, "src/modules/"),
+      "@Components": path.resolve(__dirname, "src/components/"),
     },
   },
 
