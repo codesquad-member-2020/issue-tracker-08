@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
-const Milestone = ({ title, date, description, history }) => {
+const Milestone = ({ title, date, description }) => {
+  let history = useHistory();
   return (
     <>
       <Wrapper>
         <TitleWrapper>
-          <Text fontSize="xl" as="a">
+          <Text fontSize="xl" isClick as="a">
             {title}
           </Text>
           <DueDateWrapper color="gray4">
@@ -33,13 +35,13 @@ const Milestone = ({ title, date, description, history }) => {
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
               Edit
             </Text>
-            <Text color="blue" fontSize="sm">
+            <Text color="blue" fontSize="sm" isClick>
               Close
             </Text>
-            <Text color="red" fontSize="sm">
+            <Text color="red" fontSize="sm" isClick>
               Delete
             </Text>
           </AdminWrapper>

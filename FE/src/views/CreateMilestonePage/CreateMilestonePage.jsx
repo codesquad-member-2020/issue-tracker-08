@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
 import Text from "@Style/Text";
@@ -9,16 +10,17 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
 
-const CreateMilestonePage = (props) => {
-  const isEdit = props.match.params.state === "isEdit";
+const CreateMilestonePage = ({ title, date, description }) => {
+  let history = useHistory();
+  const { state } = useParams();
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <Wrapper>
         <ContentWrapper>
           <InfoWrapper>
-            {isEdit ? (
-              <NavigationButton history={props.history} isMilestone />
+            {state === "isEdit" ? (
+              <NavigationButton isMilestone />
             ) : (
               <>
                 <Text fontSize="xl" fontWeight="bold">
@@ -29,25 +31,25 @@ const CreateMilestonePage = (props) => {
             )}
           </InfoWrapper>
           <Content>
-            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" value={props.title}></PersonalInputBox>
+            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" value={title}></PersonalInputBox>
             <Text fontWeight="bold">Due date (optional)</Text>
-            <DatePickers defaultValue={props.date || "연도-월-일"}></DatePickers>
+            <DatePickers defaultValue={date || "연도-월-일"}></DatePickers>
             <Text fontWeight="bold">Description (optional)</Text>
-            <DescriptionBox value={props.description} />
+            <DescriptionBox value={description} />
           </Content>
           <ButtonWrapper>
-            {isEdit ? (
+            {state === "isEdit" ? (
               <>
-                <Button backgroundColor="gray1" color="black" onClick={() => props.history.push(`/MilestonePage`)}>
+                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
                   Cancel
                 </Button>
-                <Button backgroundColor="gray1" color="black" onClick={() => props.history.push(`/MilestonePage`)}>
+                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
                   Close milestone
                 </Button>
-                <Button onClick={() => props.history.push(`/MilestonePage`)}>Save changes</Button>
+                <Button onClick={() => history.push(`/MilestonePage`)}>Save changes</Button>
               </>
             ) : (
-              <Button onClick={() => props.history.push(`/MilestonePage`)}>Create milestone</Button>
+              <Button onClick={() => history.push(`/MilestonePage`)}>Create milestone</Button>
             )}
           </ButtonWrapper>
         </ContentWrapper>

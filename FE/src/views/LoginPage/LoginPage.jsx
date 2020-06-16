@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 import Button from "@Style/Button";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
+  let history = useHistory();
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   return (
@@ -21,7 +23,7 @@ const LoginPage = (props) => {
             <PersonalInputBox title="아이디" />
             <PersonalInputBox title="비밀번호" />
             <ButtonWrap>
-              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => props.history.push(`/IssueListPage`)}>
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => history.push(`/IssueListPage`)}>
                 로그인
               </Button>
               <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => setIsSignupOpen(!isSignupOpen)}>

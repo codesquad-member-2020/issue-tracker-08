@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -10,18 +12,27 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
+import { getIssue } from "@Modules/issue";
 
-const IssueListPage = (props) => {
-  const issueList = (
-    <>
-      <Issue history={props.history}></Issue>
-      <Issue></Issue>
-    </>
-  );
+const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
+  let history = useHistory();
+
+  const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getIssue();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getIssue]);
 
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <NavBarWrap>
         <NavBar>
           <SearchBarWrapper>
@@ -33,11 +44,11 @@ const IssueListPage = (props) => {
               <SearchInputIcon />
             </SearchBar>
           </SearchBarWrapper>
-          <NavigationButton history={props.history} />
-          <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
+          <NavigationButton />
+          <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={issueList} />
+      <Table tableHeader={<IssueListHeader />} tableList={<IssueList issues={issues} loadingIssue={loadingIssue} />} />
     </>
   );
 };
@@ -112,7 +123,15 @@ const SearchInputIcon = styled(SearchIcon)`
   pointer-events: none;
 `;
 
-export default IssueListPage;
+export default connect(
+  ({ issue, loading }) => ({
+    issues: issue.issues,
+    loadingIssue: loading["issue/GET_ISSUE"],
+  }),
+  {
+    getIssue,
+  }
+)(IssueListPage);
 
 const labels = [
   {
