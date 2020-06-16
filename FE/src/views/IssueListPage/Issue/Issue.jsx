@@ -12,6 +12,12 @@ import Badge from "@Style/Badge";
 const formatter = buildFormatter(koreaStrings);
 
 const Issue = (props) => {
+  const badgeList = props.issue.labels.map((label) => (
+    <Badge backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
+      {label.name}
+    </Badge>
+  ));
+
   return (
     <>
       <Wrapper>
@@ -22,16 +28,18 @@ const Issue = (props) => {
         <IssueWrapper>
           <Title onClick={() => props.history.push(`/IssueDetailPage`)}>
             <Text fontWeight="bold" as="a">
-              목록 보기 구현
+              {props.issue.title}
             </Text>
-            <Badge>bug</Badge>
+            {badgeList}
           </Title>
           <Info>
-            <Text fontSize="sm">#2 opened</Text>
             <Text fontSize="sm">
-              <TimeAgo date="May 25, 2020" formatter={formatter} />
+              #{props.issue.id} {props.issue.isOpen ? "opened" : "closed"}
             </Text>
-            <Text fontSize="sm">by choisohyun</Text>
+            <Text fontSize="sm">
+              <TimeAgo date={props.issue.createdAt} formatter={formatter} />
+            </Text>
+            <Text fontSize="sm">by {props.issue.author.nickname}</Text>
             <Text fontSize="sm">
               <Milestone>
                 <EventNoteIcon style={{ fontSize: 15 }} />
