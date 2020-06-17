@@ -5,18 +5,18 @@ import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 
-const Label = () => {
+const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
   return (
     <>
       <Wrapper>
         <BadgeWrapper>
-          <Badge big color="white" backgroundColor="red" style={{ display: "inline-block" }}>
-            bug
+          <Badge big color={isFontColorBlack ? "black" : "white"} backgroundColor={color} style={{ display: "inline-block" }}>
+            {name}
           </Badge>
         </BadgeWrapper>
         <TextWrapper>
           <Text color="gray4" lineHeight="30px">
-            Something isn't working
+            {description}
           </Text>
         </TextWrapper>
         <ButtonWrapper>
@@ -52,4 +52,4 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export default Label;
+export default React.memo(Label);
