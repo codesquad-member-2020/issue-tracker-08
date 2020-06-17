@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 import Button from "@Style/Button";
 
@@ -9,6 +10,7 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
+import { getLabel } from "@Modules/label";
 
 const LabelListPage = () => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
@@ -50,4 +52,12 @@ const NavBar = styled.nav`
   align-items: center;
 `;
 
-export default LabelListPage;
+export default connect(
+  ({ label, loading }) => ({
+    labels: label.labels,
+    loadingLabel: loading["label/GET_LABEL"],
+  }),
+  {
+    getLabel,
+  }
+)(React.memo(LabelListPage));
