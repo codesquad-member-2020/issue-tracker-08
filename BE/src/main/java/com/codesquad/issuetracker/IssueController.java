@@ -29,6 +29,7 @@ public class IssueController {
                 .labels(Arrays.asList(
                         new Label("BE", "BE 이슈", "#0366d6", true),
                         new Label("FE", "FE 이슈", "#72c2c9", false)))
+                .milestone(new Milestone(2L, "BE 1주차", "BE 1주차 계획", null, null, true, null, null, null, null))
                 .createdAt(LocalDateTime.now())
                 .title("[BE] GitHub OAuth")
                 .numberOfComment(1)
@@ -44,6 +45,7 @@ public class IssueController {
                 .labels(Arrays.asList(
                         new Label("FE 리뷰 요청","FE 리뷰 요청 용 라벨", "#d4c5f9", true),
                         new Label("Feature", "기능 구현", "#f7b4b6", false)))
+                .milestone(new Milestone(1L, "FE 1주차", "FE 1주차 마일스톤", null, null, true, null, null, null, null))
                 .createdAt(LocalDateTime.parse("2020-06-07 17:59:32", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .title("[FE] 컨벤션 논의")
                 .numberOfComment(3)

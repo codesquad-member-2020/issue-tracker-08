@@ -36,7 +36,8 @@ public class Milestone {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Issue> issues;
 
-    private int achievementRate;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer achievementRate;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer numberOfOpenIssue;
