@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -13,6 +13,22 @@ import DatePickers from "./DatePickers";
 const CreateMilestonePage = ({ title, date, description }) => {
   let history = useHistory();
   const { state } = useParams();
+  const [titleContent, setTitleContent] = useState((title = ""));
+  const [dateContent, setDateContent] = useState((date = "연도-월-일"));
+  const [descriptionContent, setDescriptionContent] = useState((description = "hi"));
+
+  const onSetTitle = (e) => {
+    setTitleContent(e.target.value);
+  };
+
+  const onSetDescription = (e) => {
+    setDescriptionContent(e.target.value);
+  };
+
+  const onCreateMilestone = () => {
+    history.push(`/MilestonePage`);
+  };
+
   return (
     <>
       <Header />
@@ -31,11 +47,11 @@ const CreateMilestonePage = ({ title, date, description }) => {
             )}
           </InfoWrapper>
           <Content>
-            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" value={title}></PersonalInputBox>
+            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" onChange={onSetTitle}></PersonalInputBox>
             <Text fontWeight="bold">Due date (optional)</Text>
             <DatePickers defaultValue={date || "연도-월-일"}></DatePickers>
             <Text fontWeight="bold">Description (optional)</Text>
-            <DescriptionBox value={description} />
+            <DescriptionBox onChange={onSetDescription} />
           </Content>
           <ButtonWrapper>
             {state === "isEdit" ? (
@@ -49,7 +65,7 @@ const CreateMilestonePage = ({ title, date, description }) => {
                 <Button onClick={() => history.push(`/MilestonePage`)}>Save changes</Button>
               </>
             ) : (
-              <Button onClick={() => history.push(`/MilestonePage`)}>Create milestone</Button>
+              <Button onClick={onCreateMilestone}>Create milestone</Button>
             )}
           </ButtonWrapper>
         </ContentWrapper>
