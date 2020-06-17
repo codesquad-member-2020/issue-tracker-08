@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
@@ -9,16 +10,51 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import Milestone from "@MilestonePage/Milestone/Milestone";
 import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
+import { getMilestone } from "@Modules/milestone";
 
-const MilestonePage = () => {
+const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
-  const MilestoneList = (
+  const openCount = !loadingMilestone && milestones && milestones.numberOfOpenMilestone;
+  const closeCount = !loadingMilestone && milestones && milestones.numberOfClosedMilestone;
+
+  const [isOpenView, setIsOpenView] = useState(true);
+  const open = () => {
+    setIsOpenView(true);
+  };
+  const close = () => {
+    setIsOpenView(false);
+  };
+
+  const MilestoneOpenList = () => (
     <>
-      <Milestone title="FE 1주차" date="June 12, 2020"></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
-      <Milestone title="BE 1주차" date="June 12, 2020" description="설명입니다."></Milestone>
+      {!loadingMilestone &&
+        milestones &&
+        milestones.milestones
+          .filter((milestone) => milestone.isOpen)
+          .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
     </>
   );
+
+  const MilestoneCloseList = () => (
+    <>
+      {!loadingMilestone &&
+        milestones &&
+        milestones.milestones
+          .filter((milestone) => !milestone.isOpen)
+          .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
+    </>
+  );
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getMilestone();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getMilestone]);
 
   return (
     <>
@@ -29,7 +65,16 @@ const MilestonePage = () => {
           <Button onClick={() => history.push(`/CreateMilestonePage/isCreate`)}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<MilestoneHeader openCount={5} closeCount={3} />} tableList={MilestoneList} />
+      <Table
+        tableHeader={<MilestoneHeader openCount={openCount} closeCount={closeCount} open={open} close={close} />}
+        tableList={
+          isOpenView ? (
+            <MilestoneOpenList milestones={milestones} loadingMilestone={loadingMilestone} />
+          ) : (
+            <MilestoneCloseList milestones={milestones} loadingMilestone={loadingMilestone} />
+          )
+        }
+      />
     </>
   );
 };
@@ -49,4 +94,12 @@ const NavBar = styled.nav`
   align-items: center;
 `;
 
-export default MilestonePage;
+export default connect(
+  ({ milestone, loading }) => ({
+    milestones: milestone.milestones,
+    loadingMilestone: loading["milestone/GET_MILESTONE"],
+  }),
+  {
+    getMilestone,
+  }
+)(MilestonePage);
