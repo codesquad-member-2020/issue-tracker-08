@@ -74,7 +74,8 @@ public class IssueController {
         List<Milestone> milestones = new ArrayList<>();
         milestones.add(new Milestone(1L, "FE 1주차", "FE 1주차 마일스톤", LocalDateTime.parse("2020-06-20 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LocalDateTime.now(), true, null, 68, 8, 17));
         milestones.add(new Milestone(2L, "BE 1주차", "BE 1주차 계획",  LocalDateTime.parse("2020-06-13 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LocalDateTime.now().minusDays(1), true, null, 0, 1, 0));
-        return new MilestoneBoard(milestones.size(), 1, milestones);
+        milestones.add(new Milestone(3L, "TEAM 1주차", "전반적인 API 의논",  LocalDateTime.parse("2020-06-20 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LocalDateTime.parse("2020-06-17 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), true, null, 0, 1, 0));
+        return new MilestoneBoard(2, 1, milestones);
     }
 
     @GetMapping("/milestones/{milestone_id}/issues")
