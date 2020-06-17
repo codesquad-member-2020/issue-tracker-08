@@ -48,7 +48,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
           <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={<IssueList issues={issues} loadingIssue={loadingIssue} />} />
+      <Table tableHeader={<IssueListHeader />} tableList={<IssueList />} />
     </>
   );
 };
