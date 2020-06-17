@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
@@ -12,15 +12,21 @@ import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getLabel } from "@Modules/label";
 
-const LabelListPage = () => {
+const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
 
-  const labelList = (
-    <>
-      <Label></Label>
-      <Label></Label>
-    </>
-  );
+  const LabelList = () => <>{!loadingLabel && labels && labels.map((label) => <Label key={label.name} label={label} />)}</>;
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getLabel();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getLabel]);
 
   return (
     <>
@@ -32,7 +38,7 @@ const LabelListPage = () => {
         </NavBar>
       </NavBarWrap>
       {isOpenNewLabel && <CreateLabel />}
-      <Table tableHeader={<LabelListHeader count={2} />} tableList={labelList} />
+      <Table tableHeader={<LabelListHeader count={2} />} tableList={<LabelList />} />
     </>
   );
 };
