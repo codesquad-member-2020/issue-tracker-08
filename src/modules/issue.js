@@ -15,7 +15,7 @@ const issue = handleActions(
   {
     [GET_ISSUE_SUCCESS]: (state, action) => ({
       ...state,
-      issues: action.payload,
+      issues: action.payload.issues,
     }),
   },
   initialState
