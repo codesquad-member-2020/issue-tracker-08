@@ -50,7 +50,6 @@ const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
           </ButtonWrapper>
         </Wrapper>
       )}
-      {/* {isOpenEditLabel && <CreateLabel />} */}
     </>
   );
 };
