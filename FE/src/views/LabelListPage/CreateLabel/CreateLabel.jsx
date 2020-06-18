@@ -9,41 +9,41 @@ import { isDark, randomColor } from "@/lib/getRandomColor";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const CreateLabel = () => {
-  const [color, setColor] = useState(randomColor);
-  const [bDark, setBDark] = useState(isDark);
+const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) => {
+  const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
+  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
 
   const colorReset = () => {
-    setColor(randomColor);
+    setbackgroundColor(randomColor);
     setBDark(isDark);
   };
 
   return (
     <>
       <Wrapper>
-        <Contents>
+        <Contents isEdit={isEdit}>
           <BadgeWrapper>
-            <Badge big backgroundColor={color} color={bDark ? "white" : "black"} style={{ display: "inline-block" }}>
-              Label preview
+            <Badge big backgroundColor={backgroundColor} color={isBackDark ? "white" : "black"} style={{ display: "inline-block" }}>
+              {name ? name : "Label preview"}
             </Badge>
           </BadgeWrapper>
           <LabelInputWrapper>
-            <PersonalInputBox title="Label name" />
-            <PersonalInputBox title="Description" widthSize="320px" />
+            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} />
+            <PersonalInputBox title="Description" placeholder="Description (optional)" value={description ? description : ""} widthSize="320px" />
             <ColorBoxWrapper>
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
-                <ColorResetButton onClick={colorReset} backgroundColor={color}>
-                  <CachedRoundedIcon fontSize="small" style={{ color: bDark ? "white" : "black" }} />
+                <ColorResetButton onClick={colorReset} backgroundColor={backgroundColor}>
+                  <CachedRoundedIcon fontSize="small" style={{ color: isBackDark ? "white" : "black" }} />
                 </ColorResetButton>
-                <PersonalInputBox widthSize="80px" value={color} />
+                <PersonalInputBox widthSize="80px" value={backgroundColor} />
               </ColorInputBoxWrapper>
             </ColorBoxWrapper>
             <BurrontWrapper>
               <Button color="black" backgroundColor="white">
                 Cancel
               </Button>
-              <Button disabled>Create Label</Button>
+              <Button disabled>{isEdit ? "Save Changes" : "Create Label"}</Button>
             </BurrontWrapper>
           </LabelInputWrapper>
         </Contents>
@@ -59,12 +59,12 @@ const Wrapper = styled.div`
 `;
 
 const Contents = styled.form`
-  width: 65%;
+  width: ${({ isEdit }) => (isEdit ? "100%" : "65%")};
   max-width: 1000px;
   height: 150px;
   padding: 16px;
   border-radius: 3px;
-  background-color: ${({ theme }) => theme.colors.gray1};
+  background-color: ${({ theme, isEdit }) => (isEdit ? theme.colors.white : theme.colors.gray1)};
   border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
