@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholder }) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const onChangeValue = ({ target }) => {
-    setInputValue(target.value);
-  };
-
+const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholder, onChange }) => {
   return (
     <>
       <Wrap>
@@ -21,7 +15,7 @@ const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholde
             defaultValue={value}
             backgroundColor={backgroundColor}
             placeholder={placeholder}
-            onChange={onChangeValue}
+            onChange={onChange}
           />
         ) : (
           <InputBox type="text" widthSize={widthSize} backgroundColor={backgroundColor} placeholder={placeholder} />
