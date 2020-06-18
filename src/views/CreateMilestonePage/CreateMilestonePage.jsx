@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
@@ -9,13 +10,29 @@ import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
+import { getMilestoneDetail } from "@Modules/milestone";
 
-const CreateMilestonePage = ({ title, date, description }) => {
+const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMilestoneDetail }) => {
   let history = useHistory();
-  const { state } = useParams();
-  const [titleContent, setTitleContent] = useState((title = ""));
-  const [dateContent, setDateContent] = useState((date = "연도-월-일"));
-  const [descriptionContent, setDescriptionContent] = useState((description = "hi"));
+  const { milestoneId } = useParams();
+
+  console.log(milestoneId);
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getMilestoneDetail();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getMilestoneDetail]);
+
+  !loadingMilestoneDetail && console.log(milestoneDetail);
+
+  const [titleContent, setTitleContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.title);
+  const [dateContent, setDateContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.dueDate);
+  const [descriptionContent, setDescriptionContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.description);
 
   const onSetTitle = (e) => {
     setTitleContent(e.target.value);
@@ -35,7 +52,7 @@ const CreateMilestonePage = ({ title, date, description }) => {
       <Wrapper>
         <ContentWrapper>
           <InfoWrapper>
-            {state === "isEdit" ? (
+            {milestoneId ? (
               <NavigationButton isMilestone />
             ) : (
               <>
@@ -47,14 +64,16 @@ const CreateMilestonePage = ({ title, date, description }) => {
             )}
           </InfoWrapper>
           <Content>
-            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" onChange={onSetTitle}></PersonalInputBox>
+            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" onChange={onSetTitle}>
+              {titleContent}
+            </PersonalInputBox>
             <Text fontWeight="bold">Due date (optional)</Text>
-            <DatePickers defaultValue={date || "연도-월-일"}></DatePickers>
+            <DatePickers defaultValue={dateContent || "연도-월-일"}></DatePickers>
             <Text fontWeight="bold">Description (optional)</Text>
-            <DescriptionBox onChange={onSetDescription} />
+            <DescriptionBox onChange={onSetDescription}>{descriptionContent}</DescriptionBox>
           </Content>
           <ButtonWrapper>
-            {state === "isEdit" ? (
+            {milestoneId ? (
               <>
                 <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
                   Cancel
@@ -127,4 +146,12 @@ const ButtonWrapper = styled.div`
   padding: 20px 0;
 `;
 
-export default CreateMilestonePage;
+export default connect(
+  ({ milestone, loading }) => ({
+    milestoneDetail: milestone.milestoneDetail,
+    loadingMilestoneDetail: loading["milestone/GET_MILESTONE_DETAIL"],
+  }),
+  {
+    getMilestoneDetail,
+  }
+)(CreateMilestonePage);
