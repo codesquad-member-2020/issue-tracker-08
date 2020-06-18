@@ -4,3 +4,5 @@ import { API_URL } from "@Constants/url";
 export const getIssue = () => axios.get(`${API_URL.issue}`);
 
 export const getLabel = () => axios.get(`${API_URL.label}`);
+
+export const deleteLabel = (labelName) => axios.delete(`${API_URL.label}${labelName}`);
