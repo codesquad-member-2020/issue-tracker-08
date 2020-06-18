@@ -12,10 +12,15 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) => {
   const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
   const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
+  const [inputName, setInputName] = useState(name ? name : "");
 
   const colorReset = () => {
     setbackgroundColor(randomColor);
     setBDark(isDark);
+  };
+
+  const onChangeName = ({ target }) => {
+    setInputName(target.value);
   };
 
   return (
@@ -24,11 +29,11 @@ const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) =
         <Contents isEdit={isEdit}>
           <BadgeWrapper>
             <Badge big backgroundColor={backgroundColor} color={isBackDark ? "white" : "black"} style={{ display: "inline-block" }}>
-              {name ? name : "Label preview"}
+              {inputName ? inputName : "Label preview"}
             </Badge>
           </BadgeWrapper>
           <LabelInputWrapper>
-            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} />
+            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} />
             <PersonalInputBox title="Description" placeholder="Description (optional)" value={description ? description : ""} widthSize="320px" />
             <ColorBoxWrapper>
               <Text children="Color" fontWeight="bold" />
