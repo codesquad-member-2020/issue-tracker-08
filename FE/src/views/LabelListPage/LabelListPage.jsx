@@ -40,7 +40,7 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
         </NavBar>
       </NavBarWrap>
       {isOpenNewLabel && <CreateLabel />}
-      <Table tableHeader={<LabelListHeader count={2} />} tableList={<LabelList />} />
+      <Table tableHeader={<LabelListHeader count={!loadingLabel && labels && labels.length} />} tableList={<LabelList />} />
     </>
   );
 };
