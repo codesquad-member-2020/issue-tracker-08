@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.comment.domain;
 
 import com.codesquad.issuetracker.issue.domain.KeyOfUserAndIssue;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,12 +12,13 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Comment {
 
     @EmbeddedId
     private CommentId id;
 
-    @EmbeddedId
+    @Embedded
     private KeyOfUserAndIssue commentId;
 
     private String content;
