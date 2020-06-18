@@ -41,7 +41,7 @@ const Milestone = ({ milestone }) => {
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/${milestone.id}`)}>
               Edit
             </Text>
             <Text color="blue" fontSize="sm" isClick>
