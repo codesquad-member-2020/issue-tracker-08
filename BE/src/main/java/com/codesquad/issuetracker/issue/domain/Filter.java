@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class Filter {
 
-    private boolean isOpen;
+    private Boolean isOpen = true;
 
     private String author;
 
