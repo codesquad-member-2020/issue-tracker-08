@@ -15,6 +15,8 @@ import { getLabel } from "@Modules/label";
 const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
 
+  const newLabelOpenHandler = () => setIsOpenNewLabel(!isOpenNewLabel);
+
   const LabelList = () => <>{!loadingLabel && labels && labels.map((label) => <Label key={label.name} label={label} />)}</>;
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
       <NavBarWrap>
         <NavBar>
           <NavigationButton isLabel />
-          <Button onClick={() => setIsOpenNewLabel(!isOpenNewLabel)}>New Label</Button>
+          <Button onClick={newLabelOpenHandler}>New Label</Button>
         </NavBar>
       </NavBarWrap>
       {isOpenNewLabel && <CreateLabel />}
