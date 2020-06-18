@@ -14,10 +14,14 @@ spring:
     show-sql: true
 
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
     # MySQL 을 사용할 것.
     database: mysql
+
+    properties:
+      hibernate:
+        format_sql: true
 
 github:
   client-id: e75bd1cffaa68832aac4
