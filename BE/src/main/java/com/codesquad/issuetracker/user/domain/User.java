@@ -2,24 +2,21 @@ package com.codesquad.issuetracker.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @ToString
 @Entity
 @Setter
+@NoArgsConstructor
 public class User {
 
-    @JsonProperty("id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private UserId id;
 
     @JsonProperty("login")
     private String nickname;
