@@ -62,7 +62,7 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
       <NavBarWrap>
         <NavBar>
           <NavigationButton isMilestone />
-          <Button onClick={() => history.push(`/CreateMilestonePage/isCreate`)}>New Milestone</Button>
+          <Button onClick={() => history.push(`/CreateMilestonePage`)}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
       <Table
