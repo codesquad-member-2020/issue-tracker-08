@@ -27,7 +27,7 @@ const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
   return (
     <>
       {isOpenEditLabel ? (
-        <CreateLabel isEdit defaultColor={color} isColorDark={isFontColorBlack} name={name} description={description} />
+        <CreateLabel isEdit close={editLabelOpenHandler} defaultColor={color} isColorDark={isFontColorBlack} name={name} description={description} />
       ) : (
         <Wrapper>
           <BadgeWrapper>
