@@ -24,5 +24,5 @@ public class  Milestone extends BaseTimeEntity {
 
     private String description;
 
-    private boolean isOpen;
+    private boolean isOpen = true;
 }

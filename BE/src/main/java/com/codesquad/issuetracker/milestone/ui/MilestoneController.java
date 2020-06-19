@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.milestone.ui;
 
+import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.MileStoneRepository;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/milestones")
 public class MilestoneController {
 
-    private final MileStoneRepository mileStoneRepository;
+    private final MilestoneService milestoneService;
 
     @PostMapping("")
     public ResponseEntity<String> createMilestone(@RequestBody Milestone milestone) {
-        Milestone milestone1 = mileStoneRepository.save(milestone);
-        log.info("milestone : {}", milestone1);
+        milestoneService.createMilestone(milestone);
         return new ResponseEntity<>("마일스톤 생성 성공", HttpStatus.CREATED);
     }
 }
