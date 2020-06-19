@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import SubjectIcon from "@material-ui/icons/Subject";
+import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
 const Header = () => {
+  let history = useHistory();
   return (
     <>
       <Wrapper>
         <HeaderIcon />
-        <Text color="white" fontWeight="bold" as="h2">
+        <Text color="white" fontWeight="bold" isClick as="h2" onClick={() => history.push(`/IssueListPage`)}>
           ISSUES
         </Text>
       </Wrapper>

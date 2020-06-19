@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import TimeAgo from "react-timeago";
@@ -7,10 +8,19 @@ import koreaStrings from "react-timeago/lib/language-strings/ko";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 import Text from "@Style/Text";
+import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const IssueList = () => {
+const Issue = ({ issue }) => {
+  let history = useHistory();
+
+  const badgeList = issue.labels.map((label) => (
+    <Badge key={label.name} backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
+      {label.name}
+    </Badge>
+  ));
+
   return (
     <>
       <Wrapper>
@@ -19,18 +29,20 @@ const IssueList = () => {
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
-          <Title>
-            <Text fontWeight="bold" as="a">
-              목록 보기 구현
+          <Title onClick={() => history.push(`/IssueDetailPage/${issue.id}`)}>
+            <Text fontWeight="bold" isClick as="a">
+              {issue.title}
             </Text>
-            <Badge>bug</Badge>
+            {badgeList}
           </Title>
           <Info>
-            <Text fontSize="sm">#2 opened</Text>
             <Text fontSize="sm">
-              <TimeAgo date="May 25, 2020" formatter={formatter} />{" "}
+              #{issue.id} {issue.isOpen ? "opened" : "closed"}
             </Text>
-            <Text fontSize="sm">by choisohyun</Text>
+            <Text fontSize="sm">
+              <TimeAgo date={issue.createdAt} formatter={formatter} />
+            </Text>
+            <Text fontSize="sm">by {issue.author.nickname}</Text>
             <Text fontSize="sm">
               <Milestone>
                 <EventNoteIcon style={{ fontSize: 15 }} />
@@ -67,18 +79,6 @@ const Title = styled.div`
   margin-bottom: 5px;
 `;
 
-const Badge = styled.span`
-  background-color: ${({ theme }) => theme.colors.green};
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: 2px;
-  height: 20px;
-  padding: 0.15em 4px;
-  margin-left: 4px;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  line-height: ${({ theme }) => theme.fontSizes.sm};
-`;
-
 const Info = styled.div`
   display: flex;
   align-items: center;
@@ -96,4 +96,4 @@ const Milestone = styled.span`
   }
 `;
 
-export default IssueList;
+export default Issue;

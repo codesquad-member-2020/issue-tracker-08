@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -10,14 +12,23 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
+import { getIssue } from "@Modules/issue";
 
-const IssueListPage = (props) => {
-  const issueList = (
-    <>
-      <Issue></Issue>
-      <Issue></Issue>
-    </>
-  );
+const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
+  let history = useHistory();
+
+  const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getIssue();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getIssue]);
 
   return (
     <>
@@ -34,10 +45,10 @@ const IssueListPage = (props) => {
             </SearchBar>
           </SearchBarWrapper>
           <NavigationButton />
-          <Button onClick={() => props.history.push(`/CreateIssuePage`)}>New Issue</Button>
+          <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={issueList} />
+      <Table tableHeader={<IssueListHeader />} tableList={<IssueList issues={issues} loadingIssue={loadingIssue} />} />
     </>
   );
 };
@@ -50,6 +61,7 @@ const NavBarWrap = styled.nav`
 
 const NavBar = styled.nav`
   width: 65%;
+  max-width: 1000px;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -93,6 +105,12 @@ const SearchInput = styled.input`
   outline: none;
   height: inherit;
   width: inherit;
+  &:focus {
+    outline: none;
+    background-color: white;
+    border-color: ${({ theme }) => theme.colors.blue};
+    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
+  }
 `;
 
 const SearchInputIcon = styled(SearchIcon)`
@@ -105,7 +123,15 @@ const SearchInputIcon = styled(SearchIcon)`
   pointer-events: none;
 `;
 
-export default IssueListPage;
+export default connect(
+  ({ issue, loading }) => ({
+    issues: issue.issues,
+    loadingIssue: loading["issue/GET_ISSUE"],
+  }),
+  {
+    getIssue,
+  }
+)(IssueListPage);
 
 const labels = [
   {
