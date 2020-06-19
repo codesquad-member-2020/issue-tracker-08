@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class  Milestone extends BaseTimeEntity {
     @EmbeddedId
     private MilestoneId id;
 
+    @Column(name = "title", unique = true)
     private String title;
 
     private LocalDate dueDate;
