@@ -48,6 +48,7 @@ public class IssueController {
                 .assignees(assignees)
                 .labels(labels)
                 .milestoneId(new MilestoneId(requestIssue.getMilestoneId()))
+                .isOpen(true)
                 .build();
 
         issue = issueRepository.save(issue);
