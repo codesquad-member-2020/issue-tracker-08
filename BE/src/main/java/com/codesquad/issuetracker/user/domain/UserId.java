@@ -1,20 +1,18 @@
 package com.codesquad.issuetracker.user.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class UserId implements Serializable {
 
+    @Column(name = "user_id")
     private Long userId;
 }

@@ -1,20 +1,18 @@
 package com.codesquad.issuetracker.comment.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Embeddable
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class CommentId implements Serializable {
 
+    @Column(name = "comment_id")
     private Long commentId;
 }

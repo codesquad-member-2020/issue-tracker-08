@@ -1,21 +1,17 @@
 package com.codesquad.issuetracker.issue.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class IssueId implements Serializable {
 
+    @Column(name = "issue_id")
     private Long issueId;
 }
