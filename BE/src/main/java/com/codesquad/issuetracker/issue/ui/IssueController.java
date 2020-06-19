@@ -1,5 +1,7 @@
 package com.codesquad.issuetracker.issue.ui;
 
+import com.codesquad.issuetracker.issue.application.IssueRequest;
+import com.codesquad.issuetracker.issue.application.IssueService;
 import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/issues")
 public class IssueController {
 
-    private final IssueRepository issueRepository;
+    private final IssueService issueService;
 
     private final UserRepository userRepository;
 
@@ -31,28 +33,15 @@ public class IssueController {
 
     @PostMapping("")
     public Issue createIssue(@RequestBody IssueDTO requestIssue) {
-        IssueId newIssueId = new IssueId(issueRepository.count() + 1);
+        String title = requestIssue.getTitle();
+        String content = requestIssue.getContent();
 
-        Set<UserId> assignees = requestIssue.getAssignees().stream()
-                .map(UserId::new)
-                .collect(Collectors.toSet());
+        Set<UserId> assignees = requestIssue.getAssignees().stream().map(UserId::new).collect(Collectors.toSet());
+        Set<LabelId> labels = requestIssue.getLabels().stream().map(LabelId::new).collect(Collectors.toSet());
 
-        Set<LabelId> labels = requestIssue.getLabels().stream()
-                .map(LabelId::new)
-                .collect(Collectors.toSet());
+        MilestoneId milestoneId = new MilestoneId(requestIssue.getMilestoneId());
 
-        Issue issue = Issue.builder()
-                .id(newIssueId)
-                .title(requestIssue.getTitle())
-                .content(requestIssue.getContent())
-                .assignees(assignees)
-                .labels(labels)
-                .milestoneId(new MilestoneId(requestIssue.getMilestoneId()))
-                .isOpen(true)
-                .build();
-
-        issue = issueRepository.save(issue);
-        return issue;
+        return issueService.createIssue(new IssueRequest(title, content, assignees, labels, milestoneId));
     }
 
     @PatchMapping("")

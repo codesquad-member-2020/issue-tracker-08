@@ -8,7 +8,6 @@ import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
