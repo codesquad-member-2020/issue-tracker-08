@@ -77,7 +77,9 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
               <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled>{isEdit ? "Save Changes" : "Create Label"}</Button>
+              <Button disabled={initLabelName === inputName} onClick={createHandler}>
+                {isEdit ? "Save Changes" : "Create Label"}
+              </Button>
             </BurrontWrapper>
           </LabelInputWrapper>
         </Contents>
