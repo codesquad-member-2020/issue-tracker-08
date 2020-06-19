@@ -1,44 +1,59 @@
 package com.codesquad.issuetracker.issue.domain;
 
-import com.codesquad.issuetracker.label.domain.Label;
-import com.codesquad.issuetracker.milestone.domain.Milestone;
-import com.codesquad.issuetracker.user.domain.User;
-import lombok.Getter;
-import lombok.Setter;
+import com.codesquad.issuetracker.comment.domain.CommentId;
+import com.codesquad.issuetracker.common.BaseTimeEntity;
+import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.domain.UserId;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
-@Setter
-public class Issue {
+@Table(name = "issue")
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@ToString
+public class Issue extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Milestone milestone;
-
-    @ManyToOne
-    private User author;
-
-    @ManyToMany
-    private List<User> assignees;
-
-    @ManyToMany
-    private List<Label> labels;
-
-    @OneToMany
-    private List<Comment> comments;
-
-    private LocalDateTime createdAt;
+    @EmbeddedId
+    private IssueId id;
 
     private String title;
 
     private String content;
 
     private boolean isOpen;
+
+    @Embedded
+    private UserId authorId;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "assigner",
+            joinColumns = @JoinColumn(name = "issue_id")
+    )
+    private Set<UserId> assignees = new HashSet<>();
+
+    @Embedded
+    private MilestoneId milestoneId;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "tag",
+            joinColumns = @JoinColumn(name = "issue_id")
+    )
+    private Set<LabelId> labels = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(
+            name = "comment",
+            joinColumns = @JoinColumn(name = "issue_id")
+    )
+    private Set<CommentId> comments = new HashSet<>();
 }
