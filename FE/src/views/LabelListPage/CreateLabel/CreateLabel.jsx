@@ -10,9 +10,11 @@ import { isDark, randomColor } from "@/lib/getRandomColor";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
+  const initLabelName = name ? name : "";
+
   const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
   const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
-  const [inputName, setInputName] = useState(name ? name : "");
+  const [inputName, setInputName] = useState(initLabelName);
   const [inputDesc, setInputDesc] = useState(description ? description : "");
 
   const colorReset = () => {
