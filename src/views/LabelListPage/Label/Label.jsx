@@ -1,33 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 
-const Label = () => {
+import { deleteLabel } from "@Modules/label";
+import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
+
+const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
+  const [isOpenEditLabel, setIsOpenEditLabel] = useState(false);
+
+  const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
+
+  const deleteHandler = () => {
+    const fn = async () => {
+      try {
+        await deleteLabel(name);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
+
   return (
     <>
-      <Wrapper>
-        <BadgeWrapper>
-          <Badge big color="white" backgroundColor="red" style={{ display: "inline-block" }}>
-            bug
-          </Badge>
-        </BadgeWrapper>
-        <TextWrapper>
-          <Text color="gray4" lineHeight="30px">
-            Something isn't working
-          </Text>
-        </TextWrapper>
-        <ButtonWrapper>
-          <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white">
-            Edit
-          </Button>
-          <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white">
-            Delete
-          </Button>
-        </ButtonWrapper>
-      </Wrapper>
+      {isOpenEditLabel ? (
+        <CreateLabel isEdit close={editLabelOpenHandler} defaultColor={color} isColorDark={isFontColorBlack} name={name} description={description} />
+      ) : (
+        <Wrapper>
+          <BadgeWrapper>
+            <Badge big color={isFontColorBlack ? "white" : "black"} backgroundColor={color} style={{ display: "inline-block" }}>
+              {name}
+            </Badge>
+          </BadgeWrapper>
+          <TextWrapper>
+            <Text color="gray4" lineHeight="30px">
+              {description}
+            </Text>
+          </TextWrapper>
+          <ButtonWrapper>
+            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={editLabelOpenHandler}>
+              Edit
+            </Button>
+            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={deleteHandler}>
+              Delete
+            </Button>
+          </ButtonWrapper>
+        </Wrapper>
+      )}
     </>
   );
 };
@@ -52,4 +74,4 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export default Label;
+export default React.memo(Label);
