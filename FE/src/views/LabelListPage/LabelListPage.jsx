@@ -39,7 +39,7 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
           <Button onClick={newLabelOpenHandler}>New Label</Button>
         </NavBar>
       </NavBarWrap>
-      {isOpenNewLabel && <CreateLabel />}
+      {isOpenNewLabel && <CreateLabel close={newLabelOpenHandler} />}
       <Table tableHeader={<LabelListHeader count={!loadingLabel && labels && labels.length} />} tableList={<LabelList />} />
     </>
   );
