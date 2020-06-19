@@ -5,8 +5,8 @@ import CachedRoundedIcon from "@material-ui/icons/CachedRounded";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 import Text from "@Style/Text";
-import { isDark, randomColor } from "@/lib/getRandomColor";
 
+import { isDark, randomColor } from "@/lib/getRandomColor";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
