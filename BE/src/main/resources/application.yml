@@ -14,7 +14,7 @@ spring:
     show-sql: true
 
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
 
     # MySQL 을 사용할 것.
     database: mysql
@@ -22,6 +22,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+    open-in-view: false
 
 github:
   client-id: e75bd1cffaa68832aac4
