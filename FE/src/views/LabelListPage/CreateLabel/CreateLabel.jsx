@@ -7,6 +7,7 @@ import Button from "@Style/Button";
 import Text from "@Style/Text";
 
 import { isDark, randomColor } from "@/lib/getRandomColor";
+import { createLabel } from "@Modules/label";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
@@ -17,17 +18,31 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
   const [inputName, setInputName] = useState(initLabelName);
   const [inputDesc, setInputDesc] = useState(description ? description : "");
 
+  const params = {
+    name: inputName,
+    description: inputDesc,
+    color: backgroundColor,
+  };
+
   const colorReset = () => {
     setbackgroundColor(randomColor);
     setBDark(isDark);
   };
 
-  const onChangeName = ({ target }) => {
-    setInputName(target.value);
+  const onChangeName = ({ target }) => setInputName(target.value);
 
   const onChangeDesc = ({ target }) => setInputDesc(target.value);
 
   const createHandler = () => {
+    const fn = async () => {
+      try {
+        await createLabel(params);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fn();
+
     close();
   };
 
