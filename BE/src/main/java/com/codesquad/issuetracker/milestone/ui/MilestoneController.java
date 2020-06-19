@@ -3,15 +3,13 @@ package com.codesquad.issuetracker.milestone.ui;
 import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
+import com.codesquad.issuetracker.milestone.domain.MilestoneBoard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,6 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MilestoneController {
 
     private final MilestoneService milestoneService;
+
+    @GetMapping("")
+    public ResponseEntity<MilestoneBoard> listMilestone() {
+        return new ResponseEntity<>(milestoneService.getAllMilestones(), HttpStatus.OK);
+    }
 
     @PostMapping("")
     public ResponseEntity<String> createMilestone(@RequestBody Milestone milestone) {
