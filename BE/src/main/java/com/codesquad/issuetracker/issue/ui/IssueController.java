@@ -1,23 +1,57 @@
 package com.codesquad.issuetracker.issue.ui;
 
-import com.codesquad.issuetracker.issue.domain.Filter;
-import com.codesquad.issuetracker.issue.domain.IssueBoard;
+import com.codesquad.issuetracker.issue.domain.*;
+import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.domain.UserId;
+import com.codesquad.issuetracker.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/issues")
 public class IssueController {
 
+    private final IssueRepository issueRepository;
+
+    private final UserRepository userRepository;
+
     @GetMapping("")
-    public IssueBoard listIssue(Filter filter) {
+    public List<Issue> listIssue(Filter filter) {
+        log.info("filter: {}", filter);
         return null;
     }
 
     @PostMapping("")
-    public IssueBoard createIssue() {
-        return null;
+    public Issue createIssue(@RequestBody IssueDTO requestIssue) {
+        IssueId newIssueId = new IssueId(issueRepository.count() + 1);
+
+        Set<UserId> assignees = requestIssue.getAssignees().stream()
+                .map(UserId::new)
+                .collect(Collectors.toSet());
+
+        Set<LabelId> labels = requestIssue.getLabels().stream()
+                .map(LabelId::new)
+                .collect(Collectors.toSet());
+
+        Issue issue = Issue.builder()
+                .id(newIssueId)
+                .title(requestIssue.getTitle())
+                .content(requestIssue.getContent())
+                .assignees(assignees)
+                .labels(labels)
+                .milestoneId(new MilestoneId(requestIssue.getMilestoneId()))
+                .build();
+
+        issue = issueRepository.save(issue);
+        return issue;
     }
 
     @PatchMapping("")
