@@ -23,16 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DatePickers = ({ defaultValue, onChange }) => {
+const DatePickers = ({ defaultValue }) => {
   const classes = useStyles();
-
-  const configureDate = (date) => {
-    const defaultDate = new Date(date);
-    const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(defaultDate);
-    const month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(defaultDate);
-    const day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(defaultDate);
-    return `${year}-${month}-${day}`;
-  };
 
   return (
     <>
@@ -40,8 +32,7 @@ const DatePickers = ({ defaultValue, onChange }) => {
         <TextField
           id="date"
           type="date"
-          defaultValue={defaultValue && configureDate(defaultValue)}
-          onChange={onChange}
+          defaultValue={defaultValue}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,

@@ -5,43 +5,37 @@ import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
-const Milestone = ({ milestone }) => {
+const Milestone = ({ title, date, description }) => {
   let history = useHistory();
-
-  const date = new Date(milestone.dueDate);
-  const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
-  const month = new Intl.DateTimeFormat("en", { month: "short" }).format(date);
-  const day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
-
   return (
     <>
       <Wrapper>
         <TitleWrapper>
           <Text fontSize="xl" isClick as="a">
-            {milestone.title}
+            {title}
           </Text>
           <DueDateWrapper color="gray4">
-            <CalendarTodayIcon fontSize="small" /> Due by {`${month} ${day}, ${year}`}
+            <CalendarTodayIcon fontSize="small" /> Due by {date}
           </DueDateWrapper>
-          <Text color="gray3">{milestone.description}</Text>
+          <Text color="gray3">{description}</Text>
         </TitleWrapper>
         <ProgressWrapper>
           <ProgressBar>
-            <Progress achievementRate={milestone.achievementRate}></Progress>
+            <Progress></Progress>
           </ProgressBar>
           <StatusBar>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.achievementRate}%</Text> complete
+              <Text>90%</Text> complete
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.numberOfOpenIssue}</Text> open
+              <Text>3</Text> open
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.numberOfClosedIssue}</Text> closed
+              <Text>28</Text> closed
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/${milestone.id}`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
               Edit
             </Text>
             <Text color="blue" fontSize="sm" isClick>
@@ -93,7 +87,7 @@ const ProgressBar = styled.div`
 `;
 
 const Progress = styled.div`
-  width: ${(props) => props.achievementRate}%;
+  width: 50%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.green};
   border-radius: 3px;
