@@ -9,7 +9,7 @@ import { isDark, randomColor } from "@/lib/getRandomColor";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) => {
+const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
   const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
   const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
   const [inputName, setInputName] = useState(name ? name : "");
@@ -21,6 +21,8 @@ const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) =
 
   const onChangeName = ({ target }) => {
     setInputName(target.value);
+  const createHandler = () => {
+    close();
   };
 
   return (
@@ -45,7 +47,7 @@ const CreateLabel = ({ isEdit, defaultColor, isColorDark, name, description }) =
               </ColorInputBoxWrapper>
             </ColorBoxWrapper>
             <BurrontWrapper>
-              <Button color="black" backgroundColor="white">
+              <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
               <Button disabled>{isEdit ? "Save Changes" : "Create Label"}</Button>
