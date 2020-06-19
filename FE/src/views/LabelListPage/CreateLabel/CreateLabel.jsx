@@ -13,6 +13,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
   const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
   const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
   const [inputName, setInputName] = useState(name ? name : "");
+  const [inputDesc, setInputDesc] = useState(description ? description : "");
 
   const colorReset = () => {
     setbackgroundColor(randomColor);
@@ -21,6 +22,9 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
 
   const onChangeName = ({ target }) => {
     setInputName(target.value);
+
+  const onChangeDesc = ({ target }) => setInputDesc(target.value);
+
   const createHandler = () => {
     close();
   };
@@ -36,7 +40,13 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
           </BadgeWrapper>
           <LabelInputWrapper>
             <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} />
-            <PersonalInputBox title="Description" placeholder="Description (optional)" value={description ? description : ""} widthSize="320px" />
+            <PersonalInputBox
+              title="Description"
+              placeholder="Description (optional)"
+              value={description ? description : ""}
+              onChange={onChangeDesc}
+              widthSize="320px"
+            />
             <ColorBoxWrapper>
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
