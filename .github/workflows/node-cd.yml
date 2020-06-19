@@ -5,7 +5,7 @@ name: CD with Node.js
 
 on:
   push:
-    branches: [ dev, master ]
+    branches: [ dev, master, feature_be/action ]
 
 env:
     PROJECT_NAME: issue-tracker-08
