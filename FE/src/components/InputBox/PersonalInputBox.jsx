@@ -3,13 +3,20 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholder }) => {
+const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholder, onChange }) => {
   return (
     <>
       <Wrap>
         <Text children={title} fontWeight="bold" />
         {value ? (
-          <InputBox type="text" widthSize={widthSize} value={value} backgroundColor={backgroundColor} placeholder={placeholder} readOnly />
+          <InputBox
+            type="text"
+            widthSize={widthSize}
+            defaultValue={value}
+            backgroundColor={backgroundColor}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
         ) : (
           <InputBox type="text" widthSize={widthSize} backgroundColor={backgroundColor} placeholder={placeholder} />
         )}

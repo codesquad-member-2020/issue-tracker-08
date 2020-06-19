@@ -5,45 +5,81 @@ import CachedRoundedIcon from "@material-ui/icons/CachedRounded";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 import Text from "@Style/Text";
-import { isDark, randomColor } from "@/lib/getRandomColor";
 
+import { isDark, randomColor } from "@/lib/getRandomColor";
+import { createLabel } from "@Modules/label";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const CreateLabel = () => {
-  const [color, setColor] = useState(randomColor);
-  const [bDark, setBDark] = useState(isDark);
+const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
+  const initLabelName = name ? name : "";
+
+  const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
+  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
+  const [inputName, setInputName] = useState(initLabelName);
+  const [inputDesc, setInputDesc] = useState(description ? description : "");
+
+  const params = {
+    name: inputName,
+    description: inputDesc,
+    color: backgroundColor,
+  };
 
   const colorReset = () => {
-    setColor(randomColor);
+    setbackgroundColor(randomColor);
     setBDark(isDark);
+  };
+
+  const onChangeName = ({ target }) => setInputName(target.value);
+
+  const onChangeDesc = ({ target }) => setInputDesc(target.value);
+
+  const createHandler = () => {
+    const fn = async () => {
+      try {
+        await createLabel(params);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fn();
+
+    close();
   };
 
   return (
     <>
       <Wrapper>
-        <Contents>
+        <Contents isEdit={isEdit}>
           <BadgeWrapper>
-            <Badge big backgroundColor={color} color={bDark ? "white" : "black"} style={{ display: "inline-block" }}>
-              Label preview
+            <Badge big backgroundColor={backgroundColor} color={isBackDark ? "white" : "black"} style={{ display: "inline-block" }}>
+              {inputName ? inputName : "Label preview"}
             </Badge>
           </BadgeWrapper>
           <LabelInputWrapper>
-            <PersonalInputBox title="Label name" />
-            <PersonalInputBox title="Description" widthSize="320px" />
+            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} />
+            <PersonalInputBox
+              title="Description"
+              placeholder="Description (optional)"
+              value={description ? description : ""}
+              onChange={onChangeDesc}
+              widthSize="320px"
+            />
             <ColorBoxWrapper>
               <Text children="Color" fontWeight="bold" />
               <ColorInputBoxWrapper>
-                <ColorResetButton onClick={colorReset} backgroundColor={color}>
-                  <CachedRoundedIcon fontSize="small" style={{ color: bDark ? "white" : "black" }} />
+                <ColorResetButton onClick={colorReset} backgroundColor={backgroundColor}>
+                  <CachedRoundedIcon fontSize="small" style={{ color: isBackDark ? "white" : "black" }} />
                 </ColorResetButton>
-                <PersonalInputBox widthSize="80px" value={color} />
+                <PersonalInputBox widthSize="80px" value={backgroundColor} />
               </ColorInputBoxWrapper>
             </ColorBoxWrapper>
             <BurrontWrapper>
-              <Button color="black" backgroundColor="white">
+              <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled>Create Label</Button>
+              <Button disabled={initLabelName === inputName} onClick={createHandler}>
+                {isEdit ? "Save Changes" : "Create Label"}
+              </Button>
             </BurrontWrapper>
           </LabelInputWrapper>
         </Contents>
@@ -59,12 +95,12 @@ const Wrapper = styled.div`
 `;
 
 const Contents = styled.form`
-  width: 65%;
+  width: ${({ isEdit }) => (isEdit ? "100%" : "65%")};
   max-width: 1000px;
   height: 150px;
   padding: 16px;
   border-radius: 3px;
-  background-color: ${({ theme }) => theme.colors.gray1};
+  background-color: ${({ theme, isEdit }) => (isEdit ? theme.colors.white : theme.colors.gray1)};
   border: 1px solid ${({ theme }) => theme.colors.gray2};
 `;
 
