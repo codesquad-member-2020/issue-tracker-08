@@ -18,7 +18,7 @@ const PersonalInputBox = ({ title, widthSize, value, backgroundColor, placeholde
             onChange={onChange}
           />
         ) : (
-          <InputBox type="text" widthSize={widthSize} backgroundColor={backgroundColor} placeholder={placeholder} />
+          <InputBox type="text" widthSize={widthSize} backgroundColor={backgroundColor} placeholder={placeholder} onChange={onChange} />
         )}
       </Wrap>
     </>
