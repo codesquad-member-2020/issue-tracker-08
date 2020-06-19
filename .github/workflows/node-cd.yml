@@ -37,7 +37,7 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: download dotenv
-      run: aws s3 cp s3://codesquad-ever/.env.production
+      run: aws s3 cp s3://codesquad-ever/.env.production .
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
