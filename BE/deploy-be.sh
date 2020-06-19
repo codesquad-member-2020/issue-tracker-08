@@ -19,4 +19,4 @@ else
 fi
 
 echo "> $JAR_PATH 배포"
-nohup java -jar $JAR_PATH &
+nohup java -jar -Dspring.profiles.active=production -Djasypt.encryptor.password=everjay $JAR_PATH &
