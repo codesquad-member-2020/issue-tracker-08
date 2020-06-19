@@ -68,11 +68,7 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
       <Table
         tableHeader={<MilestoneHeader openCount={openCount} closeCount={closeCount} open={open} close={close} />}
         tableList={
-          isOpenView ? (
-            <MilestoneOpenList milestones={milestones} loadingMilestone={loadingMilestone} />
-          ) : (
-            <MilestoneCloseList milestones={milestones} loadingMilestone={loadingMilestone} />
-          )
+          isOpenView ? <MilestoneOpenList loadingMilestone={loadingMilestone} /> : <MilestoneCloseList loadingMilestone={loadingMilestone} />
         }
       />
     </>

@@ -10,29 +10,51 @@ import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "./DatePickers";
-import { getMilestoneDetail } from "@Modules/milestone";
+import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
 const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMilestoneDetail }) => {
   let history = useHistory();
-  const { milestoneId } = useParams();
+  let { milestoneId } = useParams();
 
-  console.log(milestoneId);
   useEffect(() => {
     const fn = async () => {
       try {
-        await getMilestoneDetail();
+        await getMilestoneDetail(milestoneId);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    if (milestoneId) fn();
+  }, [getMilestoneDetail]);
+
+  const postHandler = (params) => {
+    const fn = async () => {
+      try {
+        await postMilestone(params);
       } catch (e) {
         console.log(e);
       }
     };
     fn();
-  }, [getMilestoneDetail]);
+  };
 
-  !loadingMilestoneDetail && console.log(milestoneDetail);
+  const putHandler = (params) => {
+    const fn = async () => {
+      try {
+        await putMilestone(milestoneId, params);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    if (milestoneId) fn();
+  };
 
   const [titleContent, setTitleContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.title);
   const [dateContent, setDateContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.dueDate);
   const [descriptionContent, setDescriptionContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.description);
+  // const [titleContent, setTitleContent] = useState("");
+  // const [dateContent, setDateContent] = useState("연도. 월. 일");
+  // const [descriptionContent, setDescriptionContent] = useState("");
 
   const onSetTitle = (e) => {
     setTitleContent(e.target.value);
@@ -42,53 +64,80 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
     setDescriptionContent(e.target.value);
   };
 
-  const onCreateMilestone = () => {
+  const onSetDate = (e) => {
+    setDateContent(e.target.value);
+  };
+
+  const onPassMilestonePage = () => {
     history.push(`/MilestonePage`);
+  };
+
+  const onCreateMilestone = () => {
+    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
+    console.log(params);
+    postHandler(params);
+    onPassMilestonePage();
+  };
+
+  const onSaveMilestone = () => {
+    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
+    console.log(params);
+    // putHandler(params);
+    onPassMilestonePage();
   };
 
   return (
     <>
       <Header />
-      <Wrapper>
-        <ContentWrapper>
-          <InfoWrapper>
-            {milestoneId ? (
-              <NavigationButton isMilestone />
-            ) : (
-              <>
-                <Text fontSize="xl" fontWeight="bold">
-                  New milestone
-                </Text>
-                <Text>Create a new milestone to help organize your issues and pull requests. Learn more about milestones and issues.</Text>
-              </>
-            )}
-          </InfoWrapper>
-          <Content>
-            <PersonalInputBox title="Title" widthSize="50%" backgroundColor="gray1" placeholder="Title" onChange={onSetTitle}>
-              {titleContent}
-            </PersonalInputBox>
-            <Text fontWeight="bold">Due date (optional)</Text>
-            <DatePickers defaultValue={dateContent || "연도-월-일"}></DatePickers>
-            <Text fontWeight="bold">Description (optional)</Text>
-            <DescriptionBox onChange={onSetDescription}>{descriptionContent}</DescriptionBox>
-          </Content>
-          <ButtonWrapper>
-            {milestoneId ? (
-              <>
-                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
-                  Cancel
+      {(!milestoneId || (!loadingMilestoneDetail && milestoneDetail)) && (
+        <Wrapper>
+          <ContentWrapper>
+            <InfoWrapper>
+              {milestoneId ? (
+                <NavigationButton isMilestone />
+              ) : (
+                <>
+                  <Text fontSize="xl" fontWeight="bold">
+                    New milestone
+                  </Text>
+                  <Text>Create a new milestone to help organize your issues and pull requests. Learn more about milestones and issues.</Text>
+                </>
+              )}
+            </InfoWrapper>
+            <Content>
+              <PersonalInputBox
+                title="Title"
+                widthSize="50%"
+                backgroundColor="gray1"
+                placeholder="Title"
+                value={milestoneId && milestoneDetail.title}
+                onChange={onSetTitle}
+              ></PersonalInputBox>
+              <Text fontWeight="bold">Due date (optional)</Text>
+              <DatePickers defaultValue={milestoneId && milestoneDetail.dueDate} onChange={onSetDate}></DatePickers>
+              <Text fontWeight="bold">Description (optional)</Text>
+              <DescriptionBox defaultValue={milestoneId && milestoneDetail.description} onChange={onSetDescription}></DescriptionBox>
+            </Content>
+            <ButtonWrapper>
+              {milestoneId ? (
+                <>
+                  <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
+                    Cancel
+                  </Button>
+                  <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
+                    Close milestone
+                  </Button>
+                  <Button onClick={onSaveMilestone}>Save changes</Button>
+                </>
+              ) : (
+                <Button onClick={onCreateMilestone} disabled={titleContent ? false : true}>
+                  Create milestone
                 </Button>
-                <Button backgroundColor="gray1" color="black" onClick={() => history.push(`/MilestonePage`)}>
-                  Close milestone
-                </Button>
-                <Button onClick={() => history.push(`/MilestonePage`)}>Save changes</Button>
-              </>
-            ) : (
-              <Button onClick={onCreateMilestone}>Create milestone</Button>
-            )}
-          </ButtonWrapper>
-        </ContentWrapper>
-      </Wrapper>
+              )}
+            </ButtonWrapper>
+          </ContentWrapper>
+        </Wrapper>
+      )}
     </>
   );
 };
