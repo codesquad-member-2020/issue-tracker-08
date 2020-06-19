@@ -17,6 +17,7 @@ public class Label {
     @EmbeddedId
     private LabelId id;
 
+    @Column(name = "name", unique = true)
     private String name;
 
     private String description;
