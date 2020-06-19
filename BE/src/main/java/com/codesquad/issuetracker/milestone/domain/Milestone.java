@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.milestone.domain;
 
+import com.codesquad.issuetracker.common.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class  Milestone {
+public class  Milestone extends BaseTimeEntity {
 
     @EmbeddedId
     private MilestoneId id;
@@ -21,8 +22,6 @@ public class  Milestone {
     private LocalDateTime dueDate;
 
     private String description;
-
-    private LocalDateTime updatedAt;
 
     private boolean isOpen;
 }
