@@ -1,9 +1,6 @@
 package com.codesquad.issuetracker.label.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString
+@Builder
 public class Label {
 
     @EmbeddedId
