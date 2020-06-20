@@ -22,16 +22,9 @@ public class CommentService {
                 .orElseGet(() -> new CommentId(1L));
     }
 
-    public Comment addComment(Comment comment) {
-        return commentRepository.save(comment);
-    }
-
-    public void update(Comment comment) {
-        commentRepository.save(comment);
-    }
-
     public void changeStatus(CommentId commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+        comment.changeStatus();
         commentRepository.save(comment);
     }
 
