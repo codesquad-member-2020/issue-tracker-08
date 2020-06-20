@@ -88,4 +88,8 @@ public class MilestoneService {
         // save는 Milestone의 모든 정보를 변경하므로 update 쿼리를 직접 작성한다.
         mileStoneRepository.updateMilestone(milestone);
     }
+
+    public boolean changeStatus(MilestoneId milestoneId) {
+        return mileStoneRepository.changeStatus(milestoneId) > 0;
+    }
 }
