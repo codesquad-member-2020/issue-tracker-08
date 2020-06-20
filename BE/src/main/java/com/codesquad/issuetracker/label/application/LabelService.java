@@ -35,4 +35,8 @@ public class LabelService {
                 .map(label -> new LabelId(label.getId().getLabelId()))
                 .orElseGet(() -> new LabelId(1L));
     }
+
+    public void delete(LabelId id) {
+        labelRepository.deleteById(id);
+    }
 }
