@@ -4,6 +4,7 @@ import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneBoard;
+import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,5 +33,17 @@ public class MilestoneController {
             return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         return new ResponseEntity<>("마일스톤 생성 성공", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{milestone_id}")
+    public ResponseEntity<?> modifyMilestone(@PathVariable(name = "milestone_id") Long milestoneId,
+                                                @RequestBody Milestone milestone) {
+        milestone.setId(new MilestoneId(milestoneId));
+        try {
+            milestoneService.modifyMilestone(milestone);
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
