@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -50,8 +48,10 @@ public class MilestoneService {
     private List<MilestoneDTO> parseMilestonesToDTO(List<Milestone> milestones) {
         return milestones.stream().map(m -> {
 
-            Map<String, Long> metaData = getMetaDataOfMilestones(StreamSupport.stream(issueRepository.findAllById(m.getIssues()).spliterator(), false)
-                    .collect(Collectors.toList()));
+            List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(m.getIssues()).spliterator(), false)
+                    .collect(Collectors.toList());
+
+            m.setMetaData(issues);
 
             // 현재는 List<IssueDTO>를 세팅하지 않지만 /milestones/{id}/issues에서 필요할 듯
             return MilestoneDTO.builder()
@@ -61,27 +61,11 @@ public class MilestoneService {
                     .dueDate(m.getDueDate())
                     .updatedAt(m.getModifiedAt())
                     .isOpen(m.isOpen())
-                    .achievementRate(metaData.get("achievementRate"))
-                    .numberOfOpenIssue(metaData.get("numberOfOpenIssue"))
-                    .numberOfClosedIssue(metaData.get("numberOfClosedIssue"))
+                    .achievementRate(m.getAchievementRate())
+                    .numberOfOpenIssue(m.getNumberOfOpenIssue())
+                    .numberOfClosedIssue(m.getNumberOfClosedIssue())
                     .build();
         }).collect(Collectors.toList());
-    }
-
-    private Map<String, Long> getMetaDataOfMilestones(List<Issue> issues) {
-        if (issues.size() == 0) {
-            return new HashMap<String, Long>() {{
-                put("numberOfOpenIssue", 0L);
-                put("numberOfClosedIssue", 0L);
-                put("achievementRate", 0L);
-            }};
-        }
-
-        return new HashMap<String, Long>() {{
-            put("numberOfOpenIssue", issues.stream().filter(Issue::getIsOpen).count());
-            put("numberOfClosedIssue", issues.stream().filter(i -> !i.getIsOpen()).count());
-            put("achievementRate", (long)(get("numberOfOpenIssue") * 1.f / issues.size() * 100));
-        }};
     }
 
     public void modifyMilestone(Milestone milestone) {
