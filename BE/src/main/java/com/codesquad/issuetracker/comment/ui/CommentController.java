@@ -27,14 +27,14 @@ public class CommentController {
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
                                          @RequestBody CommentQuery query) {
 
+        CommentId newCommentId = commentService.getNextIdentity();
         IssueId targetIssueId = new IssueId(issueId);
         UserId userId = query.getUserId();
-        CommentId newCommentId = commentService.getNextIdentity();
         String content =query.getContent();
 
-        CommentQuery newQuery = new CommentQuery(targetIssueId, userId, newCommentId, content);
+        CommentQuery newQuery = new CommentQuery(newCommentId, targetIssueId, userId, content);
 
-        Comment comment = buildComment(newCommentId, targetIssueId, content);
+        Comment comment = Comment.of(newQuery);
         commentRepository.save(comment);
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
@@ -43,12 +43,17 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content) {
+                                         @RequestBody CommentQuery query) {
 
+
+        CommentId newCommentId = new CommentId(commentId);
         IssueId targetIssueId = new IssueId(issueId);
-        CommentId targetCommentId = new CommentId(commentId);
-        Comment comment = buildComment(targetCommentId, targetIssueId, content);
+        UserId userId = query.getUserId();
+        String content =query.getContent();
 
+        CommentQuery newQuery = new CommentQuery(newCommentId, targetIssueId, userId, content);
+
+        Comment comment = Comment.of(newQuery);
         commentRepository.save(comment);
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
@@ -56,7 +61,8 @@ public class CommentController {
 
     @PatchMapping("/{comment_id}")
     public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
-                                               @PathVariable("comment_id") Long commentId) {
+                                               @PathVariable("comment_id") Long commentId,
+                                               @RequestBody String userId) {
         CommentId targetCommentId = new CommentId(commentId);
         commentService.changeStatus(targetCommentId);
         return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
@@ -64,12 +70,11 @@ public class CommentController {
 
     @DeleteMapping("/{comment_id}")
     public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
-                                         @PathVariable("comment_id") Long commentId) {
+                                         @PathVariable("comment_id") Long commentId,
+                                         @RequestBody String userId) {
         CommentId targetCommentId = new CommentId(commentId);
         commentService.delete(targetCommentId);
         return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
     }
-
-
 }
 

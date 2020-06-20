@@ -9,11 +9,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CommentQuery {
 
+    private CommentId commentId;
+
     private IssueId issueId;
 
     private UserId userId;
-
-    private CommentId commentId;
 
     private String content;
 }
