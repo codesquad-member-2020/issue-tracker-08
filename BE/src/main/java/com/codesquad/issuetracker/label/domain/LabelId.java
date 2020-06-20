@@ -13,6 +13,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class LabelId implements Serializable {
 
-    @Column(name = "label_id")
+    @Column(name = "label_name")
     private Long labelId;
 }

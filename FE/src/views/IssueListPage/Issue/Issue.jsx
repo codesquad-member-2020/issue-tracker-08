@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import TimeAgo from "react-timeago";
@@ -11,7 +12,15 @@ import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const Issue = (props) => {
+const Issue = ({ issue }) => {
+  let history = useHistory();
+
+  const badgeList = issue.labels.map((label) => (
+    <Badge key={label.name} backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
+      {label.name}
+    </Badge>
+  ));
+
   return (
     <>
       <Wrapper>
@@ -20,18 +29,20 @@ const Issue = (props) => {
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
-          <Title onClick={() => props.history.push(`/IssueDetailPage`)}>
-            <Text fontWeight="bold" as="a">
-              목록 보기 구현
+          <Title onClick={() => history.push(`/IssueDetailPage/${issue.id}`)}>
+            <Text fontWeight="bold" isClick as="a">
+              {issue.title}
             </Text>
-            <Badge>bug</Badge>
+            {badgeList}
           </Title>
           <Info>
-            <Text fontSize="sm">#2 opened</Text>
             <Text fontSize="sm">
-              <TimeAgo date="May 25, 2020" formatter={formatter} />
+              #{issue.id} {issue.isOpen ? "opened" : "closed"}
             </Text>
-            <Text fontSize="sm">by choisohyun</Text>
+            <Text fontSize="sm">
+              <TimeAgo date={issue.createdAt} formatter={formatter} />
+            </Text>
+            <Text fontSize="sm">by {issue.author.nickname}</Text>
             <Text fontSize="sm">
               <Milestone>
                 <EventNoteIcon style={{ fontSize: 15 }} />

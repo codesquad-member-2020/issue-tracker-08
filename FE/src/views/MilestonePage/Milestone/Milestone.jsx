@@ -1,45 +1,53 @@
 import React from "react";
 import styled from "styled-components";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 
-const Milestone = ({ title, date, description, history }) => {
+const Milestone = ({ milestone }) => {
+  let history = useHistory();
+
+  const date = new Date(milestone.dueDate);
+  const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
+  const month = new Intl.DateTimeFormat("en", { month: "short" }).format(date);
+  const day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
+
   return (
     <>
       <Wrapper>
         <TitleWrapper>
-          <Text fontSize="xl" as="a">
-            {title}
+          <Text fontSize="xl" isClick as="a">
+            {milestone.title}
           </Text>
           <DueDateWrapper color="gray4">
-            <CalendarTodayIcon fontSize="small" /> Due by {date}
+            <CalendarTodayIcon fontSize="small" /> Due by {`${month} ${day}, ${year}`}
           </DueDateWrapper>
-          <Text color="gray3">{description}</Text>
+          <Text color="gray3">{milestone.description}</Text>
         </TitleWrapper>
         <ProgressWrapper>
           <ProgressBar>
-            <Progress></Progress>
+            <Progress achievementRate={milestone.achievementRate}></Progress>
           </ProgressBar>
           <StatusBar>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>90%</Text> complete
+              <Text>{milestone.achievementRate}%</Text> complete
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>3</Text> open
+              <Text>{milestone.numberOfOpenIssue}</Text> open
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>28</Text> closed
+              <Text>{milestone.numberOfClosedIssue}</Text> closed
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" onClick={() => history.push(`/CreateMilestonePage/isEdit`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/${milestone.id}`)}>
               Edit
             </Text>
-            <Text color="blue" fontSize="sm">
+            <Text color="blue" fontSize="sm" isClick>
               Close
             </Text>
-            <Text color="red" fontSize="sm">
+            <Text color="red" fontSize="sm" isClick>
               Delete
             </Text>
           </AdminWrapper>
@@ -85,7 +93,7 @@ const ProgressBar = styled.div`
 `;
 
 const Progress = styled.div`
-  width: 50%;
+  width: ${(props) => props.achievementRate}%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.green};
   border-radius: 3px;

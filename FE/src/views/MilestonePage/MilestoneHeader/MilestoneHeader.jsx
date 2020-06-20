@@ -5,15 +5,15 @@ import DoneIcon from "@material-ui/icons/Done";
 
 import Text from "@Style/Text";
 
-const MilestoneHeader = ({ openCount, closeCount }) => {
+const MilestoneHeader = ({ openCount, closeCount, open, close }) => {
   return (
     <>
       <Wrapper>
-        <HeaderLink fontWeight="bold" as="a">
+        <HeaderLink fontWeight="bold" as="a" onClick={open}>
           <EventNoteIcon fontSize="small" />
           {openCount} Open
         </HeaderLink>
-        <HeaderLink fontWeight="bold" as="a">
+        <HeaderLink fontWeight="bold" as="a" onClick={close}>
           <DoneIcon fontSize="small" />
           {closeCount} Close
         </HeaderLink>

@@ -1,5 +1,4 @@
 import React from "react";
-// import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
@@ -15,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #eee",
     padding: 10,
     borderRadius: 5,
-    "&:focus": {
-      backgroundColor: "white",
+    "&:focus-within": {
       outline: "none",
       backgroundColor: "white",
       borderColor: "#00adb5",
@@ -25,8 +23,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DatePickers = ({ defaultValue }) => {
+const DatePickers = ({ defaultValue, onChange }) => {
   const classes = useStyles();
+
+  const configureDate = (date) => {
+    const defaultDate = new Date(date);
+    const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(defaultDate);
+    const month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(defaultDate);
+    const day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(defaultDate);
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <>
@@ -34,30 +40,16 @@ const DatePickers = ({ defaultValue }) => {
         <TextField
           id="date"
           type="date"
-          defaultValue={defaultValue}
+          defaultValue={defaultValue && configureDate(defaultValue)}
+          onChange={onChange}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
-            // FormLabelClasses: {
-            //   root: css`
-            //     &.focused {
-            //       color: red;
-            //     }
-            //   `,
-            //   focused: "focused",
-            // },
           }}
           inputProps={{
             style: {
               padding: 0,
               fontSize: "13px",
-              "&:focus": {
-                backgroundColor: "white",
-                outline: "none",
-                backgroundColor: "white",
-                borderColor: "#00adb5",
-                boxShadow: "inset 0 1px 2px #f1f8ff, 0 0 0 0.2em #c0d3eb",
-              },
             },
           }}
           InputProps={{ disableUnderline: true }}

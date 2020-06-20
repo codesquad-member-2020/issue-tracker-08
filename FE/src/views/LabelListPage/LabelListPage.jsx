@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 import Button from "@Style/Button";
 
@@ -9,28 +10,37 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
+import { getLabel } from "@Modules/label";
 
-const LabelListPage = (props) => {
+const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
 
-  const labelList = (
-    <>
-      <Label></Label>
-      <Label></Label>
-    </>
-  );
+  const newLabelOpenHandler = () => setIsOpenNewLabel(!isOpenNewLabel);
+
+  const LabelList = () => <>{!loadingLabel && labels && labels.map((label) => <Label key={label.name} label={label} />)}</>;
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getLabel();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, [getLabel]);
 
   return (
     <>
-      <Header history={props.history} />
+      <Header />
       <NavBarWrap>
         <NavBar>
-          <NavigationButton history={props.history} isLabel />
-          <Button onClick={() => setIsOpenNewLabel(!isOpenNewLabel)}>New Label</Button>
+          <NavigationButton isLabel />
+          <Button onClick={newLabelOpenHandler}>New Label</Button>
         </NavBar>
       </NavBarWrap>
-      {isOpenNewLabel && <CreateLabel />}
-      <Table tableHeader={<LabelListHeader count={2} />} tableList={labelList} />
+      {isOpenNewLabel && <CreateLabel close={newLabelOpenHandler} />}
+      <Table tableHeader={<LabelListHeader count={!loadingLabel && labels && labels.length} />} tableList={<LabelList />} />
     </>
   );
 };
@@ -50,4 +60,12 @@ const NavBar = styled.nav`
   align-items: center;
 `;
 
-export default LabelListPage;
+export default connect(
+  ({ label, loading }) => ({
+    labels: label.labels,
+    loadingLabel: loading["label/GET_LABEL"],
+  }),
+  {
+    getLabel,
+  }
+)(React.memo(LabelListPage));

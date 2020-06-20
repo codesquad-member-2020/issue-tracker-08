@@ -2,11 +2,13 @@ package com.codesquad.issuetracker.issue.ui;
 
 import com.codesquad.issuetracker.issue.application.IssueRequest;
 import com.codesquad.issuetracker.issue.application.IssueService;
-import com.codesquad.issuetracker.issue.domain.*;
+import com.codesquad.issuetracker.issue.domain.Filter;
+import com.codesquad.issuetracker.issue.domain.Issue;
+import com.codesquad.issuetracker.issue.domain.IssueBoard;
+import com.codesquad.issuetracker.issue.domain.IssueDTO;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
-import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,6 @@ import java.util.stream.Collectors;
 public class IssueController {
 
     private final IssueService issueService;
-
-    private final UserRepository userRepository;
 
     @GetMapping("")
     public List<Issue> listIssue(Filter filter) {

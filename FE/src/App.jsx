@@ -24,10 +24,11 @@ const App = () => {
             <Route path="/" exact component={LoginPage} />
             <Route path="/IssueListPage" exact component={IssueListPage} />
             <Route path="/CreateIssuePage" exact component={CreateIssuePage} />
-            <Route path="/IssueDetailPage" exact component={IssueDetailPage} />
+            <Route path="/IssueDetailPage/:issueId" exact component={IssueDetailPage} />
             <Route path="/LabelListPage" exact component={LabelListPage} />
             <Route path="/MilestonePage" exact component={MilestonePage} />
-            <Route path="/CreateMilestonePage/:state" component={CreateMilestonePage} />
+            <Route path="/CreateMilestonePage/" exact component={CreateMilestonePage} />
+            <Route path="/CreateMilestonePage/:milestoneId" component={CreateMilestonePage} />
             <Route component={ErrorPage} />
           </Switch>
         </Router>
