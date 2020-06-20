@@ -6,8 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorMessage {
+  
+    LABEL_NAME_DUPLICATED("Name has already been taken"),
+    MILESTONE_TITLE_DUPLICATED("Title has already been taken");
 
-    LABEL_NAME_DUPLICATED("Name has already been taken");
-
-    private String messsage;
+    private String message;
+    
 }
