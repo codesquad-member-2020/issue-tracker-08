@@ -83,4 +83,9 @@ public class MilestoneService {
             put("achievementRate", (long)(get("numberOfOpenIssue") * 1.f / issues.size() * 100));
         }};
     }
+
+    public void modifyMilestone(Milestone milestone) {
+        // save는 Milestone의 모든 정보를 변경하므로 update 쿼리를 직접 작성한다.
+        mileStoneRepository.updateMilestone(milestone);
+    }
 }
