@@ -46,4 +46,12 @@ public class MilestoneController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping("/{milestone_id}")
+    public ResponseEntity<?> changeStatus(@PathVariable(name = "milestone_id") Long milestoneId) {
+        if (milestoneService.changeStatus(new MilestoneId(milestoneId))) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }
