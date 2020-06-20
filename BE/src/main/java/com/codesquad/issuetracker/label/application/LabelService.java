@@ -32,7 +32,7 @@ public class LabelService {
 
     public LabelId getNextIdentity() {
         return Optional.ofNullable(labelRepository.findFirstByOrderByIdDesc())
-                .map(label -> new LabelId(label.getId().getLabelId()))
+                .map(label -> new LabelId(label.getId().getLabelId() + 1L))
                 .orElseGet(() -> new LabelId(1L));
     }
 
