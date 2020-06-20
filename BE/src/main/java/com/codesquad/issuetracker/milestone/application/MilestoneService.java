@@ -92,4 +92,8 @@ public class MilestoneService {
     public boolean changeStatus(MilestoneId milestoneId) {
         return mileStoneRepository.changeStatus(milestoneId) > 0;
     }
+
+    public void deleteMilestone(MilestoneId milestoneId) {
+        mileStoneRepository.deleteById(milestoneId);
+    }
 }
