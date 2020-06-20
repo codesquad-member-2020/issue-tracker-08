@@ -19,36 +19,47 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("")
-    public ResponseEntity<String> create(@PathVariable Long issueId, @RequestBody String content) {
+    public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
+                                         @RequestBody String content) {
+
+        IssueId targetIssueId = new IssueId(issueId);
         CommentId newCommentId = commentService.getNextIdentity();
-        IssueId targetIssue = new IssueId(issueId);
-        Comment comment = buildComment(newCommentId, targetIssue, content);
+        Comment comment = buildComment(newCommentId, targetIssueId, content);
 
         commentService.addComment(comment);
+
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
     }
 
     @PutMapping("/{comment_id}")
-    public ResponseEntity<String> update(@PathVariable(value = "issue_id") Long id,
-                                         @PathVariable(value = "comment_id") CommentId commentId,
+    public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
+                                         @PathVariable("comment_id") Long commentId,
                                          @RequestBody String content) {
 
-        Comment comment = buildComment(commentId, content);
+        IssueId targetIssueId = new IssueId(issueId);
+        CommentId targetCommentId = new CommentId(commentId);
+        Comment comment = buildComment(targetCommentId, targetIssueId, content);
+
         commentService.update(comment);
+
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{comment_id}")
-    public ResponseEntity<String> changeStatus(@PathVariable(value = "comment_id") Long id) {
-        CommentId commentId = new CommentId(id);
-        commentService.changeStatus(commentId);
+    public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
+                                               @PathVariable("comment_id") Long commentId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        CommentId targetCommentId = new CommentId(commentId);
+        commentService.changeStatus(targetCommentId);
         return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{comment_id}")
-    public ResponseEntity<String> delete(@PathVariable(value = "comment_id") Long id) {
-        CommentId commentId = new CommentId(id);
-        commentService.delete(commentId);
+    public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
+                                         @PathVariable("comment_id") Long commentId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        CommentId targetCommentId = new CommentId(commentId);
+        commentService.delete(targetCommentId);
         return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
     }
 
