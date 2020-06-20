@@ -64,13 +64,6 @@ public class CommentController {
         return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
     }
 
-    private Comment buildComment(CommentId commentId, IssueId issueId, String content) {
-        return Comment.builder()
-                .id(commentId)
-                .issueId(issueId)
-                .content(content)
-                .isOpen(true)
-                .build();
-    }
+
 }
 
