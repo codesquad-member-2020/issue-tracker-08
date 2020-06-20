@@ -47,6 +47,13 @@ public class LabelController {
         return new ResponseEntity<>("라벨 업데이트 성공", HttpStatus.NO_CONTENT);
     }
 
+    @DeleteMapping("/{label_id}")
+    public ResponseEntity<String> delete(@PathVariable(value = "label_id") Long labelId) {
+        LabelId id = new LabelId(labelId);
+        labelService.delete(id);
+        return new ResponseEntity<>("라벨 삭제 성공", HttpStatus.NO_CONTENT);
+    }
+
     private Label buildLabel(LabelId id, LabelProperty property) {
         return Label.builder()
                 .id(id)
