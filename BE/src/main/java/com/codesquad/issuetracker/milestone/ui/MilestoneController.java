@@ -8,6 +8,7 @@ import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class MilestoneController {
 
     @PutMapping("/{milestone_id}")
     public ResponseEntity<?> modifyMilestone(@PathVariable(name = "milestone_id") Long milestoneId,
-                                                @RequestBody Milestone milestone) {
+                                             @RequestBody Milestone milestone) {
         milestone.setId(new MilestoneId(milestoneId));
         try {
             milestoneService.modifyMilestone(milestone);
@@ -52,6 +53,16 @@ public class MilestoneController {
         if (milestoneService.changeStatus(new MilestoneId(milestoneId))) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{milestone_id}")
+    public ResponseEntity<?> deleteMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
+        try {
+            milestoneService.deleteMilestone(new MilestoneId(milestoneId));
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>(ErrorMessage.ENTITY_DELETE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
