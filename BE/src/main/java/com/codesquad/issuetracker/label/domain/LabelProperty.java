@@ -5,11 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Embeddable;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LabelDTO {
+@Embeddable
+public class LabelProperty {
 
     private String name;
 

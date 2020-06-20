@@ -3,7 +3,7 @@ package com.codesquad.issuetracker.label.ui;
 import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.label.application.LabelService;
 import com.codesquad.issuetracker.label.domain.Label;
-import com.codesquad.issuetracker.label.domain.LabelDTO;
+import com.codesquad.issuetracker.label.domain.LabelProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,7 +22,7 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping("")
-    public ResponseEntity<List<LabelDTO>> listLabel() {
+    public ResponseEntity<List<LabelProperty>> listLabel() {
         return new ResponseEntity<>(labelService.getAllLabels(), HttpStatus.OK);
     }
 

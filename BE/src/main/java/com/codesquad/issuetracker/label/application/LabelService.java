@@ -1,7 +1,7 @@
 package com.codesquad.issuetracker.label.application;
 
 import com.codesquad.issuetracker.label.domain.Label;
-import com.codesquad.issuetracker.label.domain.LabelDTO;
+import com.codesquad.issuetracker.label.domain.LabelProperty;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.label.domain.LabelRepository;
 import lombok.AllArgsConstructor;
@@ -27,9 +27,9 @@ public class LabelService {
         labelRepository.save(label);
     }
 
-    public List<LabelDTO> getAllLabels() {
+    public List<LabelProperty> getAllLabels() {
         return StreamSupport.stream(labelRepository.findAll().spliterator(), false)
-                .map(label -> LabelDTO.builder()
+                .map(label -> labelRepository.builder()
                         .name(label.getName())
                         .description(label.getDescription())
                         .color(label.getColor())
