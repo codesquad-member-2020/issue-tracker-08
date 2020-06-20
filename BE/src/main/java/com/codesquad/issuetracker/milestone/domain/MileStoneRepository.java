@@ -19,4 +19,14 @@ public interface MileStoneRepository extends CrudRepository<Milestone, Milestone
             "      due_date = :#{#milestone.dueDate} " +
             "WHERE milestone_id = :#{#milestone.id.milestoneId}")
     public void updateMilestone(@Param("milestone") Milestone milestone);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Milestone " +
+            "SET   is_open = " +
+            "      CASE is_open " +
+            "      WHEN TRUE THEN FALSE" +
+            "      ELSE TRUE END " +
+            "WHERE milestone_id = :#{#milestoneId.milestoneId}")
+    public int changeStatus(@Param("milestoneId") MilestoneId milestoneId);
 }
