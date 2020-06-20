@@ -29,12 +29,7 @@ public class LabelService {
 
     public List<LabelProperty> getAllLabels() {
         return StreamSupport.stream(labelRepository.findAll().spliterator(), false)
-                .map(label -> labelRepository.builder()
-                        .name(label.getName())
-                        .description(label.getDescription())
-                        .color(label.getColor())
-                        .isFontColorBlack(label.isFontColorBlack())
-                        .build())
+                .map(Label::getLabelProperty)
                 .collect(Collectors.toList());
     }
 
