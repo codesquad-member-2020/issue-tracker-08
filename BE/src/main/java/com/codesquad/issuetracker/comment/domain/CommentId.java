@@ -11,6 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class CommentId implements Serializable {
 
     @Column(name = "comment_id")
