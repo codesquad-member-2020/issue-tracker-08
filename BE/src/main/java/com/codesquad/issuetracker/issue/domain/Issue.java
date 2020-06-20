@@ -1,6 +1,5 @@
 package com.codesquad.issuetracker.issue.domain;
 
-import com.codesquad.issuetracker.comment.domain.CommentId;
 import com.codesquad.issuetracker.common.BaseTimeEntity;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
@@ -27,7 +26,7 @@ public class Issue extends BaseTimeEntity {
 
     private String content;
 
-    private boolean isOpen;
+    private Boolean isOpen;
 
     @Embedded
     private UserId authorId;
@@ -48,11 +47,4 @@ public class Issue extends BaseTimeEntity {
             joinColumns = @JoinColumn(name = "issue_id")
     )
     private Set<LabelId> labels = new HashSet<>();
-
-    @ElementCollection
-    @CollectionTable(
-            name = "comment",
-            joinColumns = @JoinColumn(name = "issue_id")
-    )
-    private Set<CommentId> comments = new HashSet<>();
 }
