@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.milestone.domain;
 
 import com.codesquad.issuetracker.common.BaseTimeEntity;
 import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class Milestone extends BaseTimeEntity {
     @Column(name = "title", unique = true)
     private String title;
 
+    @JsonProperty(value = "due_date")
     private LocalDate dueDate;
 
     private String description;
