@@ -5,9 +5,7 @@ import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.utils.GithubApiUtils;
 import com.codesquad.issuetracker.utils.JwtUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -43,7 +39,7 @@ public class LoginService {
 
     public void login(String code, HttpServletResponse response) throws IOException {
         User user = GithubApiUtils.requestApi(getGithubToken(code).getAccessToken(), githubProperty.getUserApiUrl(), User.class);
-        String jwtToken = createJwtToken(user);
+        String jwtToken = JwtUtils.createToken(user);
 
         List<Cookie> cookies = createCookiesByUser(user, jwtToken);
         setCookies(cookies, response);
@@ -52,10 +48,6 @@ public class LoginService {
     private GithubToken getGithubToken(String code) {
         githubProperty.setCode(code);
         return new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
-    }
-
-    private String createJwtToken(Object object) {
-        return JwtUtils.createToken(new ObjectMapper().convertValue(object, Map.class));
     }
 
     private List<Cookie> createCookiesByUser(User user, String jwtToken) {
@@ -73,6 +65,6 @@ public class LoginService {
             response.addCookie(cookie);
         });
 
-        response.sendRedirect("/");
+        response.sendRedirect("/api/issues");
     }
 }
