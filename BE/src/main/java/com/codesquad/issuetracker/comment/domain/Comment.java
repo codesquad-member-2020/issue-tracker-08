@@ -28,4 +28,8 @@ public class Comment extends BaseTimeEntity {
     private String content;
 
     private boolean isOpen;
+
+    public void changeStatus() {
+        this.isOpen = !isOpen;
+    }
 }
