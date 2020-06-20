@@ -24,9 +24,8 @@ public class UserController {
     private final LoginService loginService;
 
     @GetMapping("")
-    public ResponseEntity<String> userList() {
-        userRepository.findAll();
-        return null;
+    public Iterable<User> userList() {
+        return userRepository.findAll();
     }
 
     @PostMapping("")
