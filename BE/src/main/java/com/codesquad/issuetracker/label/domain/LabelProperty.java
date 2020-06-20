@@ -7,9 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
+@ToString
 public class LabelProperty {
 
     @Column(name = "name", unique = true)
