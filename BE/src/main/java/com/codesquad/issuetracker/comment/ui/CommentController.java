@@ -3,8 +3,10 @@ package com.codesquad.issuetracker.comment.ui;
 import com.codesquad.issuetracker.comment.application.CommentService;
 import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
+import com.codesquad.issuetracker.comment.domain.CommentQuery;
 import com.codesquad.issuetracker.comment.domain.CommentRepository;
 import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,12 +25,16 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content) {
+                                         @RequestBody CommentQuery query) {
 
         IssueId targetIssueId = new IssueId(issueId);
+        UserId userId = query.getUserId();
         CommentId newCommentId = commentService.getNextIdentity();
-        Comment comment = buildComment(newCommentId, targetIssueId, content);
+        String content =query.getContent();
 
+        CommentQuery newQuery = new CommentQuery(targetIssueId, userId, newCommentId, content);
+
+        Comment comment = buildComment(newCommentId, targetIssueId, content);
         commentRepository.save(comment);
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
