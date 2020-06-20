@@ -78,8 +78,8 @@ public class MilestoneService {
         }
 
         return new HashMap<String, Long>() {{
-            put("numberOfOpenIssue", issues.stream().filter(Issue::isOpen).count());
-            put("numberOfClosedIssue", issues.stream().filter(i -> !i.isOpen()).count());
+            put("numberOfOpenIssue", issues.stream().filter(Issue::getIsOpen).count());
+            put("numberOfClosedIssue", issues.stream().filter(i -> !i.getIsOpen()).count());
             put("achievementRate", (long)(get("numberOfOpenIssue") * 1.f / issues.size() * 100));
         }};
     }
