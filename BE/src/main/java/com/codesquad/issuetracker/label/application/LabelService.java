@@ -20,12 +20,12 @@ public class LabelService {
 
     private final LabelRepository labelRepository;
 
-    public Label saveLabel(Label label) {
+    public Label saveLabel(LabelProperty label) {
         LabelId id = new LabelId(getNextIdentity());
 
         Label newLabel = Label.builder()
                 .id(id)
-                .labelProperty(label.getLabelProperty())
+                .labelProperty(label)
                 .build();
 
         return labelRepository.save(newLabel);

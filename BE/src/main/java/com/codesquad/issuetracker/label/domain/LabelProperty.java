@@ -1,8 +1,7 @@
 package com.codesquad.issuetracker.label.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
@@ -18,6 +17,7 @@ public class LabelProperty {
 
     private String color;
 
+    @JsonProperty("isFontColorBlack")
     private boolean isFontColorBlack;
 }
 
