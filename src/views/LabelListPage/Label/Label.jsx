@@ -14,14 +14,17 @@ const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
   const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
 
   const deleteHandler = () => {
-    const fn = async () => {
+    const CONFIRM_MSG = `${name} 라벨을 삭제하시겠습니까?`;
+
+    if (!confirm(CONFIRM_MSG)) return;
+
+    (async () => {
       try {
         await deleteLabel(name);
       } catch (e) {
         console.log(e);
       }
-    };
-    fn();
+    })();
   };
 
   return (
