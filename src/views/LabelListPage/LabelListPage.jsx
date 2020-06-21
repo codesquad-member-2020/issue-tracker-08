@@ -10,7 +10,7 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
-import { getLabel } from "@Modules/label";
+import { getLabel, createLabel, editLabel, deleteLabel } from "@Modules/label";
 
 const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
@@ -63,11 +63,13 @@ const NavBar = styled.nav`
 `;
 
 export default connect(
-  ({ label, loading }) => ({
+  ({ label }) => ({
     labels: label.labels,
-    loadingLabel: loading["label/GET_LABEL"],
   }),
   {
     getLabel,
+    createLabel,
+    editLabel,
+    deleteLabel,
   }
-)(React.memo(LabelListPage));
+)(LabelListPage);
