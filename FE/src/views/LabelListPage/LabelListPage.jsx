@@ -17,7 +17,9 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
 
   const newLabelOpenHandler = () => setIsOpenNewLabel(!isOpenNewLabel);
 
-  const LabelList = () => <>{!loadingLabel && labels && labels.map((label) => <Label key={label.name} label={label} />)}</>;
+  const hasLabels = () => !loadingLabel && labels;
+
+  const LabelList = () => <>{hasLabels() && labels.map((label) => <Label key={label.name} label={label} />)}</>;
 
   useEffect(() => {
     const fn = async () => {
@@ -40,7 +42,7 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
         </NavBar>
       </NavBarWrap>
       {isOpenNewLabel && <CreateLabel close={newLabelOpenHandler} />}
-      <Table tableHeader={<LabelListHeader count={!loadingLabel && labels && labels.length} />} tableList={<LabelList />} />
+      <Table tableHeader={<LabelListHeader count={hasLabels() && labels.length} />} tableList={<LabelList />} />
     </>
   );
 };
