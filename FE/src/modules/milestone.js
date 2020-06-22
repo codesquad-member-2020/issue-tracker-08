@@ -42,6 +42,10 @@ const milestone = handleActions(
       ...state,
       milestoneDetail: action.payload,
     }),
+    [DELETE_MILESTONE_SUCCESS]: (state, action) => ({
+      ...state,
+      milestones: state.milestones.filter((milestone) => milestone !== action.payload),
+    }),
   },
   initialState
 );
