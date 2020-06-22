@@ -38,4 +38,10 @@ public class IssueService {
         issue.editTitle(title);
         issueRepository.save(issue);
     }
+
+    public void editContent(IssueId issueId, String content) {
+        Issue issue = findIssueById(issueId);
+        issue.editContent(content);
+        issueRepository.save(issue);
+    }
 }
