@@ -72,4 +72,8 @@ public class Issue extends BaseTimeEntity {
     public void editContent(String content) {
         this.content = content;
     }
+
+    public void reassign(Set<UserId> assigness) {
+        this.assignees = assigness;
+    }
 }
