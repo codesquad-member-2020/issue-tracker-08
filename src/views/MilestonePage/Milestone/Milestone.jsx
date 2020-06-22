@@ -5,10 +5,39 @@ import { useHistory } from "react-router-dom";
 
 import Text from "@Style/Text";
 import { configureDate } from "@Lib/configureDate";
+import { patchMilestone, deleteMilestone } from "@Modules/milestone";
 
 const Milestone = ({ milestone }) => {
   let history = useHistory();
 
+  const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage/${milestone.id}`);
+
+  const deleteConfirm = () => {
+    return confirm("Are you sure?");
+  };
+
+  const patchHandler = () => {
+    const fn = async () => {
+      try {
+        await patchMilestone(milestone.id);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
+
+  const deleteHandler = () => {
+    if (!deleteConfirm()) return;
+    const fn = async () => {
+      try {
+        await deleteMilestone(milestone.id);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
 
   return (
     <>
@@ -38,13 +67,13 @@ const Milestone = ({ milestone }) => {
             </Text>
           </StatusBar>
           <AdminWrapper>
-            <Text color="blue" fontSize="sm" isClick onClick={() => history.push(`/CreateMilestonePage/${milestone.id}`)}>
+            <Text color="blue" fontSize="sm" isClick onClick={onPassCreateMilestonePage}>
               Edit
             </Text>
-            <Text color="blue" fontSize="sm" isClick>
-              Close
+            <Text color="blue" fontSize="sm" isClick onClick={patchHandler}>
+              {milestone.isOpen ? "Close" : "Open"}
             </Text>
-            <Text color="red" fontSize="sm" isClick>
+            <Text color="red" fontSize="sm" isClick onClick={deleteHandler}>
               Delete
             </Text>
           </AdminWrapper>
