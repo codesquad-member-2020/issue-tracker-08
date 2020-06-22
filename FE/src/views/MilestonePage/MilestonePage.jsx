@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -14,21 +14,20 @@ import { getMilestone } from "@Modules/milestone";
 
 const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
-  const openCount = !loadingMilestone && milestones && milestones.numberOfOpenMilestone;
-  const closeCount = !loadingMilestone && milestones && milestones.numberOfClosedMilestone;
+  const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage`);
+
+  const isLoaded = !loadingMilestone && milestones;
+
+  const openCount = isLoaded && milestones.numberOfOpenMilestone;
+  const closeCount = isLoaded && milestones.numberOfClosedMilestone;
 
   const [isOpenView, setIsOpenView] = useState(true);
-  const open = () => {
-    setIsOpenView(true);
-  };
-  const close = () => {
-    setIsOpenView(false);
-  };
+  const open = () => setIsOpenView(true);
+  const close = () => setIsOpenView(false);
 
   const MilestoneOpenList = () => (
     <>
-      {!loadingMilestone &&
-        milestones &&
+      {isLoaded &&
         milestones.milestones
           .filter((milestone) => milestone.isOpen)
           .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
@@ -37,14 +36,14 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
 
   const MilestoneCloseList = () => (
     <>
-      {!loadingMilestone &&
-        milestones &&
+      {isLoaded &&
         milestones.milestones
           .filter((milestone) => !milestone.isOpen)
           .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
     </>
   );
 
+  let location = useLocation();
   useEffect(() => {
     const fn = async () => {
       try {
@@ -54,7 +53,7 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
       }
     };
     fn();
-  }, [getMilestone]);
+  }, [getMilestone, location]);
 
   return (
     <>
@@ -62,7 +61,7 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
       <NavBarWrap>
         <NavBar>
           <NavigationButton isMilestone />
-          <Button onClick={() => history.push(`/CreateMilestonePage`)}>New Milestone</Button>
+          <Button onClick={onPassCreateMilestonePage}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
       <Table
