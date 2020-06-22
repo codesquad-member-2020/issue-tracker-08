@@ -12,9 +12,10 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
   const initLabelName = name ? name : "";
+  const [color, dark] = randomColor();
 
-  const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
-  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
+  const [backgroundColor, setBackgroundColor] = useState(defaultColor ? defaultColor : color);
+  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : dark);
   const [inputName, setInputName] = useState(initLabelName);
   const [inputDesc, setInputDesc] = useState(description ? description : "");
 
@@ -25,8 +26,8 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
   };
 
   const colorReset = () => {
-    setbackgroundColor(randomColor);
-    setBDark(isDark);
+    setBackgroundColor(color);
+    setBDark(dark);
   };
 
   const onChangeName = ({ target }) => setInputName(target.value);
