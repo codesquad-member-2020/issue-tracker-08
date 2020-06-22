@@ -15,4 +15,10 @@ public class CommentId implements Serializable {
 
     @Column(name = "comment_id")
     private Long commentId;
+
+    @Column(name = "issue_id")
+    private Long issueId;
+
+    @Column(name = "userId")
+    private Long userId;
 }

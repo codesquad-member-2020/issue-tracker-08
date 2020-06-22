@@ -1,10 +1,8 @@
 package com.codesquad.issuetracker.comment.domain;
 
 import com.codesquad.issuetracker.common.BaseTimeEntity;
-import com.codesquad.issuetracker.issue.domain.IssueId;
 import lombok.*;
 
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,14 +20,23 @@ public class Comment extends BaseTimeEntity {
     @EmbeddedId
     private CommentId id;
 
-    @Embedded
-    private IssueId issueId;
-
     private String content;
 
     private boolean isOpen;
 
     public void changeStatus() {
         this.isOpen = !isOpen;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public static Comment of(CommentId commentId, String content) {
+        return Comment.builder()
+                .id(commentId)
+                .content(content)
+                .isOpen(true)
+                .build();
     }
 }

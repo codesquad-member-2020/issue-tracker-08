@@ -16,20 +16,35 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public CommentId getNextIdentity() {
+    public Long getNextIdentity() {
         return Optional.ofNullable(commentRepository.findFirstByOrderByIdDesc())
-                .map(comment -> new CommentId(comment.getId().getCommentId() + 1L))
-                .orElseGet(() -> new CommentId(1L));
+                .map(comment -> comment.getId().getCommentId() + 1L)
+                .orElseGet(() -> 1L);
     }
 
     public void changeStatus(CommentId commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+        Comment comment = findCommentById(commentId);
         comment.changeStatus();
         commentRepository.save(comment);
     }
 
     public void delete(CommentId commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+        Comment comment = findCommentById(commentId);
         commentRepository.delete(comment);
+    }
+
+    public Comment save(CommentId commentId, String content) {
+        Comment comment = Comment.of(commentId, content);
+        return commentRepository.save(comment);
+    }
+
+    public void update(CommentId commentId, String content) {
+        Comment comment = findCommentById(commentId);
+        comment.updateContent(content);
+        commentRepository.save(comment);
+    }
+
+    private Comment findCommentById(CommentId commentId) {
+        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
     }
 }

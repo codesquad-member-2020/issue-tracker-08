@@ -30,4 +30,5 @@ public class GithubProperty {
 
     @JsonIgnore
     private String accessTokenUrl;
+
 }

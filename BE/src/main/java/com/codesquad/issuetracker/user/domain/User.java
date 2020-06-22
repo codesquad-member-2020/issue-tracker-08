@@ -1,16 +1,17 @@
 package com.codesquad.issuetracker.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class User {
 
     @EmbeddedId
@@ -24,4 +25,13 @@ public class User {
 
     @JsonProperty("email")
     private String email;
+
+    public static User of(UserId userId, User user) {
+        return User.builder()
+                .id(userId)
+                .nickname(user.getNickname())
+                .avatarUrl(user.getAvatarUrl())
+                .email(user.getEmail())
+                .build();
+    }
 }
