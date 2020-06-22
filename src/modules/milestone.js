@@ -21,11 +21,11 @@ const DELETE_MILESTONE = "milestone/DELETE_MILESTONE";
 const DELETE_MILESTONE_SUCCESS = "milestone/DELETE_MILESTONE_SUCCESS";
 
 export const getMilestone = createRequestThunk(GET_MILESTONE, api.getMilestone);
-export const getMilestoneDetail = createRequestThunk(GET_MILESTONE_DETAIL, api.getMilestoneDetail);
-export const postMilestone = createRequestThunk(POST_MILESTONE, api.postMilestone);
-export const putMilestone = createRequestThunk(PUT_MILESTONE, api.putMilestone);
-export const patchMilestone = createRequestThunk(POST_MILESTONE, api.patchMilestone);
-export const deleteMilestone = createRequestThunk(POST_MILESTONE, api.deleteMilestone);
+export const getMilestoneDetail = (milestoneId) => createRequestThunk(GET_MILESTONE_DETAIL, api.getMilestoneDetail(milestoneId));
+export const postMilestone = (params) => createRequestThunk(POST_MILESTONE, api.postMilestone(params));
+export const putMilestone = (milestoneId, params) => createRequestThunk(PUT_MILESTONE, api.putMilestone(milestoneId, params));
+export const patchMilestone = (milestoneId) => createRequestThunk(PATCH_MILESTONE, api.patchMilestone(milestoneId));
+export const deleteMilestone = (milestoneId) => createRequestThunk(DELETE_MILESTONE, api.deleteMilestone(milestoneId));
 
 const initialState = {
   milestones: null,
