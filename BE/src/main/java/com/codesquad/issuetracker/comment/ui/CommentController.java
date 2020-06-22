@@ -20,8 +20,7 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content,
-                                         @CookieValue(name = "jwt") String jwtToken) {
+                                         @RequestBody String content) {
 
         Long commentId = commentService.getNextIdentity();
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
@@ -35,8 +34,7 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content,
-                                         @CookieValue(name = "jwt") String jwtToken) {
+                                         @RequestBody String content) {
 
 
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
@@ -49,8 +47,7 @@ public class CommentController {
 
     @PatchMapping("/{comment_id}")
     public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
-                                               @PathVariable("comment_id") Long commentId,
-                                               @CookieValue(name = "jwt") String jwtToken) {
+                                               @PathVariable("comment_id") Long commentId) {
 
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
@@ -62,8 +59,7 @@ public class CommentController {
 
     @DeleteMapping("/{comment_id}")
     public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
-                                         @PathVariable("comment_id") Long commentId,
-                                         @CookieValue(name = "jwt") String jwtToken) {
+                                         @PathVariable("comment_id") Long commentId) {
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
 
