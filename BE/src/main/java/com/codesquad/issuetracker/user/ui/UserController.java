@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.user.ui;
 
 import com.codesquad.issuetracker.user.application.LoginService;
+import com.codesquad.issuetracker.user.application.UserService;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
 import com.codesquad.issuetracker.user.domain.UserRepository;
@@ -30,9 +31,7 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        UserId userId = getNextIdentity();
-        userRepository.save(newUser);
-
+        UserService.createUser(userId, user);
         return new ResponseEntity<>("유저 생성 성공", HttpStatus.CREATED);
     }
 
