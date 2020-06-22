@@ -24,6 +24,8 @@ public class UserController {
 
     private final LoginService loginService;
 
+    private final UserService userService;
+
     @GetMapping("")
     public Iterable<User> userList() {
         return userRepository.findAll();
@@ -31,7 +33,8 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        UserService.createUser(userId, user);
+        UserId userId = getNextIdentity();
+        userService.createUser(userId, user);
         return new ResponseEntity<>("유저 생성 성공", HttpStatus.CREATED);
     }
 
