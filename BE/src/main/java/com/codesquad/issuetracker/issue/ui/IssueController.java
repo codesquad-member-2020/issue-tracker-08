@@ -56,8 +56,10 @@ public class IssueController {
     }
 
     @PatchMapping("/{issue_id}/content")
-    public IssueBoard editContent(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueBoard editContent(@PathVariable(name = "issue_id") Long issueId,
+                                  @RequestBody String content) {
         IssueId targetIssueId = new IssueId(issueId);
+        issueService.editContent(targetIssueId, content);
         return null;
     }
 

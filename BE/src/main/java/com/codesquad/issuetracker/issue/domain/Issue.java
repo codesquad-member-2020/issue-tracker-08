@@ -68,4 +68,8 @@ public class Issue extends BaseTimeEntity {
     public void editTitle(String title) {
         this.title = title;
     }
+
+    public void editContent(String content) {
+        this.content = content;
+    }
 }
