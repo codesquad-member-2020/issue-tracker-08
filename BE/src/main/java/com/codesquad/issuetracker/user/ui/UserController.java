@@ -60,13 +60,14 @@ public class UserController {
         loginService.login(user, response);
         userService.createUser(userId, user);
 
-        response.sendRedirect("/issues");
+        response.sendRedirect("/api/issues");
 
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
-    
+
     private HttpHeaders getGithubCode(GithubProperty githubProperty) {
         HttpHeaders headers = new HttpHeaders();
+
         URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
                 .queryParam("client_id", githubProperty.getClientId())
                 .queryParam("scope", "user")
