@@ -2,21 +2,22 @@ package com.codesquad.issuetracker.user.ui;
 
 import com.codesquad.issuetracker.user.application.LoginService;
 import com.codesquad.issuetracker.user.application.UserService;
-import com.codesquad.issuetracker.user.domain.*;
-import com.codesquad.issuetracker.utils.GithubApiUtils;
+import com.codesquad.issuetracker.user.domain.GithubProperty;
+import com.codesquad.issuetracker.user.domain.User;
+import com.codesquad.issuetracker.user.domain.UserId;
+import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URI;
 
+import static com.codesquad.issuetracker.user.domain.GithubProperty.getGithubCode;
 import static com.codesquad.issuetracker.user.domain.GithubToken.getGithubToken;
+import static com.codesquad.issuetracker.utils.GithubApiUtils.requestApi;
 
 @Slf4j
 @RestController
@@ -46,14 +47,13 @@ public class UserController {
 
     @GetMapping("/oauth/code")
     public ResponseEntity<Void> getCode() {
-        HttpHeaders headers = getGithubCode();
-        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
+        return new ResponseEntity<>(getGithubCode(githubProperty), HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/oauth")
     public ResponseEntity<Void> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
         String accessToken = getGithubToken(githubProperty, code).getAccessToken();
-        User user = GithubApiUtils.requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
+        User user = requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
         UserId userId = user.getId();
 
         loginService.login(user, response);
@@ -64,16 +64,5 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
-    private HttpHeaders getGithubCode() {
-        HttpHeaders headers = new HttpHeaders();
-        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
-                .queryParam("client_id", githubProperty.getClientId())
-                .queryParam("scope", "user")
-                .build()
-                .toUri();
 
-        headers.setLocation(uri);
-
-        return headers;
-    }
 }

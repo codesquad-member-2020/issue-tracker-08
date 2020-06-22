@@ -15,8 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final GithubProperty githubProperty;
-
     public void login(User user, HttpServletResponse response) {
         String jwtToken = JwtUtils.createToken(user);
         List<Cookie> cookies = createCookiesByUser(user, jwtToken);

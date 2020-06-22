@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Getter
 @Setter
@@ -30,4 +34,17 @@ public class GithubProperty {
 
     @JsonIgnore
     private String accessTokenUrl;
+
+    public static HttpHeaders getGithubCode(GithubProperty githubProperty) {
+        HttpHeaders headers = new HttpHeaders();
+        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
+                .queryParam("client_id", githubProperty.getClientId())
+                .queryParam("scope", "user")
+                .build()
+                .toUri();
+
+        headers.setLocation(uri);
+
+        return headers;
+    }
 }
