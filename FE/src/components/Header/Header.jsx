@@ -7,6 +7,7 @@ import Text from "@Style/Text";
 
 const Header = () => {
   let history = useHistory();
+  if (!document.cookie) history.push("/");
 
   const onPass = () => history.push(`/IssueListPage`);
 
