@@ -37,12 +37,12 @@ public class Comment extends BaseTimeEntity {
         this.isOpen = !isOpen;
     }
 
-    public static Comment of(CommentQuery commentQuery) {
+    public static Comment of(CommentId commentId, IssueId issueId, UserId userId, String content) {
         return Comment.builder()
-                .id(commentQuery.getCommentId())
-                .issueId(commentQuery.getIssueId())
-                .userId(commentQuery.getUserId())
-                .content(commentQuery.getContent())
+                .id(commentId)
+                .issueId(issueId)
+                .userId(userId)
+                .content(content)
                 .isOpen(true)
                 .build();
     }

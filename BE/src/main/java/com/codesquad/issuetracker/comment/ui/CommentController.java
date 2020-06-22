@@ -25,14 +25,12 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody CommentQuery query) {
+                                         @RequestBody String content) {
 
         CommentId newCommentId = commentService.getNextIdentity();
         IssueId targetIssueId = new IssueId(issueId);
-        UserId userId = query.getUserId();
         String content =query.getContent();
 
-        CommentQuery newQuery = new CommentQuery(newCommentId, targetIssueId, userId, content);
 
         Comment comment = Comment.of(newQuery);
         commentRepository.save(comment);
@@ -43,7 +41,7 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody CommentQuery query) {
+                                         @RequestBody String content) {
 
 
         CommentId newCommentId = new CommentId(commentId);
