@@ -4,6 +4,7 @@ import com.codesquad.issuetracker.issue.application.IssueService;
 import com.codesquad.issuetracker.issue.domain.Filter;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueBoard;
+import com.codesquad.issuetracker.issue.domain.IssueId;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,9 @@ public class IssueController {
     }
 
     @PatchMapping("/{issue_id}")
-    public IssueBoard changeStatus() {
+    public IssueBoard changeStatus(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.changeStatus(targetIssueId);
         return null;
     }
 

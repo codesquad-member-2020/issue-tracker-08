@@ -22,4 +22,14 @@ public class IssueService {
     public IssueId nextId() {
         return new IssueId(issueRepository.count() + 1);
     }
+
+    public void changeStatus(IssueId issueId) {
+        Issue issue = findIssueById(issueId);
+        issue.changeStatus();
+        issueRepository.save(issue);
+    }
+
+    public Issue findIssueById(IssueId issueId) {
+        return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
+    }
 }
