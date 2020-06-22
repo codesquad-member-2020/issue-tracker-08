@@ -7,10 +7,15 @@ import Text from "@Style/Text";
 import Button from "@Style/Button";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
+import { API_URL } from "@Constants/url";
 
 const LoginPage = () => {
   let history = useHistory();
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+
+  const loginHandler = () => {
+    window.location.href = API_URL.oauth;
+  };
 
   return (
     <>
@@ -30,7 +35,7 @@ const LoginPage = () => {
                 회원가입
               </Button>
             </ButtonWrap>
-            <Button backgroundColor="gray4" style={githubButtonStyle}>
+            <Button backgroundColor="gray4" style={githubButtonStyle} onClick={loginHandler}>
               Sign in with Github
               <GitHubIcon style={githubLogoStyle} />
             </Button>
