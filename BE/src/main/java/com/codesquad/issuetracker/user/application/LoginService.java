@@ -5,15 +5,12 @@ import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +19,6 @@ import java.util.List;
 public class LoginService {
 
     private final GithubProperty githubProperty;
-
-    public HttpHeaders getGithubCode() {
-        HttpHeaders headers = new HttpHeaders();
-        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
-                .queryParam("client_id", githubProperty.getClientId())
-                .queryParam("scope", "user")
-                .build()
-                .toUri();
-
-        headers.setLocation(uri);
-
-        return headers;
-    }
 
     public void login(User user, HttpServletResponse response) throws IOException {
         String jwtToken = JwtUtils.createToken(user);

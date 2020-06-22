@@ -13,9 +13,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
 
 @Slf4j
 @RestController
@@ -45,7 +47,7 @@ public class UserController {
 
     @GetMapping("/oauth/code")
     public ResponseEntity<Void> getCode() {
-        HttpHeaders headers = loginService.getGithubCode();
+        HttpHeaders headers = getGithubCode();
         return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
 
@@ -61,5 +63,18 @@ public class UserController {
         response.sendRedirect("/issues");
 
         return new ResponseEntity<>(HttpStatus.FOUND);
+    }
+
+    private HttpHeaders getGithubCode() {
+        HttpHeaders headers = new HttpHeaders();
+        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
+                .queryParam("client_id", githubProperty.getClientId())
+                .queryParam("scope", "user")
+                .build()
+                .toUri();
+
+        headers.setLocation(uri);
+
+        return headers;
     }
 }
