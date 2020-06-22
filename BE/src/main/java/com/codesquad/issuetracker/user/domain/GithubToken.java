@@ -16,7 +16,6 @@ public class GithubToken {
     private String scope;
 
     public static GithubToken getGithubToken(GithubProperty githubProperty, String code) {
-        githubProperty.setCode(code);
-        return new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
+
     }
 }
