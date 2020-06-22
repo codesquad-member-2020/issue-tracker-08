@@ -31,13 +31,6 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         UserId userId = getNextIdentity();
-        User newUser = User.builder()
-                .id(userId)
-                .nickname(user.getNickname())
-                .avatarUrl(user.getAvatarUrl())
-                .email(user.getEmail())
-                .build();
-
         userRepository.save(newUser);
 
         return new ResponseEntity<>("유저 생성 성공", HttpStatus.CREATED);

@@ -3,6 +3,7 @@ package com.codesquad.issuetracker.user.application;
 import com.codesquad.issuetracker.user.domain.GithubProperty;
 import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
+import com.codesquad.issuetracker.user.domain.UserRepository;
 import com.codesquad.issuetracker.utils.GithubApiUtils;
 import com.codesquad.issuetracker.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;

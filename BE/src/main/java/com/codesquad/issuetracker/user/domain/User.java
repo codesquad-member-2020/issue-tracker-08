@@ -25,4 +25,13 @@ public class User {
 
     @JsonProperty("email")
     private String email;
+
+    public static User of(UserId userId, User user) {
+        return User.builder()
+                .id(userId)
+                .nickname(user.getNickname())
+                .avatarUrl(user.getAvatarUrl())
+                .email(user.getEmail())
+                .build();
+    }
 }
