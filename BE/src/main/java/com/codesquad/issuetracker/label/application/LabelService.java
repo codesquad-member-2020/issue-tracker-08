@@ -2,7 +2,6 @@ package com.codesquad.issuetracker.label.application;
 
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
-import com.codesquad.issuetracker.label.domain.LabelProperty;
 import com.codesquad.issuetracker.label.domain.LabelRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +23,8 @@ public class LabelService {
         return labelRepository.save(label);
     }
 
-    public List<LabelProperty> getAllLabels() {
+    public List<Label> getAllLabels() {
         return StreamSupport.stream(labelRepository.findAll().spliterator(), false)
-                .map(Label::getLabelProperty)
                 .collect(Collectors.toList());
     }
 
