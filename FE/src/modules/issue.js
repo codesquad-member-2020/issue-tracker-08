@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import createRequestThunk from "../lib/createRequestThunk";
+import createRequestThunk from "@Lib/createRequestThunk";
 import * as api from "@Lib/api";
 
 const GET_ISSUE = "issue/GET_ISSUE";

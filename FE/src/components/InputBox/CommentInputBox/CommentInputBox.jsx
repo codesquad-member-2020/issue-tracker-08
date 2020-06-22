@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import MarkdownConverted from "./MarkdownConverted";
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 
 import Button from "@Style/Button";
 
