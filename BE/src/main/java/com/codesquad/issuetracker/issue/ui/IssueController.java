@@ -5,12 +5,14 @@ import com.codesquad.issuetracker.issue.domain.Filter;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueBoard;
 import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,8 +67,10 @@ public class IssueController {
     }
 
     @PutMapping("/{issue_id}/assignees")
-    public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId,
+                                      @RequestBody Set<UserId> assignees) {
         IssueId targetIssueId = new IssueId(issueId);
+        issueService.reassign(targetIssueId, assignees);
         return null;
     }
 
