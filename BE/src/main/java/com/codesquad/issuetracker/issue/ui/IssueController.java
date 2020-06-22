@@ -8,6 +8,7 @@ import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,8 +71,9 @@ public class IssueController {
 
     @PutMapping("/{issue_id}/assignees")
     public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId,
-                                      @RequestBody Set<UserId> assignees) {
+                                      @RequestBody Issue issue) throws JsonProcessingException {
         IssueId targetIssueId = new IssueId(issueId);
+        Set<UserId> assignees = issue.getAssignees();
         issueService.reassign(targetIssueId, assignees);
         return null;
     }
