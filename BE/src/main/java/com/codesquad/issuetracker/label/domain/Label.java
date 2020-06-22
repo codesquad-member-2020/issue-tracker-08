@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -17,6 +18,7 @@ public class Label {
     @EmbeddedId
     private LabelId id;
 
+    @Size(max = 50)
     @Column(name = "name", unique = true)
     private String name;
 
