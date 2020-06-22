@@ -37,4 +37,9 @@ public class CommentService {
         Comment comment = Comment.of(compositeCommentId, content);
         return commentRepository.save(comment);
     }
+
+    public void update(CommentId compositeCommentId, String content) {
+        Comment comment = commentRepository.findById(compositeCommentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+        comment.updateContent(content);
+    }
 }
