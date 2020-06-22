@@ -8,14 +8,16 @@ import com.codesquad.issuetracker.user.domain.UserId;
 import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
 
-import static com.codesquad.issuetracker.user.domain.GithubProperty.getGithubCode;
 import static com.codesquad.issuetracker.utils.GithubApiUtils.requestApi;
 
 @Slf4j
@@ -61,5 +63,18 @@ public class UserController {
         response.sendRedirect("/issues");
 
         return new ResponseEntity<>(HttpStatus.FOUND);
+    }
+    
+    private HttpHeaders getGithubCode(GithubProperty githubProperty) {
+        HttpHeaders headers = new HttpHeaders();
+        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
+                .queryParam("client_id", githubProperty.getClientId())
+                .queryParam("scope", "user")
+                .build()
+                .toUri();
+
+        headers.setLocation(uri);
+
+        return headers;
     }
 }
