@@ -8,7 +8,6 @@ import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +40,9 @@ public class IssueController {
     }
 
     @GetMapping("/{issue_id}")
-    public IssueBoard readIssue(@PathVariable(name = "issue_id") Long issueId) {
-        return null;
+    public Issue readIssue(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        return issueService.read(targetIssueId);
     }
 
     @PatchMapping("/{issue_id}")
@@ -70,7 +70,7 @@ public class IssueController {
 
     @PutMapping("/{issue_id}/assignees")
     public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId,
-                                      @RequestBody Issue issue) throws JsonProcessingException {
+                                      @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         Set<UserId> assignees = issue.getAssignees();
         issueService.reassign(targetIssueId, assignees);
@@ -79,8 +79,9 @@ public class IssueController {
 
     @PutMapping("/{issue_id}/labels")
     public IssueBoard modifyLabels(@PathVariable(name = "issue_id") Long issueId,
-                                   @RequestBody Set<LabelId> labels) {
+                                   @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
+        Set<LabelId> labels = issue.getLabels();
         issueService.putLabels(targetIssueId, labels);
         return null;
     }

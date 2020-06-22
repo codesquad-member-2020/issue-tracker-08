@@ -79,4 +79,8 @@ public class IssueService {
         issue.changeMilestone(targetMilestoneId);
         issueRepository.save(issue);
     }
+
+    public Issue read(IssueId issueId) {
+        return findIssueById(issueId);
+    }
 }
