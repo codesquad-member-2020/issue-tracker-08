@@ -1,10 +1,12 @@
 package com.codesquad.issuetracker.user.application;
 
 import com.codesquad.issuetracker.user.domain.GithubProperty;
+import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -35,5 +37,10 @@ public class LoginService {
             cookie.setPath("/");
             response.addCookie(cookie);
         });
+    }
+
+    public GithubToken getGithubToken(GithubProperty githubProperty, String code) {
+        githubProperty.setCode(code);
+        return new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
     }
 }

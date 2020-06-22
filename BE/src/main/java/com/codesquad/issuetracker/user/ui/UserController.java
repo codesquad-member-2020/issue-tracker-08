@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.codesquad.issuetracker.user.domain.GithubProperty.getGithubCode;
-import static com.codesquad.issuetracker.user.domain.GithubToken.getGithubToken;
 import static com.codesquad.issuetracker.utils.GithubApiUtils.requestApi;
 
 @Slf4j
@@ -52,7 +51,7 @@ public class UserController {
 
     @GetMapping("/oauth")
     public ResponseEntity<Void> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
-        String accessToken = getGithubToken(githubProperty, code).getAccessToken();
+        String accessToken = loginService.getGithubToken(githubProperty, code).getAccessToken();
         User user = requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
         UserId userId = user.getId();
 
@@ -63,6 +62,4 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
-
-
 }
