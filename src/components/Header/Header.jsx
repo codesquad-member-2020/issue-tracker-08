@@ -7,13 +7,18 @@ import Text from "@Style/Text";
 
 const Header = () => {
   let history = useHistory();
+
+  const onPass = () => history.push(`/IssueListPage`);
+
   return (
     <>
       <Wrapper>
-        <HeaderIcon />
-        <Text color="white" fontWeight="bold" isClick as="h2" onClick={() => history.push(`/IssueListPage`)}>
-          ISSUES
-        </Text>
+        <TitleWrapper>
+          <HeaderIcon />
+          <Text color="white" fontWeight="bold" isClick as="h2" onClick={onPass}>
+            ISSUES
+          </Text>
+        </TitleWrapper>
       </Wrapper>
     </>
   );
@@ -32,6 +37,11 @@ const Wrapper = styled.header`
 const HeaderIcon = styled(SubjectIcon)`
   color: ${({ theme }) => theme.colors.gray2};
   margin-right: 5px;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default Header;
