@@ -27,7 +27,7 @@ public class IssueController {
 
     @PostMapping("")
     public Issue createIssue(@RequestBody Issue issue) {
-        return issueService.createIssue(null);
+        return issueService.createIssue(issue);
     }
 
     @PatchMapping("")

@@ -15,9 +15,8 @@ public class IssueService {
     private final IssueRepository issueRepository;
 
     public Issue createIssue(Issue issue) {
-
         Issue newIssue = Issue.of(nextId(), issue);
-        return issueRepository.save(issue);
+        return issueRepository.save(newIssue);
     }
 
     public IssueId nextId() {
