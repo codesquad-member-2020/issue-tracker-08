@@ -28,6 +28,10 @@ public class Comment extends BaseTimeEntity {
         this.isOpen = !isOpen;
     }
 
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
     public static Comment of(CommentId commentId, String content) {
         return Comment.builder()
                 .id(commentId)
