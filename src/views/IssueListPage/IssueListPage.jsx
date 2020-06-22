@@ -17,6 +17,8 @@ import { getIssue } from "@Modules/issue";
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
 
+  const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
+
   const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
             </SearchBar>
           </SearchBarWrapper>
           <NavigationButton />
-          <Button onClick={() => history.push(`/CreateIssuePage`)}>New Issue</Button>
+          <Button onClick={onPassCreateIssuePage}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<IssueListHeader />} tableList={<IssueList />} />
