@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.codesquad.issuetracker.utils.JwtUtils.decrypt;
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,10 +20,11 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content) {
+                                         @RequestBody String content,
+                                         HttpServletRequest request) {
 
         Long commentId = commentService.getNextIdentity();
-        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
 
         commentService.save(compositeCommentId, content);
@@ -34,10 +35,10 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content) {
+                                         @RequestBody String content,
+                                         HttpServletRequest request) {
 
-
-        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
 
         commentService.update(compositeCommentId, content);
@@ -47,9 +48,10 @@ public class CommentController {
 
     @PatchMapping("/{comment_id}")
     public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
-                                               @PathVariable("comment_id") Long commentId) {
+                                               @PathVariable("comment_id") Long commentId,
+                                               HttpServletRequest request) {
 
-        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
 
         commentService.changeStatus(compositeCommentId);
@@ -59,8 +61,10 @@ public class CommentController {
 
     @DeleteMapping("/{comment_id}")
     public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
-                                         @PathVariable("comment_id") Long commentId) {
-        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+                                         @PathVariable("comment_id") Long commentId,
+                                         HttpServletRequest request) {
+
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
 
         commentService.delete(compositeCommentId);

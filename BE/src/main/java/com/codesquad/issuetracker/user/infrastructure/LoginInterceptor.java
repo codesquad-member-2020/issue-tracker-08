@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         Claims claims = JwtUtils.decrypt(jwtToken);
         User loginUser = new ObjectMapper().convertValue(claims, User.class);
 
-        request.setAttribute("nickname", loginUser.getNickname());
+        request.setAttribute("id", loginUser.getId());
         return true;
     }
 
