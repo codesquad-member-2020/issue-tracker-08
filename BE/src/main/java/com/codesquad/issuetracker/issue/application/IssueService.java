@@ -3,6 +3,8 @@ package com.codesquad.issuetracker.issue.application;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.issue.domain.IssueRepository;
+import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +64,18 @@ public class IssueService {
     public void reassign(IssueId issueId, Set<UserId> assignees) {
         Issue issue = findIssueById(issueId);
         issue.reassign(assignees);
+        issueRepository.save(issue);
+    }
+
+    public void putLabels(IssueId issueId, Set<LabelId> labels) {
+        Issue issue = findIssueById(issueId);
+        issue.putLabels(labels);
+        issueRepository.save(issue);
+    }
+
+    public void changeMilestone(IssueId issueId, MilestoneId targetMilestoneId) {
+        Issue issue = findIssueById(issueId);
+        issue.changeMilestone(targetMilestoneId);
         issueRepository.save(issue);
     }
 }
