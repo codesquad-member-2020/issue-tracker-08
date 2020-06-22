@@ -1,11 +1,7 @@
 package com.codesquad.issuetracker.comment.ui;
 
 import com.codesquad.issuetracker.comment.application.CommentService;
-import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
-import com.codesquad.issuetracker.comment.domain.CommentRepository;
-import com.codesquad.issuetracker.issue.domain.IssueId;
-import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,8 +16,6 @@ import static com.codesquad.issuetracker.utils.JwtUtils.decrypt;
 @RestController
 public class CommentController {
 
-    private final CommentRepository commentRepository;
-
     private final CommentService commentService;
 
     @PostMapping("")
@@ -30,7 +24,7 @@ public class CommentController {
                                          @CookieValue(name = "jwt") String jwtToken) {
 
         Long commentId = commentService.getNextIdentity();
-        Long userId = Long.parseLong(decrypt(jwtToken).getId());
+        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
 
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
         commentService.save(compositeCommentId, content);
@@ -41,14 +35,14 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content) {
+                                         @RequestBody String content,
+                                         @CookieValue(name = "jwt") String jwtToken) {
 
 
-        Long commentId = commentService.getNextIdentity();
         Long userId = Long.parseLong(decrypt(jwtToken).getId());
 
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
-        commentService.save(compositeCommentId, content);
+        commentService.update(compositeCommentId, content);
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
     }
@@ -57,8 +51,8 @@ public class CommentController {
     public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
                                                @PathVariable("comment_id") Long commentId,
                                                @RequestBody String userId) {
-        CommentId targetCommentId = new CommentId(commentId);
-        commentService.changeStatus(targetCommentId);
+//        CommentId targetCommentId = new CommentId(commentId);
+//        commentService.changeStatus(targetCommentId);
         return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
     }
 
@@ -66,8 +60,8 @@ public class CommentController {
     public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
                                          @RequestBody String userId) {
-        CommentId targetCommentId = new CommentId(commentId);
-        commentService.delete(targetCommentId);
+//        CommentId targetCommentId = new CommentId(commentId);
+//        commentService.delete(targetCommentId);
         return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
     }
 }
