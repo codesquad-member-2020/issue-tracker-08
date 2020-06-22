@@ -39,14 +39,12 @@ public class LoginService {
     }
 
     public void login(String code, HttpServletResponse response) throws IOException {
-        User user = GithubApiUtils.requestApi(getGithubToken(code).getAccessToken(), githubProperty.getUserApiUrl(), User.class);
         String jwtToken = JwtUtils.createToken(user);
-
         List<Cookie> cookies = createCookiesByUser(user, jwtToken);
         setCookies(cookies, response);
     }
 
-    private GithubToken getGithubToken(String code) {
+    public GithubToken getGithubToken(String code) {
         githubProperty.setCode(code);
         return new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
     }
