@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ import javax.persistence.Embeddable;
 @ToString
 public class LabelProperty {
 
+    @Size(max = 50)
     @Column(name = "name", unique = true)
     private String name;
 

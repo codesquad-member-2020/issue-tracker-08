@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Milestone extends BaseTimeEntity {
     )
     Set<IssueId> issues = new HashSet<>();
 
+    @Size(max = 50)
     @Column(name = "title", unique = true)
     private String title;
 

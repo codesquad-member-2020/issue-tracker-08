@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -18,6 +19,8 @@ public class User {
     private UserId id;
 
     @JsonProperty("login")
+    @Size(max = 50)
+    @Column(name = "nickname", unique = true)
     private String nickname;
 
     @JsonProperty("avatar_url")
