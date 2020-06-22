@@ -15,6 +15,8 @@ const formatter = buildFormatter(koreaStrings);
 const Issue = ({ issue }) => {
   let history = useHistory();
 
+  const onPassIssueDetailPage = () => history.push(`/IssueDetailPage/${issue.id}`);
+
   const badgeList = issue.labels.map((label) => (
     <Badge key={label.name} backgroundColor={label.color} color={label.isFontColorBlack ? "black" : "white"}>
       {label.name}
@@ -29,7 +31,7 @@ const Issue = ({ issue }) => {
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
-          <Title onClick={() => history.push(`/IssueDetailPage/${issue.id}`)}>
+          <Title onClick={onPassIssueDetailPage}>
             <Text fontWeight="bold" isClick as="a">
               {issue.title}
             </Text>
