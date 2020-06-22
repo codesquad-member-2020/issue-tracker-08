@@ -3,7 +3,6 @@ package com.codesquad.issuetracker.issue.application;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.issue.domain.IssueRepository;
-import com.codesquad.issuetracker.issue.ui.IssuesStatusRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
