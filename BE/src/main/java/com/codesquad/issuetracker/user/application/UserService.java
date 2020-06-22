@@ -16,6 +16,4 @@ public class UserService {
         User newUser = User.of(userId, user);
         return userRepository.save(newUser);
     }
-
-
 }
