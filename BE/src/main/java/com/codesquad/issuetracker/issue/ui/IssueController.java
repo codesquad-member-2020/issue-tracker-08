@@ -2,10 +2,7 @@ package com.codesquad.issuetracker.issue.ui;
 
 import com.codesquad.issuetracker.issue.application.IssueRequest;
 import com.codesquad.issuetracker.issue.application.IssueService;
-import com.codesquad.issuetracker.issue.domain.Filter;
-import com.codesquad.issuetracker.issue.domain.Issue;
-import com.codesquad.issuetracker.issue.domain.IssueBoard;
-import com.codesquad.issuetracker.issue.domain.IssueDTO;
+import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
@@ -47,8 +44,8 @@ public class IssueController {
     }
 
     @PatchMapping("")
-    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody IssuesStatusRequest statusRequest) {
-        issueService.changeStatusOfIssues(statusRequest);
+    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody List<IssueId> issueIds) {
+        issueService.changeStatusOfIssues(issueIds);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
