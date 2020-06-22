@@ -13,6 +13,9 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class CommentId implements Serializable {
 
+    @Column(name = "comment_id")
+    private Long commentId;
+
     @Column(name = "issue_id")
     private Long issueId;
 
