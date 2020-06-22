@@ -52,6 +52,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
   const [titleContent, setTitleContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.title);
   const [dateContent, setDateContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.dueDate);
   const [descriptionContent, setDescriptionContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.description);
+  // 수정할때 바꾸지 않은 데이터는 초기값이 안넘어가는 문제 해결중
   // const [titleContent, setTitleContent] = useState("");
   // const [dateContent, setDateContent] = useState("연도. 월. 일");
   // const [descriptionContent, setDescriptionContent] = useState("");
@@ -74,15 +75,13 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
 
   const onCreateMilestone = () => {
     const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
-    console.log(params);
     postHandler(params);
     onPassMilestonePage();
   };
 
   const onSaveMilestone = () => {
     const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
-    console.log(params);
-    // putHandler(params);
+    putHandler(params);
     onPassMilestonePage();
   };
 
