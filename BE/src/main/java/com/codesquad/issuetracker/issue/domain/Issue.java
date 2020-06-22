@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "issue")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
