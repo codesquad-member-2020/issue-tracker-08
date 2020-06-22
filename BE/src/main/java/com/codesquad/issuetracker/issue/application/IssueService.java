@@ -16,16 +16,7 @@ public class IssueService {
 
     public Issue createIssue(Issue issue) {
 
-        Issue issue = Issue.builder()
-                .id(nextId())
-                .title(issueRequest.getTitle())
-                .content(issueRequest.getContent())
-                .assignees(issueRequest.getAssignees())
-                .labels(issueRequest.getLabels())
-                .milestoneId(issueRequest.getMilestoneId())
-                .isOpen(true)
-                .build();
-
+        Issue newIssue = Issue.of(nextId(), issue);
         return issueRepository.save(issue);
     }
 
