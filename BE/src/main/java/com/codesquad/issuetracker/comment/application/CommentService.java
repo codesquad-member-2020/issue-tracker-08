@@ -23,13 +23,13 @@ public class CommentService {
     }
 
     public void changeStatus(CommentId commentId) {
-        Comment comment = newComment(commentId);
+        Comment comment = findCommentById(commentId);
         comment.changeStatus();
         commentRepository.save(comment);
     }
 
     public void delete(CommentId commentId) {
-        Comment comment = newComment(commentId);
+        Comment comment = findCommentById(commentId);
         commentRepository.delete(comment);
     }
 
@@ -39,12 +39,12 @@ public class CommentService {
     }
 
     public void update(CommentId commentId, String content) {
-        Comment comment = newComment(commentId);
+        Comment comment = findCommentById(commentId);
         comment.updateContent(content);
         commentRepository.save(comment);
     }
 
-    private Comment newComment(CommentId commentId) {
+    private Comment findCommentById(CommentId commentId) {
         return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
     }
 }
