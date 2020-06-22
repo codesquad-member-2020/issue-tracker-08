@@ -49,27 +49,34 @@ public class IssueController {
     }
 
     @PatchMapping("/{issue_id}/titles")
-    public IssueBoard editTitle(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueBoard editTitle(@PathVariable(name = "issue_id") Long issueId,
+                                @RequestBody String title) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.editTitle(targetIssueId, title);
         return null;
     }
 
     @PatchMapping("/{issue_id}/content")
     public IssueBoard editContent(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
         return null;
     }
 
     @PutMapping("/{issue_id}/assignees")
     public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
         return null;
     }
 
     @PutMapping("/{issue_id}/labels")
     public IssueBoard modifyLabels(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
         return null;
     }
 
     @PutMapping("/{issue_id}/milestone")
     public IssueBoard modifyMilestone(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
         return null;
     }
 }
