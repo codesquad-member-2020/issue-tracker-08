@@ -2,10 +2,7 @@ package com.codesquad.issuetracker.user.ui;
 
 import com.codesquad.issuetracker.user.application.LoginService;
 import com.codesquad.issuetracker.user.application.UserService;
-import com.codesquad.issuetracker.user.domain.GithubProperty;
-import com.codesquad.issuetracker.user.domain.User;
-import com.codesquad.issuetracker.user.domain.UserId;
-import com.codesquad.issuetracker.user.domain.UserRepository;
+import com.codesquad.issuetracker.user.domain.*;
 import com.codesquad.issuetracker.utils.GithubApiUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+
+import static com.codesquad.issuetracker.user.domain.GithubToken.getGithubToken;
 
 @Slf4j
 @RestController
@@ -53,7 +52,7 @@ public class UserController {
 
     @GetMapping("/oauth")
     public ResponseEntity<Void> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
-        String accessToken = loginService.getGithubToken(code).getAccessToken();
+        String accessToken = getGithubToken(githubProperty, code).getAccessToken();
         User user = GithubApiUtils.requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
         UserId userId = user.getId();
 

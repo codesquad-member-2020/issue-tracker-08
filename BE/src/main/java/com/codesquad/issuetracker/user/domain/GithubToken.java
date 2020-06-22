@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import org.springframework.web.client.RestTemplate;
 
 @Getter
 public class GithubToken {
@@ -13,4 +14,9 @@ public class GithubToken {
     private String tokenType;
 
     private String scope;
+
+    public static GithubToken getGithubToken(GithubProperty githubProperty, String code) {
+        githubProperty.setCode(code);
+        return new RestTemplate().postForEntity(githubProperty.getAccessTokenUrl(), githubProperty, GithubToken.class).getBody();
+    }
 }
