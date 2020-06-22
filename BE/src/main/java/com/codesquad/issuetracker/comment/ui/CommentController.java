@@ -25,8 +25,8 @@ public class CommentController {
 
         Long commentId = commentService.getNextIdentity();
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
-
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+
         commentService.save(compositeCommentId, content);
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
@@ -40,8 +40,8 @@ public class CommentController {
 
 
         Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
-
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+
         commentService.update(compositeCommentId, content);
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
@@ -50,9 +50,13 @@ public class CommentController {
     @PatchMapping("/{comment_id}")
     public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
                                                @PathVariable("comment_id") Long commentId,
-                                               @RequestBody String userId) {
-//        CommentId targetCommentId = new CommentId(commentId);
-//        commentService.changeStatus(targetCommentId);
+                                               @CookieValue(name = "jwt") String jwtToken) {
+
+        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+
+        commentService.changeStatus(compositeCommentId);
+
         return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
     }
 
