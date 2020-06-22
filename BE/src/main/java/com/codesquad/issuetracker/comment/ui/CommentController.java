@@ -3,7 +3,6 @@ package com.codesquad.issuetracker.comment.ui;
 import com.codesquad.issuetracker.comment.application.CommentService;
 import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
-import com.codesquad.issuetracker.comment.domain.CommentQuery;
 import com.codesquad.issuetracker.comment.domain.CommentRepository;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.user.domain.UserId;
@@ -12,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.codesquad.issuetracker.utils.JwtUtils.decrypt;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,15 +26,14 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content) {
+                                         @RequestBody String content,
+                                         @CookieValue(name = "jwt") String jwtToken) {
 
-        CommentId newCommentId = commentService.getNextIdentity();
-        IssueId targetIssueId = new IssueId(issueId);
-        String content =query.getContent();
+        Long commentId = commentService.getNextIdentity();
+        Long userId = Long.parseLong(decrypt(jwtToken).getId());
 
-
-        Comment comment = Comment.of(newQuery);
-        commentRepository.save(comment);
+        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+        commentService.save(compositeCommentId, content);
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
     }
@@ -44,15 +44,11 @@ public class CommentController {
                                          @RequestBody String content) {
 
 
-        CommentId newCommentId = new CommentId(commentId);
-        IssueId targetIssueId = new IssueId(issueId);
-        UserId userId = query.getUserId();
-        String content =query.getContent();
+        Long commentId = commentService.getNextIdentity();
+        Long userId = Long.parseLong(decrypt(jwtToken).getId());
 
-        CommentQuery newQuery = new CommentQuery(newCommentId, targetIssueId, userId, content);
-
-        Comment comment = Comment.of(newQuery);
-        commentRepository.save(comment);
+        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+        commentService.save(compositeCommentId, content);
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
     }

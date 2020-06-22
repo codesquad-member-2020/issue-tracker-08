@@ -32,4 +32,9 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
         commentRepository.delete(comment);
     }
+
+    public Comment save(CommentId compositeCommentId, String content) {
+        Comment comment = Comment.of(compositeCommentId, content);
+        return commentRepository.save(comment);
+    }
 }
