@@ -48,4 +48,16 @@ public class Issue extends BaseTimeEntity {
             joinColumns = @JoinColumn(name = "issue_id")
     )
     private Set<LabelId> labels = new HashSet<>();
+
+    public static Issue of(IssueId issueId, Issue issue) {
+        return Issue.builder()
+                .id(issueId)
+                .title(issue.title)
+                .content(issue.content)
+                .assignees(issue.assignees)
+                .labels(issue.labels)
+                .milestoneId(issue.milestoneId)
+                .isOpen(true)
+                .build();
+    }
 }
