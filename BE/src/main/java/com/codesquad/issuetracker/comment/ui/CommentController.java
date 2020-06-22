@@ -39,7 +39,7 @@ public class CommentController {
                                          @CookieValue(name = "jwt") String jwtToken) {
 
 
-        Long userId = Long.parseLong(decrypt(jwtToken).getId());
+        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
 
         CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
         commentService.update(compositeCommentId, content);
