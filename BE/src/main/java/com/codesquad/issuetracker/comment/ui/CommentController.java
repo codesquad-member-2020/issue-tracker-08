@@ -63,9 +63,12 @@ public class CommentController {
     @DeleteMapping("/{comment_id}")
     public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String userId) {
-//        CommentId targetCommentId = new CommentId(commentId);
-//        commentService.delete(targetCommentId);
+                                         @CookieValue(name = "jwt") String jwtToken) {
+        Long userId = Long.valueOf(decrypt(jwtToken).get("id").toString());
+        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+
+        commentService.delete(compositeCommentId);
+
         return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
     }
 }
