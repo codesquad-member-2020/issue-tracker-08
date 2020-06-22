@@ -63,6 +63,7 @@ public class IssueService {
 
     public void reassign(IssueId issueId, Set<UserId> assignees) {
         Issue issue = findIssueById(issueId);
+        log.info("assignees : {}", assignees);
         issue.reassign(assignees);
         issueRepository.save(issue);
     }
