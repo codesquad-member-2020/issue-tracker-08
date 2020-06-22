@@ -18,7 +18,7 @@ const DELETE_LABEL_FAILURE = "label/DELETE_LABEL_FAILURE";
 
 export const getLabel = createRequestThunk(GET_LABEL, api.getLabel);
 export const createLabel = (params) => createRequestThunk(POST_LABEL, api.createLabel(params));
-export const editLabel = (name) => createRequestThunk(EDIT_LABEL, api.deleteLabel(name));
+export const editLabel = (name, params) => createRequestThunk(EDIT_LABEL, api.editLabel(name, params));
 export const deleteLabel = (name) => createRequestThunk(DELETE_LABEL, api.deleteLabel(name));
 
 const initialState = {
