@@ -35,16 +35,4 @@ public class GithubProperty {
     @JsonIgnore
     private String accessTokenUrl;
 
-    public static HttpHeaders getGithubCode(GithubProperty githubProperty) {
-        HttpHeaders headers = new HttpHeaders();
-        URI uri = UriComponentsBuilder.fromUriString(githubProperty.getCodeUrl())
-                .queryParam("client_id", githubProperty.getClientId())
-                .queryParam("scope", "user")
-                .build()
-                .toUri();
-
-        headers.setLocation(uri);
-
-        return headers;
-    }
 }
