@@ -5,6 +5,8 @@ import com.codesquad.issuetracker.issue.domain.Filter;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueBoard;
 import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -75,14 +77,19 @@ public class IssueController {
     }
 
     @PutMapping("/{issue_id}/labels")
-    public IssueBoard modifyLabels(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueBoard modifyLabels(@PathVariable(name = "issue_id") Long issueId,
+                                   @RequestBody Set<LabelId> labels) {
         IssueId targetIssueId = new IssueId(issueId);
+        issueService.putLabels(targetIssueId, labels);
         return null;
     }
 
     @PutMapping("/{issue_id}/milestone")
-    public IssueBoard modifyMilestone(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueBoard modifyMilestone(@PathVariable(name = "issue_id") Long issueId,
+                                      @RequestBody Long milestoneId) {
         IssueId targetIssueId = new IssueId(issueId);
+        MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+        issueService.changeMilestone(targetIssueId, targetMilestoneId);
         return null;
     }
 }

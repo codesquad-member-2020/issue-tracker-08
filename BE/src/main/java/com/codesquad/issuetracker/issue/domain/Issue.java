@@ -75,4 +75,12 @@ public class Issue extends BaseTimeEntity {
     public void reassign(Set<UserId> assigness) {
         this.assignees = assigness;
     }
+
+    public void putLabels(Set<LabelId> labels) {
+        this.labels = labels;
+    }
+
+    public void changeMilestone(MilestoneId milestoneId) {
+        this.milestoneId = milestoneId;
+    }
 }
