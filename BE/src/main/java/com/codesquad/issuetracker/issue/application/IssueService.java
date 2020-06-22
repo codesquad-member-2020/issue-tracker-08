@@ -45,4 +45,10 @@ public class IssueService {
     public Issue findIssueById(IssueId issueId) {
         return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
     }
+
+    public void editTitle(IssueId issueId, String title) {
+        Issue issue = findIssueById(issueId);
+        issue.editTitle(title);
+        issueRepository.save(issue);
+    }
 }
