@@ -38,11 +38,11 @@ public class IssueService {
         return new IssueId(issueRepository.count() + 1);
     }
 
-    public void changeStatusOfIssues(IssuesStatusRequest statusRequest) {
-        List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(statusRequest.getIssues()).spliterator(), false)
+    public void changeStatusOfIssues(List<IssueId> issueIds) {
+        List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(issueIds).spliterator(), false)
                 .collect(Collectors.toList());
 
-        issues.forEach(i -> i.setIsOpen(statusRequest.getIsOpen()));
+        issues.forEach(i -> i.setIsOpen(!i.getIsOpen()));
 
         issueRepository.saveAll(issues);
     }
