@@ -33,6 +33,11 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
 
   const onChangeDesc = ({ target }) => setInputDesc(target.value);
 
+  const onChangeColor = ({ target }) => {
+    setBackgroundColor(target.value);
+    setBDark(isDark(target.value));
+  };
+
   const createHandler = () => {
     const fn = async () => {
       try {
@@ -83,7 +88,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
                 <ColorResetButton onClick={colorReset} backgroundColor={backgroundColor}>
                   <CachedRoundedIcon fontSize="small" style={{ color: isBackDark ? "white" : "black" }} />
                 </ColorResetButton>
-                <PersonalInputBox widthSize="80px" value={backgroundColor} />
+                <PersonalInputBox widthSize="80px" isRandom value={backgroundColor} onChange={onChangeColor} maxLength={7} />
               </ColorInputBoxWrapper>
             </ColorBoxWrapper>
             <BurrontWrapper>
