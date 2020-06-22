@@ -41,7 +41,9 @@ public class IssueController {
     }
 
     @PatchMapping("/{issue_id}")
-    public IssueBoard changeStatus() {
+    public IssueBoard changeStatus(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.changeStatus(targetIssueId);
         return null;
     }
 

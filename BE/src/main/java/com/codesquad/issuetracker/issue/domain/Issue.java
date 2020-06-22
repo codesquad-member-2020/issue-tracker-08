@@ -60,4 +60,8 @@ public class Issue extends BaseTimeEntity {
                 .isOpen(true)
                 .build();
     }
+
+    public void changeStatus() {
+        this.isOpen = !isOpen;
+    }
 }

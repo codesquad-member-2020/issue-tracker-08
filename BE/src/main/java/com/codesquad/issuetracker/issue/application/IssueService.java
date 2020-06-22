@@ -35,4 +35,14 @@ public class IssueService {
 
         issueRepository.saveAll(issues);
     }
+
+    public void changeStatus(IssueId issueId) {
+        Issue issue = findIssueById(issueId);
+        issue.changeStatus();
+        issueRepository.save(issue);
+    }
+
+    public Issue findIssueById(IssueId issueId) {
+        return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
+    }
 }
