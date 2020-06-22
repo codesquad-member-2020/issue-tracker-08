@@ -10,6 +10,13 @@ const Header = () => {
 
   const onPass = () => history.push(`/IssueListPage`);
 
+  const logoutHandler = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    document.cookie += ";Expires=" + date.toUTCString();
+    history.push("/");
+  };
+
   return (
     <>
       <Wrapper>
@@ -19,6 +26,9 @@ const Header = () => {
             ISSUES
           </Text>
         </TitleWrapper>
+          <Text color="white" isClick onClick={logoutHandler}>
+            로그아웃
+          </Text>
       </Wrapper>
     </>
   );
