@@ -39,9 +39,8 @@ public class MilestoneController {
     @PutMapping("/{milestone_id}")
     public ResponseEntity<?> modifyMilestone(@PathVariable(name = "milestone_id") Long milestoneId,
                                              @RequestBody Milestone milestone) {
-        milestone.setId(new MilestoneId(milestoneId));
         try {
-            milestoneService.modifyMilestone(milestone);
+            milestoneService.modifyMilestone(Milestone.of(new MilestoneId(milestoneId), milestone));
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
