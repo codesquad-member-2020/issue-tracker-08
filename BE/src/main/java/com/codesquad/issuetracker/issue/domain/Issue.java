@@ -32,7 +32,7 @@ public class Issue extends BaseTimeEntity {
     @Embedded
     private UserId authorId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "assigner",
             joinColumns = @JoinColumn(name = "issue_id")
@@ -42,7 +42,7 @@ public class Issue extends BaseTimeEntity {
     @Embedded
     private MilestoneId milestoneId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "tag",
             joinColumns = @JoinColumn(name = "issue_id")
