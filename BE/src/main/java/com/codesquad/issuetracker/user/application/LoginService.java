@@ -3,8 +3,6 @@ package com.codesquad.issuetracker.user.application;
 import com.codesquad.issuetracker.user.domain.GithubProperty;
 import com.codesquad.issuetracker.user.domain.GithubToken;
 import com.codesquad.issuetracker.user.domain.User;
-import com.codesquad.issuetracker.user.domain.UserRepository;
-import com.codesquad.issuetracker.utils.GithubApiUtils;
 import com.codesquad.issuetracker.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +36,7 @@ public class LoginService {
         return headers;
     }
 
-    public void login(String code, HttpServletResponse response) throws IOException {
+    public void login(User user, HttpServletResponse response) throws IOException {
         String jwtToken = JwtUtils.createToken(user);
         List<Cookie> cookies = createCookiesByUser(user, jwtToken);
         setCookies(cookies, response);
@@ -63,7 +61,5 @@ public class LoginService {
             cookie.setPath("/");
             response.addCookie(cookie);
         });
-
-        response.sendRedirect("/api/issues");
     }
 }

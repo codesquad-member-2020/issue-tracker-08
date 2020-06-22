@@ -2,9 +2,13 @@ package com.codesquad.issuetracker.user.ui;
 
 import com.codesquad.issuetracker.user.application.LoginService;
 import com.codesquad.issuetracker.user.application.UserService;
-import com.codesquad.issuetracker.user.domain.*;
+import com.codesquad.issuetracker.user.domain.GithubProperty;
+import com.codesquad.issuetracker.user.domain.User;
+import com.codesquad.issuetracker.user.domain.UserId;
+import com.codesquad.issuetracker.user.domain.UserRepository;
 import com.codesquad.issuetracker.utils.GithubApiUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -34,7 +38,7 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        UserId userId = getNextIdentity();
+        UserId userId = userService.getNextIdentity();
         userService.createUser(userId, user);
         return new ResponseEntity<>("유저 생성 성공", HttpStatus.CREATED);
     }
@@ -50,14 +54,12 @@ public class UserController {
         String accessToken = loginService.getGithubToken(code).getAccessToken();
         User user = GithubApiUtils.requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
         UserId userId = user.getId();
-        loginService.login(code, response);
-        userService.createUser(userId, user);
-        return new ResponseEntity<>(HttpStatus.FOUND);
-    }
 
-    public UserId getNextIdentity() {
-        return Optional.ofNullable(userRepository.findFirstByOrderByIdDesc())
-                .map(user -> new UserId(user.getId().getUserId() + 1L))
-                .orElseGet(() -> new UserId(1L));
+        loginService.login(user, response);
+        userService.createUser(userId, user);
+
+        response.sendRedirect("/issues");
+
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 }
