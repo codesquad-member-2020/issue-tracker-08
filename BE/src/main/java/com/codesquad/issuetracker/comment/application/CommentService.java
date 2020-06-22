@@ -16,10 +16,10 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public CommentId getNextIdentity() {
+    public Long getNextIdentity() {
         return Optional.ofNullable(commentRepository.findFirstByOrderByIdDesc())
-                .map(comment -> new CommentId(comment.getId().getCommentId() + 1L))
-                .orElseGet(() -> new CommentId(1L));
+                .map(comment -> comment.getId().getCommentId() + 1L)
+                .orElseGet(() -> 1L);
     }
 
     public void changeStatus(CommentId commentId) {
