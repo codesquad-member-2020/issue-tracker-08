@@ -49,29 +49,24 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
     if (milestoneId) fn();
   };
 
-  const [titleContent, setTitleContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.title);
-  const [dateContent, setDateContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.dueDate);
-  const [descriptionContent, setDescriptionContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.description);
+  const data = (key) => {
+    if (key) return !loadingMilestoneDetail && milestoneDetail && milestoneDetail[key];
+    return !loadingMilestoneDetail && milestoneDetail;
+  };
+
+  const [titleContent, setTitleContent] = useState(data("title"));
+  const [dateContent, setDateContent] = useState(data("dueDate"));
+  const [descriptionContent, setDescriptionContent] = useState(data("description"));
   // 수정할때 바꾸지 않은 데이터는 초기값이 안넘어가는 문제 해결중
   // const [titleContent, setTitleContent] = useState("");
   // const [dateContent, setDateContent] = useState("연도. 월. 일");
   // const [descriptionContent, setDescriptionContent] = useState("");
 
-  const onSetTitle = (e) => {
-    setTitleContent(e.target.value);
-  };
+  const onSetTitle = ({ target }) => setTitleContent(target.value);
+  const onSetDescription = ({ target }) => setDescriptionContent(target.value);
+  const onSetDate = ({ target }) => setDateContent(target.value);
 
-  const onSetDescription = (e) => {
-    setDescriptionContent(e.target.value);
-  };
-
-  const onSetDate = (e) => {
-    setDateContent(e.target.value);
-  };
-
-  const onPassMilestonePage = () => {
-    history.push(`/MilestonePage`);
-  };
+  const onPassMilestonePage = () => history.push(`/MilestonePage`);
 
   const onCreateMilestone = () => {
     const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
@@ -88,7 +83,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
   return (
     <>
       <Header />
-      {(!milestoneId || (!loadingMilestoneDetail && milestoneDetail)) && (
+      {(!milestoneId || data()) && (
         <Wrapper>
           <ContentWrapper>
             <InfoWrapper>
@@ -109,13 +104,13 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
                 widthSize="50%"
                 backgroundColor="gray1"
                 placeholder="Title"
-                value={milestoneId && milestoneDetail.title}
+                value={milestoneId && data("title")}
                 onChange={onSetTitle}
               ></PersonalInputBox>
               <Text fontWeight="bold">Due date (optional)</Text>
-              <DatePickers defaultValue={milestoneId && milestoneDetail.dueDate} onChange={onSetDate}></DatePickers>
+              <DatePickers defaultValue={milestoneId && data("dueDate")} onChange={onSetDate}></DatePickers>
               <Text fontWeight="bold">Description (optional)</Text>
-              <DescriptionBox defaultValue={milestoneId && milestoneDetail.description} onChange={onSetDescription}></DescriptionBox>
+              <DescriptionBox defaultValue={milestoneId && data("description")} onChange={onSetDescription}></DescriptionBox>
             </Content>
             <ButtonWrapper>
               {milestoneId ? (
