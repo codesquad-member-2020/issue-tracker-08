@@ -3,9 +3,14 @@ package com.codesquad.issuetracker.issue.application;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.issue.domain.IssueRepository;
+import com.codesquad.issuetracker.issue.ui.IssuesStatusRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -31,5 +36,14 @@ public class IssueService {
 
     public IssueId nextId() {
         return new IssueId(issueRepository.count() + 1);
+    }
+
+    public void changeStatusOfIssues(IssuesStatusRequest statusRequest) {
+        List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(statusRequest.getIssues()).spliterator(), false)
+                .collect(Collectors.toList());
+
+        issues.forEach(i -> i.setIsOpen(statusRequest.getIsOpen()));
+
+        issueRepository.saveAll(issues);
     }
 }
