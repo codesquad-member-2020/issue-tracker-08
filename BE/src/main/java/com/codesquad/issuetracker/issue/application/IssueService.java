@@ -14,7 +14,7 @@ public class IssueService {
 
     private final IssueRepository issueRepository;
 
-    public Issue createIssue(IssueRequest issueRequest) {
+    public Issue createIssue(Issue issue) {
 
         Issue issue = Issue.builder()
                 .id(nextId())
