@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LabelIcon from "@material-ui/icons/Label";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import { useHistory } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const NavigationButton = ({ isLabel, isMilestone }) => {
           onClick={() => history.push(`/LabelListPage`)}
           isLabel={isLabel}
         >
-          <LabelIcon fontSize="small" />
+          <LocalOfferOutlinedIcon fontSize="small" />
           Labels
         </LeftButton>
         <RightButton
