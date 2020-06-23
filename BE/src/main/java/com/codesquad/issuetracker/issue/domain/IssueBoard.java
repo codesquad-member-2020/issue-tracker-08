@@ -1,10 +1,17 @@
 package com.codesquad.issuetracker.issue.domain;
 
+import lombok.*;
+
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class IssueBoard {
 
-    private List<Issue> issues;
+    private List<IssueResponse> issues;
 
     private long numberOfLabels;
 
