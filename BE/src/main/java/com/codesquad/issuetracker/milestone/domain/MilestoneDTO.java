@@ -31,11 +31,14 @@ public class MilestoneDTO {
     @JsonProperty
     private Boolean isOpen;
 
-    private long achievementRate;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer achievementRate;
 
-    private long numberOfOpenIssue;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfOpenIssue;
 
-    private long numberOfClosedIssue;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfClosedIssue;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<IssueDTO> issues;
