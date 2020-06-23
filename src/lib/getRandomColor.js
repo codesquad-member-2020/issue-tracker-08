@@ -16,6 +16,13 @@ const rgbToHex = (rgb) =>
     })
     .join("");
 
+const isInvalid = (hex) => {
+  const regex = /([a-f\d]{2})/gm;
+  const result = hex.match(regex);
+
+  return result.length < 3;
+};
+
 const hexToRGB = (hex) => {
   const regex = /([a-f\d]{2})/gm;
   const result = hex.match(regex);
@@ -29,4 +36,4 @@ const randomColor = () => {
 
 const isDark = (hex) => isBackDark(hexToRGB(hex));
 
-export { isDark, randomColor };
+export { isDark, randomColor, isInvalid };
