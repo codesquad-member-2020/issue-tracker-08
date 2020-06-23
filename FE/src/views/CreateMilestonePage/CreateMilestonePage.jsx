@@ -12,7 +12,7 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "@CreateMilestonePage/DatePickers";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
-const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMilestoneDetail }) => {
+const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, milestoneDetail, loadingMilestoneDetail }) => {
   let history = useHistory();
   let { milestoneId } = useParams();
 
@@ -20,12 +20,13 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
     const fn = async () => {
       try {
         await getMilestoneDetail(milestoneId);
+        initContent();
       } catch (e) {
         console.log(e);
       }
     };
     if (milestoneId) fn();
-  }, [getMilestoneDetail]);
+  }, [getMilestoneDetail, postMilestone, putMilestone]);
 
   const postHandler = (params) => {
     const fn = async () => {
@@ -41,7 +42,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
   const putHandler = (params) => {
     const fn = async () => {
       try {
-        await putMilestone(milestoneId, params);
+        await putMilestone({ milestoneId, params });
       } catch (e) {
         console.log(e);
       }
@@ -54,13 +55,23 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
     return !loadingMilestoneDetail && milestoneDetail;
   };
 
-  const [titleContent, setTitleContent] = useState(data("title"));
-  const [dateContent, setDateContent] = useState(data("dueDate"));
-  const [descriptionContent, setDescriptionContent] = useState(data("description"));
+  // const [titleContent, setTitleContent] = useState(data("title"));
+  // const [dateContent, setDateContent] = useState(data("dueDate"));
+  // const [descriptionContent, setDescriptionContent] = useState(data("description"));
   // 수정할때 바꾸지 않은 데이터는 초기값이 안넘어가는 문제 해결중
-  // const [titleContent, setTitleContent] = useState("");
-  // const [dateContent, setDateContent] = useState("연도. 월. 일");
-  // const [descriptionContent, setDescriptionContent] = useState("");
+  const [titleContent, setTitleContent] = useState("");
+  const [dateContent, setDateContent] = useState("");
+  const [descriptionContent, setDescriptionContent] = useState("");
+
+  const initContent = () => {
+    if (!data()) return;
+    setTitleContent(data("title"));
+    setDateContent(data("dueDate"));
+    setDescriptionContent(data("description"));
+    // setTitleContent(milestoneDetail[title]);
+    // setDateContent(milestoneDetail[dueDate]);
+    // setDescriptionContent(milestoneDetail[description]);
+  };
 
   const onSetTitle = ({ target }) => setTitleContent(target.value);
   const onSetDescription = ({ target }) => setDescriptionContent(target.value);
@@ -68,14 +79,14 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
 
   const onPassMilestonePage = () => history.push(`/MilestonePage`);
 
+  const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
+
   const onCreateMilestone = () => {
-    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
     postHandler(params);
     onPassMilestonePage();
   };
 
   const onSaveMilestone = () => {
-    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
     putHandler(params);
     onPassMilestonePage();
   };
@@ -197,5 +208,7 @@ export default connect(
   }),
   {
     getMilestoneDetail,
+    postMilestone,
+    putMilestone,
   }
 )(CreateMilestonePage);
