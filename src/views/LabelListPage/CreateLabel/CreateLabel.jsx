@@ -23,6 +23,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
     name: inputName,
     description: inputDesc,
     color: backgroundColor,
+    isFontColorBlack: isBackDark,
   };
 
   const colorReset = () => {
