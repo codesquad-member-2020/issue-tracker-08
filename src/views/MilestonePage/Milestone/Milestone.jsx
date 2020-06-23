@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import CalendarTodayOutlinedIcon from "@material-ui/icons/CalendarTodayOutlined";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import TimeAgo from "react-timeago";
 import { useHistory } from "react-router-dom";
 import Text from "@Style/Text";
 import { configureDate } from "@Lib/configureDate";
@@ -24,8 +26,26 @@ const Milestone = ({ milestone, patchHandler, deleteHandler }) => {
           <Text fontSize="xl" isClick as="a">
             {milestone.title}
           </Text>
-          <DueDateWrapper color="gray4">
-            <CalendarTodayIcon fontSize="small" /> Due by {configureDate(milestone.dueDate, "short", "Milestone")}
+          <DueDateWrapper>
+            {milestone.dueDate ? (
+              <>
+                <CalendarTodayOutlinedIcon fontSize="small" style={{ marginRight: "5px" }} /> {"Due by "}
+                {configureDate(milestone.dueDate, "short", "Milestone")}
+              </>
+            ) : milestone.isOpen ? (
+              <Text color="gray4">No due date</Text>
+            ) : (
+              <>
+                <Text color="gray4" fontWeight="bold">
+                  Closed
+                </Text>
+                <TimeAgo date={milestone.updatedAt} style={{ marginLeft: "5px" }} />
+              </>
+            )}
+            <>
+              <AccessTimeIcon fontSize="small" style={{ margin: "0 5px 0 10px" }} /> Last updated
+              <TimeAgo date={milestone.updatedAt} style={{ marginLeft: "5px" }} />
+            </>
           </DueDateWrapper>
           <Text color="gray3">{milestone.description}</Text>
         </TitleWrapper>
@@ -76,10 +96,11 @@ const TitleWrapper = styled.div`
   padding: 15px 20px;
 `;
 
-const DueDateWrapper = styled(Text)`
+const DueDateWrapper = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 0;
+  color: ${({ theme }) => theme.colors.gray4};
 `;
 
 const ProgressWrapper = styled.div`
