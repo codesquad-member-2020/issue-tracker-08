@@ -42,27 +42,25 @@ const LabelListPage = ({ getLabel, createLabel, editLabel, deleteLabel, labels, 
   }, []);
 
   const createHandler = (params) => {
-    const fn = async () => {
+    (async () => {
       try {
         await createLabel(params);
         getLabelFc();
       } catch (e) {
         console.error(e);
       }
-    };
-    fn();
+    })();
   };
 
   const editHandler = ({ labelId, params }) => {
-    const fn = async () => {
+    (async () => {
       try {
         await editLabel({ labelId, params });
         getLabelFc();
       } catch (e) {
         console.error(e);
       }
-    };
-    fn();
+    })();
   };
 
   const deleteHandler = (labelId) => {
