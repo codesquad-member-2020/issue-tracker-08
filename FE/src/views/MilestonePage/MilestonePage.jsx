@@ -10,9 +10,9 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import Milestone from "@MilestonePage/Milestone/Milestone";
 import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
-import { getMilestone } from "@Modules/milestone";
+import { getMilestone, patchMilestone, deleteMilestone } from "@Modules/milestone";
 
-const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
+const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
   const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage`);
 
@@ -44,16 +44,48 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
   );
 
   let location = useLocation();
+
+  const getHandler = async () => {
+    try {
+      await getMilestone();
+      console.log("render!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
+    getHandler();
+  }, [getMilestone, patchMilestone, deleteMilestone, location]);
+
+  const deleteConfirm = () => {
+    return confirm("Are you sure?");
+  };
+
+  const patchHandler = (milestoneId) => {
     const fn = async () => {
       try {
-        await getMilestone();
+        await patchMilestone(milestoneId);
+        getHandler();
       } catch (e) {
         console.log(e);
       }
     };
     fn();
-  }, [getMilestone, location]);
+  };
+
+  const deleteHandler = (milestoneId) => {
+    if (!deleteConfirm()) return;
+    const fn = async () => {
+      try {
+        await deleteMilestone(milestoneId);
+        getHandler();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
 
   return (
     <>
@@ -97,5 +129,7 @@ export default connect(
   }),
   {
     getMilestone,
+    patchMilestone,
+    deleteMilestone,
   }
 )(MilestonePage);

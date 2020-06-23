@@ -2,41 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useHistory } from "react-router-dom";
-
 import Text from "@Style/Text";
 import { configureDate } from "@Lib/configureDate";
-import { patchMilestone, deleteMilestone } from "@Modules/milestone";
 
-const Milestone = ({ milestone }) => {
+const Milestone = ({ milestone, patchHandler, deleteHandler }) => {
   let history = useHistory();
 
   const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage/${milestone.id}`);
 
-  const deleteConfirm = () => {
-    return confirm("Are you sure?");
+  const onPatch = () => {
+    patchHandler(milestone.id);
   };
-
-  const patchHandler = () => {
-    const fn = async () => {
-      try {
-        await patchMilestone(milestone.id);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
-  };
-
-  const deleteHandler = () => {
-    if (!deleteConfirm()) return;
-    const fn = async () => {
-      try {
-        await deleteMilestone(milestone.id);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
+  const onDelete = () => {
+    deleteHandler(milestone.id);
   };
 
   return (
@@ -70,10 +48,10 @@ const Milestone = ({ milestone }) => {
             <Text color="blue" fontSize="sm" isClick onClick={onPassCreateMilestonePage}>
               Edit
             </Text>
-            <Text color="blue" fontSize="sm" isClick onClick={patchHandler}>
+            <Text color="blue" fontSize="sm" isClick onClick={onPatch}>
               {milestone.isOpen ? "Close" : "Open"}
             </Text>
-            <Text color="red" fontSize="sm" isClick onClick={deleteHandler}>
+            <Text color="red" fontSize="sm" isClick onClick={onDelete}>
               Delete
             </Text>
           </AdminWrapper>
