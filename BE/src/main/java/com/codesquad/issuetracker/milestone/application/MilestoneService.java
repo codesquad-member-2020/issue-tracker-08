@@ -68,4 +68,8 @@ public class MilestoneService {
         Milestone milestone = mileStoneRepository.findById(milestoneId).orElseThrow(EntityNotFoundException::new);
         return MilestoneDTO.from(milestone);
     }
+
+    public long count() {
+        return mileStoneRepository.count();
+    }
 }
