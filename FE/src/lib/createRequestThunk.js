@@ -1,6 +1,6 @@
 import { startLoading, finishLoading } from "@Modules/loading";
 
-export default function createRequestThunk(type, request) {
+const createRequestThunk = (type, request) => {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
   return (params) => async (dispatch) => {
@@ -23,4 +23,6 @@ export default function createRequestThunk(type, request) {
       throw e;
     }
   };
-}
+};
+
+export default createRequestThunk;
