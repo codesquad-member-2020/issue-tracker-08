@@ -30,6 +30,8 @@ public class Issue extends BaseTimeEntity {
     private Boolean isOpen;
 
     @Embedded
+    @AttributeOverride(name = "userId",
+            column = @Column(name = "author_id"))
     private UserId authorId;
 
     @ElementCollection(fetch = FetchType.EAGER)
