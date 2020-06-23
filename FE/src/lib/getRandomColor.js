@@ -17,7 +17,6 @@ const rgbToHex = (rgb) =>
     .join("");
 
 const hexToRGB = (hex) => {
-  console.log(hex);
   const regex = /([a-f\d]{2})/gm;
   const result = hex.match(regex);
   return [parseInt(result[0], 16), parseInt(result[1], 16), parseInt(result[2], 16)];
