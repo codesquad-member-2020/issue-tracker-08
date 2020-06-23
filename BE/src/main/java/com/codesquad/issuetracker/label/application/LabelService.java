@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,5 +37,13 @@ public class LabelService {
 
     public void delete(LabelId id) {
         labelRepository.deleteById(id);
+    }
+
+    public long count() {
+        return labelRepository.count();
+    }
+
+    public List<Label> findAllByIds(Set<LabelId> labelIds) {
+        return StreamSupport.stream(labelRepository.findAllById(labelIds).spliterator(), false).collect(Collectors.toList());
     }
 }
