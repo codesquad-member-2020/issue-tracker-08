@@ -83,4 +83,16 @@ public class MilestoneService {
     public void deleteMilestone(MilestoneId milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
     }
+
+    public MilestoneDTO readMilestoneById(MilestoneId milestoneId) {
+        Milestone milestone = mileStoneRepository.findById(milestoneId).orElseThrow(EntityNotFoundException::new);
+        return MilestoneDTO.builder()
+                .id(milestone.getId().getMilestoneId())
+                .title(milestone.getTitle())
+                .description(milestone.getDescription())
+                .dueDate(milestone.getDueDate())
+                .updatedAt(milestone.getModifiedAt())
+                .isOpen(milestone.isOpen())
+                .build();
+    }
 }
