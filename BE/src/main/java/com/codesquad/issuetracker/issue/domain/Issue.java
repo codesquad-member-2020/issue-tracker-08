@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "issue")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,7 +32,7 @@ public class Issue extends BaseTimeEntity {
     @Embedded
     private UserId authorId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "assigner",
             joinColumns = @JoinColumn(name = "issue_id")
@@ -41,7 +42,7 @@ public class Issue extends BaseTimeEntity {
     @Embedded
     private MilestoneId milestoneId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "tag",
             joinColumns = @JoinColumn(name = "issue_id")

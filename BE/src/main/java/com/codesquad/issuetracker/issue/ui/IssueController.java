@@ -9,8 +9,11 @@ import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +39,9 @@ public class IssueController {
     }
 
     @PatchMapping("")
-    public IssueBoard changeStatusOfIssues() {
-        return null;
+    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody List<IssueId> issueIds) {
+        issueService.changeStatusOfIssues(issueIds);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{issue_id}")

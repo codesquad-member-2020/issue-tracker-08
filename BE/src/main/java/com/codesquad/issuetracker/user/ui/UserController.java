@@ -60,7 +60,7 @@ public class UserController {
         loginService.login(user, response);
         userService.createUser(userId, user);
 
-        response.sendRedirect("/api/issues");
+        response.sendRedirect("/IssueListPage");
 
         return new ResponseEntity<>(HttpStatus.FOUND);
     }

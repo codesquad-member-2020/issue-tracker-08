@@ -4,9 +4,7 @@ import com.codesquad.issuetracker.common.BaseTimeEntity;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -19,6 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Milestone extends BaseTimeEntity {
 
     @EmbeddedId
@@ -50,6 +50,20 @@ public class Milestone extends BaseTimeEntity {
 
     @Transient
     public int achievementRate;
+
+    public static Milestone of(MilestoneId milestoneId, Milestone milestone) {
+        return Milestone.builder()
+                .id(milestoneId)
+                .issues(milestone.issues)
+                .title(milestone.title)
+                .dueDate(milestone.dueDate)
+                .description(milestone.description)
+                .isOpen(milestone.isOpen)
+                .numberOfOpenIssue(milestone.numberOfOpenIssue)
+                .numberOfClosedIssue(milestone.numberOfClosedIssue)
+                .achievementRate(milestone.achievementRate)
+                .build();
+    }
 
     public void setMetaData(List<Issue> issues) {
         this.numberOfOpenIssue = countNumberOfOpenIssue(issues);

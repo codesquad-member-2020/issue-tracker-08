@@ -4,7 +4,6 @@ import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.label.application.LabelService;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
-import com.codesquad.issuetracker.label.domain.LabelProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,15 +22,15 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping("")
-    public ResponseEntity<List<LabelProperty>> listLabel() {
+    public ResponseEntity<List<Label>> listLabel() {
         return new ResponseEntity<>(labelService.getAllLabels(), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> createLabel(@RequestBody LabelProperty property) {
+    public ResponseEntity<String> createLabel(@RequestBody Label property) {
         try {
             LabelId nextId = labelService.getNextIdentity();
-            Label label = buildLabel(nextId, property);
+            Label label = Label.of(nextId, property);
             labelService.save(label);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(ErrorMessage.LABEL_NAME_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
@@ -40,9 +39,9 @@ public class LabelController {
     }
 
     @PutMapping("/{label_id}")
-    public ResponseEntity<String> update(@PathVariable(value = "label_id") Long labelId, @RequestBody LabelProperty property) {
+    public ResponseEntity<String> update(@PathVariable(value = "label_id") Long labelId, @RequestBody Label property) {
         LabelId id = new LabelId(labelId);
-        Label label = buildLabel(id, property);
+        Label label = Label.of(id, property);
         labelService.save(label);
         return new ResponseEntity<>("라벨 업데이트 성공", HttpStatus.NO_CONTENT);
     }
@@ -52,12 +51,5 @@ public class LabelController {
         LabelId id = new LabelId(labelId);
         labelService.delete(id);
         return new ResponseEntity<>("라벨 삭제 성공", HttpStatus.NO_CONTENT);
-    }
-
-    private Label buildLabel(LabelId id, LabelProperty property) {
-        return Label.builder()
-                .id(id)
-                .labelProperty(property)
-                .build();
     }
 }
