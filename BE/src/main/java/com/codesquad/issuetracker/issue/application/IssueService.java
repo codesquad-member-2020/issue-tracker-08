@@ -35,6 +35,7 @@ public class IssueService {
         List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(issueIds).spliterator(), false)
                 .collect(Collectors.toList());
 
+        // changeStatus 메소드로 변경
         issues.forEach(i -> i.setIsOpen(!i.getIsOpen()));
 
         issueRepository.saveAll(issues);
@@ -79,9 +80,5 @@ public class IssueService {
         Issue issue = findIssueById(issueId);
         issue.changeMilestone(targetMilestoneId);
         issueRepository.save(issue);
-    }
-
-    public Issue read(IssueId issueId) {
-        return findIssueById(issueId);
     }
 }

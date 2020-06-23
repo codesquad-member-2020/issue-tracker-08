@@ -5,6 +5,7 @@ import com.codesquad.issuetracker.issue.domain.Filter;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueBoard;
 import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.codesquad.issuetracker.issue.infrastructure.IssueViewDAO;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
@@ -28,6 +29,8 @@ public class IssueController {
 
     private final IssueService issueService;
 
+    private final IssueViewDAO issueViewDAO;
+
     @GetMapping("")
     public List<Issue> listIssue(Filter filter) {
         return null;
@@ -47,7 +50,7 @@ public class IssueController {
     @GetMapping("/{issue_id}")
     public Issue readIssue(@PathVariable(name = "issue_id") Long issueId) {
         IssueId targetIssueId = new IssueId(issueId);
-        return issueService.read(targetIssueId);
+        return issueViewDAO.read();
     }
 
     @PatchMapping("/{issue_id}")
