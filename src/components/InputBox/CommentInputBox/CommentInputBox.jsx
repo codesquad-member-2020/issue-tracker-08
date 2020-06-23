@@ -74,7 +74,6 @@ const Avatar = styled.img`
 const CommentGroup = styled.div`
   width: 100%;
   z-index: 2;
-  background-color: ${({ theme }) => theme.colors.gray1};
   color: ${({ theme }) => theme.colors.gray4};
   border: 1px solid ${({ theme }) => theme.colors.gray2};
   flex: auto;
@@ -111,7 +110,6 @@ const CommentContent = styled.div`
   padding: 10px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray2};
   overflow: visible;
-  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const ButtonTab = styled.div`
@@ -123,7 +121,7 @@ const WriteButton = styled.button`
   padding: 5px 10px;
   border: 1px ${(props) => (props.isRawOpen ? "solid" : "none")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
-  background-color: ${(props) => (props.isRawOpen ? props.theme.colors.white : props.theme.colors.gray1)};
+  background-color: ${(props) => props.theme.colors.white};
   cursor: pointer;
 `;
 
@@ -131,7 +129,7 @@ const PreviewButton = styled.button`
   padding: 5px 10px;
   border: 1px ${(props) => (props.isRawOpen ? "none" : "solid")} ${({ theme }) => theme.colors.gray2};
   border-bottom: none;
-  background-color: ${(props) => (props.isRawOpen ? props.theme.colors.gray1 : props.theme.colors.white)};
+  background-color: ${(props) => props.theme.colors.white};
   cursor: pointer;
 `;
 
