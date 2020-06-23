@@ -7,10 +7,9 @@ import Button from "@Style/Button";
 import Text from "@Style/Text";
 
 import { isDark, randomColor } from "@/lib/getRandomColor";
-import { createLabel, editLabel } from "@Modules/label";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
+const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, description, createHandler, editHandler }) => {
   const initLabelName = name ? name : "";
   const [color, dark] = randomColor();
 
@@ -42,16 +41,8 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
     setBDark(isDark(target.value));
   };
 
-  const createHandler = () => {
-    const fn = async () => {
-      try {
-        await createLabel(params);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fn();
-
+  const onCreate = () => {
+    createHandler(params);
     close();
   };
 
@@ -99,7 +90,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
               <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled={initLabelName === inputName} onClick={isEdit ? editHandler : createHandler}>
+              <Button disabled={initLabelName === inputName} onClick={isEdit ? editHandler : onCreate}>
                 {isEdit ? "Save Changes" : "Create Label"}
               </Button>
             </BurrontWrapper>
