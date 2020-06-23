@@ -63,6 +63,10 @@ public class Milestone extends BaseTimeEntity {
                 .build();
     }
 
+    public void changeStatus() {
+        this.isOpen = !this.isOpen;
+    }
+
     public void setMetaData(List<Issue> issues) {
         this.numberOfOpenIssue = countNumberOfOpenIssue(issues);
         this.numberOfClosedIssue = countNumberOfClosedIssue(issues);
