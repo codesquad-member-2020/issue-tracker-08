@@ -4,6 +4,7 @@ import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneBoard;
+import com.codesquad.issuetracker.milestone.domain.MilestoneDTO;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,11 @@ public class MilestoneController {
             return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         return new ResponseEntity<>("마일스톤 생성 성공", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{milestone_id}")
+    public ResponseEntity<MilestoneDTO> readMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
+        return new ResponseEntity<>(milestoneService.readMilestoneById(new MilestoneId(milestoneId)), HttpStatus.OK);
     }
 
     @PutMapping("/{milestone_id}")
