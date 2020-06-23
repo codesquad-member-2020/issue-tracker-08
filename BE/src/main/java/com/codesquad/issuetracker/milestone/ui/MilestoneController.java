@@ -40,8 +40,14 @@ public class MilestoneController {
     }
 
     @GetMapping("/{milestone_id}")
-    public ResponseEntity<MilestoneDTO> readMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
-        return new ResponseEntity<>(milestoneService.readMilestoneById(new MilestoneId(milestoneId)), HttpStatus.OK);
+    public ResponseEntity<?> readMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
+        MilestoneDTO milestoneDTO = null;
+        try {
+            milestoneDTO = milestoneService.readMilestoneById(new MilestoneId(milestoneId));
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(ErrorMessage.ENTITY_NOT_FOUND.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(milestoneDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{milestone_id}")
