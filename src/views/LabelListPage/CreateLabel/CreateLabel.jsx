@@ -46,16 +46,8 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
     close();
   };
 
-  const editHandler = () => {
-    const fn = async () => {
-      try {
-        await editLabel(name, params);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fn();
-
+  const onEdit = () => {
+    editHandler({ labelId, params });
     close();
   };
 
@@ -90,7 +82,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
               <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled={initLabelName === inputName} onClick={isEdit ? editHandler : onCreate}>
+              <Button disabled={initLabelName === inputName} onClick={isEdit ? onEdit : onCreate}>
                 {isEdit ? "Save Changes" : "Create Label"}
               </Button>
             </BurrontWrapper>
