@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Repository
 public class IssueViewDAO {
@@ -14,6 +15,10 @@ public class IssueViewDAO {
     private EntityManager entityManager;
 
     public IssueView read(IssueId issueId) {
-        return null;
+        String selectQuery = "SELECT new com";
+
+        TypedQuery<IssueView> query = entityManager.createQuery(selectQuery, IssueView.class);
+        query.setParameter("issueId", issueId);
+        return query.getSingleResult();
     }
 }
