@@ -132,7 +132,9 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
                   <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
                     Close milestone
                   </Button>
-                  <Button onClick={onSaveMilestone}>Save changes</Button>
+                  <Button onClick={onSaveMilestone} disabled={titleContent ? false : true}>
+                    Save changes
+                  </Button>
                 </>
               ) : (
                 <Button onClick={onCreateMilestone} disabled={titleContent ? false : true}>
