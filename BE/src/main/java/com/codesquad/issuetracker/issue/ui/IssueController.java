@@ -1,10 +1,7 @@
 package com.codesquad.issuetracker.issue.ui;
 
 import com.codesquad.issuetracker.issue.application.IssueService;
-import com.codesquad.issuetracker.issue.domain.Filter;
-import com.codesquad.issuetracker.issue.domain.Issue;
-import com.codesquad.issuetracker.issue.domain.IssueBoard;
-import com.codesquad.issuetracker.issue.domain.IssueId;
+import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.issue.infrastructure.IssueViewDAO;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
@@ -48,7 +45,7 @@ public class IssueController {
     }
 
     @GetMapping("/{issue_id}")
-    public Issue readIssue(@PathVariable(name = "issue_id") Long issueId) {
+    public IssueView readIssue(@PathVariable(name = "issue_id") Long issueId) {
         IssueId targetIssueId = new IssueId(issueId);
         return issueViewDAO.read(targetIssueId);
     }

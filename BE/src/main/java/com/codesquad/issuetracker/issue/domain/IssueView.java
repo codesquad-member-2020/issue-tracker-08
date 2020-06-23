@@ -1,14 +1,16 @@
 package com.codesquad.issuetracker.issue.domain;
 
-import com.codesquad.issuetracker.comment.domain.Comment;
+import com.codesquad.issuetracker.comment.domain.CommentView;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 public class IssueView {
 
+    @JsonIgnoreProperties({"authorId", "assignees", "milestoneId", "labels"})
     private Issue issue;
 
     private User author;
@@ -19,5 +21,5 @@ public class IssueView {
 
     private Milestone milestone;
 
-    private List<Comment> comments;
+    private List<CommentView> comments;
 }
