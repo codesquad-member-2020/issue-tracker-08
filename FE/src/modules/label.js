@@ -9,13 +9,11 @@ const EDIT_LABEL = "label/EDIT_LABEL";
 const DELETE_LABEL = "label/DELETE_LABEL";
 
 export const getLabel = createRequestThunk(GET_LABEL, api.getLabel);
-export const createLabel = (params) => createRequestThunk(POST_LABEL, api.createLabel(params));
-export const editLabel = (name, params) => createRequestThunk(EDIT_LABEL, api.editLabel(name, params));
-export const deleteLabel = (name) => createRequestThunk(DELETE_LABEL, api.deleteLabel(name));
+export const createLabel = createRequestThunk(POST_LABEL, api.createLabel);
+export const editLabel = createRequestThunk(EDIT_LABEL, api.editLabel);
+export const deleteLabel = createRequestThunk(DELETE_LABEL, api.deleteLabel);
 
-const initialState = {
-  labels: null,
-};
+const initialState = { labels: null };
 
 const label = handleActions(
   {
