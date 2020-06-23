@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -49,10 +51,12 @@ public class MilestoneController {
 
     @PatchMapping("/{milestone_id}")
     public ResponseEntity<?> changeStatus(@PathVariable(name = "milestone_id") Long milestoneId) {
-        if (milestoneService.changeStatus(new MilestoneId(milestoneId))) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            milestoneService.changeStatus(new MilestoneId(milestoneId));
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{milestone_id}")
