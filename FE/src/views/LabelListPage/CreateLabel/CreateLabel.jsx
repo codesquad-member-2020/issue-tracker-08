@@ -26,6 +26,8 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
     isFontColorBlack: isBackDark,
   };
 
+  const isDisabled = () => initLabelName === inputName || isInvalidColor;
+
   const colorReset = () => {
     const [resetColor, resetDark] = randomColor();
 
@@ -84,7 +86,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
               <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled={initLabelName === inputName} onClick={isEdit ? onEdit : onCreate}>
+              <Button disabled={isDisabled()} onClick={isEdit ? onEdit : onCreate}>
                 {isEdit ? "Save Changes" : "Create Label"}
               </Button>
             </BurrontWrapper>
