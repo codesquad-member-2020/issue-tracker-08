@@ -26,9 +26,17 @@ const PersonalInputBox = ({ isRandom, title, widthSize, value, backgroundColor, 
             backgroundColor={backgroundColor}
             placeholder={placeholder}
             onChange={onChange}
+            maxLength={maxLength}
           />
         ) : (
-          <InputBox type="text" widthSize={widthSize} backgroundColor={backgroundColor} placeholder={placeholder} onChange={onChange} />
+          <InputBox
+            type="text"
+            widthSize={widthSize}
+            backgroundColor={backgroundColor}
+            placeholder={placeholder}
+            onChange={onChange}
+            maxLength={maxLength}
+          />
         )}
       </Wrap>
     </>
