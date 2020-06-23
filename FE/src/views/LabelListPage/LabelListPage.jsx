@@ -12,21 +12,47 @@ import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getLabel, createLabel, editLabel, deleteLabel } from "@Modules/label";
 
-const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
+const LabelListPage = ({ getLabel, createLabel, editLabel, deleteLabel, labels, loadingLabel }) => {
   const [isOpenNewLabel, setIsOpenNewLabel] = useState(false);
 
   const newLabelOpenHandler = () => setIsOpenNewLabel(!isOpenNewLabel);
 
   const hasLabels = () => !loadingLabel && labels;
 
-  const LabelList = () => <>{hasLabels() && labels.map((label) => <Label key={label.name} label={label} />)}</>;
+  const LabelList = () => (
+    <>
+      {!loadingLabel &&
+        labels &&
+        labels.map((label) => (
+          <Label key={label.id.labelId} label={label} createHandler={createHandler} editHandler={editHandler} deleteHandler={deleteHandler} />
+        ))}
+    </>
+  );
+
+  const getLabelFc = async () => {
+    try {
+      await getLabel();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
+    getLabelFc();
+  }, []);
+
+  const createHandler = (params) => {
     const fn = async () => {
       try {
-        await getLabel();
+        await createLabel(params);
+        getLabelFc();
       } catch (e) {
-        console.log(e);
+        console.error(e);
+      }
+    };
+    fn();
+  };
+
       }
     };
     fn();
@@ -41,7 +67,9 @@ const LabelListPage = ({ getLabel, labels, loadingLabel }) => {
           <Button onClick={newLabelOpenHandler}>New Label</Button>
         </NavBar>
       </NavBarWrap>
-      {isOpenNewLabel && <CreateLabel close={newLabelOpenHandler} />}
+      {isOpenNewLabel && (
+        <CreateLabel createHandler={createHandler} editHandler={editHandler} deleteHandler={deleteHandler} close={newLabelOpenHandler} />
+      )}
       <Table tableHeader={<LabelListHeader count={hasLabels() && labels.length} />} tableList={<LabelList />} />
     </>
   );

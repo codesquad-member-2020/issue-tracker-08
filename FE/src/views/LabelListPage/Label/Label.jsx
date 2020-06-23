@@ -8,7 +8,18 @@ import Button from "@Style/Button";
 import { deleteLabel } from "@Modules/label";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 
-const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
+const Label = ({
+  label: {
+    id: { labelId },
+    name,
+    description,
+    color,
+    isFontColorBlack,
+  },
+  createHandler,
+  editHandler,
+  deleteHandler,
+}) => {
   const [isOpenEditLabel, setIsOpenEditLabel] = useState(false);
 
   const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
@@ -30,7 +41,17 @@ const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
   return (
     <>
       {isOpenEditLabel ? (
-        <CreateLabel isEdit close={editLabelOpenHandler} defaultColor={color} isColorDark={isFontColorBlack} name={name} description={description} />
+        <CreateLabel
+          isEdit
+          createHandler={createHandler}
+          editHandler={editHandler}
+          close={editLabelOpenHandler}
+          defaultColor={color}
+          isColorDark={isFontColorBlack}
+          labelId={labelId}
+          name={name}
+          description={description}
+        />
       ) : (
         <Wrapper>
           <BadgeWrapper>
@@ -77,4 +98,4 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export default React.memo(Label);
+export default Label;
