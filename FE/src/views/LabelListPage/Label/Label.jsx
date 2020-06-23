@@ -5,7 +5,6 @@ import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 
-import { deleteLabel } from "@Modules/label";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 
 const Label = ({
