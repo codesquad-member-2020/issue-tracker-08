@@ -3,6 +3,7 @@ package com.codesquad.issuetracker.comment.application;
 import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
 import com.codesquad.issuetracker.comment.domain.CommentRepository;
+import com.codesquad.issuetracker.issue.domain.IssueId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,9 @@ public class CommentService {
 
     private Comment findCommentById(CommentId commentId) {
         return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+    }
+
+    public long countByIssueId(IssueId issueId) {
+        return commentRepository.countByIssueId(issueId);
     }
 }
