@@ -50,7 +50,7 @@ public class IssueController {
     @GetMapping("/{issue_id}")
     public Issue readIssue(@PathVariable(name = "issue_id") Long issueId) {
         IssueId targetIssueId = new IssueId(issueId);
-        return issueViewDAO.read();
+        return issueViewDAO.read(targetIssueId);
     }
 
     @PatchMapping("/{issue_id}")
