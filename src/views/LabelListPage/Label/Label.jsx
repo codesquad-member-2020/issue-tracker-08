@@ -24,19 +24,7 @@ const Label = ({
 
   const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
 
-  const deleteHandler = () => {
-    const CONFIRM_MSG = `${name} 라벨을 삭제하시겠습니까?`;
-
-    if (!confirm(CONFIRM_MSG)) return;
-
-    (async () => {
-      try {
-        await deleteLabel(name);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  };
+  const onDelete = () => deleteHandler(labelId);
 
   return (
     <>
@@ -68,7 +56,7 @@ const Label = ({
             <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={editLabelOpenHandler}>
               Edit
             </Button>
-            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={deleteHandler}>
+            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={onDelete}>
               Delete
             </Button>
           </ButtonWrapper>

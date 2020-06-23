@@ -65,6 +65,20 @@ const LabelListPage = ({ getLabel, createLabel, editLabel, deleteLabel, labels, 
     fn();
   };
 
+  const deleteHandler = (labelId) => {
+    const CONFIRM_MSG = `${name} 라벨을 삭제하시겠습니까?`;
+
+    if (!confirm(CONFIRM_MSG)) return;
+
+    (async () => {
+      try {
+        await deleteLabel(labelId);
+        getLabelFc();
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
 
   return (
     <>
