@@ -13,6 +13,7 @@ const colors = {
 };
 
 const fontSizes = {
+  xsm: "10px",
   sm: "12px",
   md: "16px",
   lg: "20px",
