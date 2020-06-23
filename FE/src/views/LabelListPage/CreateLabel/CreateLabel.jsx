@@ -6,7 +6,7 @@ import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 import Text from "@Style/Text";
 
-import { isDark, randomColor } from "@/lib/getRandomColor";
+import { isDark, randomColor, isInvalid } from "@/lib/getRandomColor";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, description, createHandler, editHandler }) => {
@@ -17,6 +17,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
   const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : dark);
   const [inputName, setInputName] = useState(initLabelName);
   const [inputDesc, setInputDesc] = useState(description ? description : "");
+  const [isInvalidColor, setIsInvalidColor] = useState(isInvalid(color));
 
   const params = {
     name: inputName,
@@ -38,6 +39,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
 
   const onChangeColor = ({ target }) => {
     setBackgroundColor(target.value);
+    setIsInvalidColor(isInvalid(target.value));
     setBDark(isDark(target.value));
   };
 
