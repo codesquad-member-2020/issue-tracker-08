@@ -65,7 +65,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
             </Badge>
           </BadgeWrapper>
           <LabelInputWrapper>
-            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} />
+            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} maxLength={20} />
             <PersonalInputBox
               title="Description"
               placeholder="Description (optional)"
@@ -81,6 +81,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
                 </ColorResetButton>
                 <PersonalInputBox widthSize="80px" isRandom value={backgroundColor} onChange={onChangeColor} maxLength={7} />
               </ColorInputBoxWrapper>
+              {isInvalidColor && <InvalidColor children="유효하지 않은 색상입니다." fontWeight="bold" fontSize="xsm" color="red" />}
             </ColorBoxWrapper>
             <BurrontWrapper>
               <Button color="black" backgroundColor="white" onClick={close}>
@@ -127,12 +128,19 @@ const ColorBoxWrapper = styled.div`
   text-align: initial;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const ColorInputBoxWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const InvalidColor = styled(Text)`
+  position: absolute;
+  bottom: 7px;
+  left: 1px;
 `;
 
 const ColorResetButton = styled.div`
