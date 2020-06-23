@@ -27,8 +27,10 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
   };
 
   const colorReset = () => {
-    setBackgroundColor(color);
-    setBDark(dark);
+    const [resetColor, resetDark] = randomColor();
+
+    setBackgroundColor(resetColor);
+    setBDark(resetDark);
   };
 
   const onChangeName = ({ target }) => setInputName(target.value);
