@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.label.application;
 
+import com.codesquad.issuetracker.issue.application.IssueService;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelDTO;
 import com.codesquad.issuetracker.label.domain.LabelId;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +22,8 @@ import java.util.stream.StreamSupport;
 public class LabelService {
 
     private final LabelRepository labelRepository;
+
+    private final IssueService issueService;
 
     public void save(Label label) {
         labelRepository.save(label);
@@ -37,8 +41,10 @@ public class LabelService {
                 .orElseGet(() -> new LabelId(1L));
     }
 
+    @Transactional
     public void delete(LabelId id) {
         labelRepository.deleteById(id);
+        issueService.deleteLabelOfIssue(id);
     }
 
     public long count() {
