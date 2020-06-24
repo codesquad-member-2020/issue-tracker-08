@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -32,13 +30,10 @@ public class IssueService {
     }
 
     public void changeStatusOfIssues(List<IssueId> issueIds) {
-        List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(issueIds).spliterator(), false)
-                .collect(Collectors.toList());
-
-        // changeStatus 메소드로 변경
-        issues.forEach(i -> i.setIsOpen(!i.getIsOpen()));
-
-        issueRepository.saveAll(issues);
+        issueRepository.findAllById(issueIds).forEach(issue -> {
+            issue.changeStatus();
+            issueRepository.save(issue);
+        });
     }
 
     public void changeStatus(IssueId issueId) {
@@ -65,7 +60,6 @@ public class IssueService {
 
     public void reassign(IssueId issueId, Set<UserId> assignees) {
         Issue issue = findIssueById(issueId);
-        log.info("assignees : {}", assignees);
         issue.reassign(assignees);
         issueRepository.save(issue);
     }
