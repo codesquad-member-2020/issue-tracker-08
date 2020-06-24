@@ -1,6 +1,6 @@
 export const REGEX = {
-  ID: /^[a-z0-9][a-z0-9_\-]{6,16}$/,
-  PSWD_LEN: /.{6,12}$/,
+  ID: /^[a-z0-9][a-z0-9_\-]{5,15}$/,
+  PSWD_LEN: /.{5,11}$/,
   DOWN_CASE: /^(?=.*[a-z])/,
   NUMBER: /\d/,
   CHARACTOR: /\W+/,
