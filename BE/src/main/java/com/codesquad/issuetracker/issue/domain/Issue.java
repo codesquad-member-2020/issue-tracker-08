@@ -89,4 +89,12 @@ public class Issue extends BaseTimeEntity {
     public void changeMilestone(MilestoneId milestoneId) {
         this.milestoneId = milestoneId;
     }
+
+    public void deleteMilestone() {
+        this.milestoneId = null;
+    }
+
+    public void deleteLabel(LabelId labelId) {
+        this.labels.remove(labelId);
+    }
 }
