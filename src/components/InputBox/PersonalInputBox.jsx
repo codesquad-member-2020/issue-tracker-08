@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ type, isRandom, title, widthSize, value, backgroundColor, placeholder, onChange, maxLength }) => {
+const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, backgroundColor, placeholder, onChange, maxLength }) => {
   return (
     <>
       <Wrap>
@@ -38,6 +38,7 @@ const PersonalInputBox = ({ type, isRandom, title, widthSize, value, backgroundC
             maxLength={maxLength}
           />
         )}
+        <MessageBox children={errorMsg} fontSize="sm" color="red" />
       </Wrap>
     </>
   );
@@ -47,11 +48,12 @@ const Wrap = styled.div`
   text-align: initial;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 `;
 
 const InputBox = styled.input`
   border: none;
-  margin: 5px 0 20px 0;
+  margin: 5px 0;
   height: 40px;
   padding: 10px;
   border-radius: 5px;
@@ -65,6 +67,10 @@ const InputBox = styled.input`
     border-color: ${({ theme }) => theme.colors.blue};
     box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
   }
+`;
+
+const MessageBox = styled(Text)`
+  height: 20px;
 `;
 
 export default PersonalInputBox;
