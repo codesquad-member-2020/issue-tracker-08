@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Button from "@Style/Button";
 
@@ -10,51 +10,87 @@ import NavigationButton from "@NavigationButton/NavigationButton";
 import Milestone from "@MilestonePage/Milestone/Milestone";
 import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
-import { getMilestone } from "@Modules/milestone";
+import { getMilestone, patchMilestone, deleteMilestone } from "@Modules/milestone";
 
-const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
+const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
-  const openCount = !loadingMilestone && milestones && milestones.numberOfOpenMilestone;
-  const closeCount = !loadingMilestone && milestones && milestones.numberOfClosedMilestone;
+  const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage`);
+
+  const isLoaded = !loadingMilestone && milestones;
+
+  const openCount = isLoaded && milestones.numberOfOpenMilestone;
+  const closeCount = isLoaded && milestones.numberOfClosedMilestone;
 
   const [isOpenView, setIsOpenView] = useState(true);
-  const open = () => {
-    setIsOpenView(true);
-  };
-  const close = () => {
-    setIsOpenView(false);
-  };
+  const open = () => setIsOpenView(true);
+  const close = () => setIsOpenView(false);
 
   const MilestoneOpenList = () => (
     <>
-      {!loadingMilestone &&
-        milestones &&
+      {isLoaded &&
         milestones.milestones
           .filter((milestone) => milestone.isOpen)
-          .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
+          .sort((a, b) => b.id - a.id)
+          .map((milestone) => (
+            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
+          ))}
     </>
   );
 
   const MilestoneCloseList = () => (
     <>
-      {!loadingMilestone &&
-        milestones &&
+      {isLoaded &&
         milestones.milestones
           .filter((milestone) => !milestone.isOpen)
-          .map((milestone) => <Milestone key={milestone.id} milestone={milestone}></Milestone>)}
+          .sort((a, b) => b.id - a.id)
+          .map((milestone) => (
+            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
+          ))}
     </>
   );
 
+  let location = useLocation();
+
+  const getHandler = async () => {
+    try {
+      await getMilestone();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
+    getHandler();
+  }, [getMilestone, patchMilestone, deleteMilestone, location]);
+
+  const deleteConfirm = () => {
+    return confirm("Are you sure?");
+  };
+
+  const patchHandler = (milestoneId) => {
     const fn = async () => {
       try {
-        await getMilestone();
+        await patchMilestone(milestoneId);
+        getHandler();
       } catch (e) {
         console.log(e);
       }
     };
     fn();
-  }, [getMilestone]);
+  };
+
+  const deleteHandler = (milestoneId) => {
+    if (!deleteConfirm()) return;
+    const fn = async () => {
+      try {
+        await deleteMilestone(milestoneId);
+        getHandler();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
 
   return (
     <>
@@ -62,7 +98,7 @@ const MilestonePage = ({ getMilestone, milestones, loadingMilestone }) => {
       <NavBarWrap>
         <NavBar>
           <NavigationButton isMilestone />
-          <Button onClick={() => history.push(`/CreateMilestonePage`)}>New Milestone</Button>
+          <Button onClick={onPassCreateMilestonePage}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
       <Table
@@ -84,6 +120,7 @@ const NavBarWrap = styled.nav`
 const NavBar = styled.nav`
   width: 65%;
   max-width: 1000px;
+  min-width: 760px;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -97,5 +134,7 @@ export default connect(
   }),
   {
     getMilestone,
+    patchMilestone,
+    deleteMilestone,
   }
 )(MilestonePage);

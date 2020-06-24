@@ -16,9 +16,24 @@ const rgbToHex = (rgb) =>
     })
     .join("");
 
-const pipe = (...functions) => (args) => functions.reduce((arg, nextFn) => nextFn(arg), args);
+const isInvalid = (hex) => {
+  const regex = /([a-f\d]{2})/gm;
+  const result = hex.match(regex);
 
-const isDark = () => pipe(chooseColors, isBackDark)([]);
-const randomColor = () => pipe(chooseColors, rgbToHex)([]);
+  return result.length < 3;
+};
 
-export { isDark, randomColor };
+const hexToRGB = (hex) => {
+  const regex = /([a-f\d]{2})/gm;
+  const result = hex.match(regex);
+  return [parseInt(result[0], 16), parseInt(result[1], 16), parseInt(result[2], 16)];
+};
+
+const randomColor = () => {
+  const color = chooseColors([]);
+  return [rgbToHex(color), isBackDark(color)];
+};
+
+const isDark = (hex) => isBackDark(hexToRGB(hex));
+
+export { isDark, randomColor, isInvalid };

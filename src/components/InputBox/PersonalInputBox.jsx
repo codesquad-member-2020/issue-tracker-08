@@ -3,12 +3,22 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ type, title, widthSize, value, backgroundColor, placeholder, onChange }) => {
+const PersonalInputBox = ({ type, isRandom, title, widthSize, value, backgroundColor, placeholder, onChange, maxLength }) => {
   return (
     <>
       <Wrap>
         <Text children={title} fontWeight="bold" />
-        {value ? (
+        {isRandom ? (
+          <InputBox
+            type="text"
+            widthSize={widthSize}
+            value={value}
+            backgroundColor={backgroundColor}
+            placeholder={placeholder}
+            onChange={onChange}
+            maxLength={maxLength}
+          />
+        ) : value ? (
           <InputBox
             type="text"
             widthSize={widthSize}
@@ -16,6 +26,7 @@ const PersonalInputBox = ({ type, title, widthSize, value, backgroundColor, plac
             backgroundColor={backgroundColor}
             placeholder={placeholder}
             onChange={onChange}
+            maxLength={maxLength}
           />
         ) : (
           <InputBox
@@ -24,6 +35,7 @@ const PersonalInputBox = ({ type, title, widthSize, value, backgroundColor, plac
             backgroundColor={backgroundColor}
             placeholder={placeholder}
             onChange={onChange}
+            maxLength={maxLength}
           />
         )}
       </Wrap>

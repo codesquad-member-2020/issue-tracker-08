@@ -5,29 +5,40 @@ import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 
-import { deleteLabel } from "@Modules/label";
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 
-const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
+const Label = ({
+  label: {
+    id: { labelId },
+    name,
+    description,
+    color,
+    isFontColorBlack,
+  },
+  createHandler,
+  editHandler,
+  deleteHandler,
+}) => {
   const [isOpenEditLabel, setIsOpenEditLabel] = useState(false);
 
   const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
 
-  const deleteHandler = () => {
-    const fn = async () => {
-      try {
-        await deleteLabel(name);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
-  };
+  const onDelete = () => deleteHandler(labelId);
 
   return (
     <>
       {isOpenEditLabel ? (
-        <CreateLabel isEdit close={editLabelOpenHandler} defaultColor={color} isColorDark={isFontColorBlack} name={name} description={description} />
+        <CreateLabel
+          isEdit
+          createHandler={createHandler}
+          editHandler={editHandler}
+          close={editLabelOpenHandler}
+          defaultColor={color}
+          isColorDark={isFontColorBlack}
+          labelId={labelId}
+          name={name}
+          description={description}
+        />
       ) : (
         <Wrapper>
           <BadgeWrapper>
@@ -44,7 +55,7 @@ const Label = ({ label: { name, description, color, isFontColorBlack } }) => {
             <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={editLabelOpenHandler}>
               Edit
             </Button>
-            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={deleteHandler}>
+            <Button color="gray4" backgroundColor="white" fontSize="sm" borderColor="white" onClick={onDelete}>
               Delete
             </Button>
           </ButtonWrapper>
@@ -74,4 +85,4 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export default React.memo(Label);
+export default Label;
