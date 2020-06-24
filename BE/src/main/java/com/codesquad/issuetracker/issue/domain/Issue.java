@@ -53,12 +53,12 @@ public class Issue extends BaseTimeEntity {
     )
     private Set<LabelId> labels = new HashSet<>();
 
-    public static Issue of(IssueId issueId, Issue issue) {
+    public static Issue of(IssueId issueId, Issue issue, UserId authorId) {
         return Issue.builder()
                 .id(issueId)
                 .title(issue.title)
                 .content(issue.content)
-                .authorId(issue.authorId)
+                .authorId(authorId)
                 .assignees(issue.assignees)
                 .labels(issue.labels)
                 .milestoneId(issue.milestoneId)
