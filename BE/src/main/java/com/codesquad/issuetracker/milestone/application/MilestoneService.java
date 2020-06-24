@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.milestone.application;
 
+import com.codesquad.issuetracker.issue.application.IssueService;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueRepository;
 import com.codesquad.issuetracker.milestone.domain.*;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ public class MilestoneService {
     private final MileStoneRepository mileStoneRepository;
 
     private final IssueRepository issueRepository;
+
+    private final IssueService issueService;
 
     public Milestone save(MilestoneId milestoneId, Milestone milestone) {
         Milestone newMilestone = Milestone.of(milestoneId, milestone);
@@ -60,8 +64,10 @@ public class MilestoneService {
         mileStoneRepository.save(milestone);
     }
 
+    @Transactional
     public void deleteMilestone(MilestoneId milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
+        issueService.deleteMilestoneOfIssue(milestoneId);
     }
 
     public MilestoneDTO readMilestoneById(MilestoneId milestoneId) {
