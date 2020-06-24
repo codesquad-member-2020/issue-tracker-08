@@ -7,6 +7,7 @@ import Text from "@Style/Text";
 import Button from "@Style/Button";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
+import SignupPage from "@SignupPage/SignupPage";
 import { API_URL } from "@Constants/url";
 
 const LoginPage = () => {
@@ -28,12 +29,12 @@ const LoginPage = () => {
         <BoxWrap>
           <LoginWrap isSignupOpen={isSignupOpen}>
             <PersonalInputBox title="아이디" />
-            <PersonalInputBox title="비밀번호" />
+            <PersonalInputBox title="비밀번호" type="password" />
             <ButtonWrap>
               <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => history.push(`/IssueListPage`)}>
                 로그인
               </Button>
-              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => setIsSignupOpen(!isSignupOpen)}>
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
                 회원가입
               </Button>
             </ButtonWrap>
@@ -42,17 +43,7 @@ const LoginPage = () => {
               <GitHubIcon style={githubLogoStyle} />
             </Button>
           </LoginWrap>
-          <SignupWrap isSignupOpen={isSignupOpen}>
-            <PersonalInputBox title="아이디" />
-            <PersonalInputBox title="비밀번호" />
-            <PersonalInputBox title="비밀번호 확인" />
-            <PersonalInputBox title="이름" />
-            <SignUpButtonWrap>
-              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => setIsSignupOpen(!isSignupOpen)}>
-                회원가입
-              </Button>
-            </SignUpButtonWrap>
-          </SignupWrap>
+          <SignupPage isSignupOpen={isSignupOpen} openHandler={openHandler}></SignupPage>
         </BoxWrap>
       </LoginPageWrap>
     </>
@@ -79,19 +70,9 @@ const LoginWrap = styled.div`
   display: ${(props) => (props.isSignupOpen ? "none" : "block")};
 `;
 
-const SignupWrap = styled.div`
-  display: ${(props) => (props.isSignupOpen ? "block" : "none")};
-`;
-
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 32px;
-`;
-
-const SignUpButtonWrap = styled.div`
-  display: flex;
-  justify-content: center;
   height: 32px;
 `;
 
