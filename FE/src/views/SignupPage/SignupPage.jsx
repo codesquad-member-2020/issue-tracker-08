@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Button from "@Style/Button";
@@ -20,6 +20,12 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   const debounceUserInfo = useDebounce(userInfo);
   const debouncedpwdCheck = useDebounce(passwordCheck);
 
+  useEffect(() => {
+    validId();
+    validPassword();
+    validPasswordCheck();
+    validEmail();
+  }, [debounceUserInfo, debouncedpwdCheck]);
 
   const validId = () => {
     if (!userInfo.id.match(REGEX.ID)) return setIdMsg(ID_MSG.INVALID);
@@ -45,22 +51,18 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
 
   const changeId = ({ target }) => {
     setUserInfo({ ...userInfo, id: target.value });
-    validId();
   };
 
   const changePassword = ({ target }) => {
     setUserInfo({ ...userInfo, password: target.value });
-    validPassword();
   };
 
   const changePasswordCheck = ({ target }) => {
     setPasswordCheck(target.value);
-    validPasswordCheck();
   };
 
   const changeEmail = ({ target }) => {
     setUserInfo({ ...userInfo, email: target.value });
-    validEmail();
   };
 
   return (
