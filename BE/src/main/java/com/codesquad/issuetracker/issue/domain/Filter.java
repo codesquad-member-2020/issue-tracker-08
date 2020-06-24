@@ -13,13 +13,13 @@ public class Filter {
 
     private Boolean isOpen = true;
 
-    private String author;
+    private Long author;
 
-    private String label;
+    private Long label;
 
-    private String milestone;
+    private Long milestone;
 
-    private String assignee;
+    private Long assignee;
 
     private SortBy sort;
 }
