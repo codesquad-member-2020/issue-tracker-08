@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class IssueService {
@@ -37,10 +36,6 @@ public class IssueService {
         Issue issue = findIssueById(issueId);
         issue.changeStatus();
         issueRepository.save(issue);
-    }
-
-    public Issue findIssueById(IssueId issueId) {
-        return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
     }
 
     public void editTitle(IssueId issueId, String title) {
@@ -71,5 +66,9 @@ public class IssueService {
         Issue issue = findIssueById(issueId);
         issue.changeMilestone(targetMilestoneId);
         issueRepository.save(issue);
+    }
+
+    private Issue findIssueById(IssueId issueId) {
+        return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
     }
 }
