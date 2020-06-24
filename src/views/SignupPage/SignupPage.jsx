@@ -72,14 +72,10 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
-        <PersonalInputBox title="아이디" onChange={changeId} />
-        <Text>{idMsg}</Text>
-        <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} />
-        <Text>{passwordMsg}</Text>
-        <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} />
-        <Text>{passworCheckdMsg}</Text>
-        <PersonalInputBox title="이메일" onChange={changeEmail} />
-        <Text>{emailMsg}</Text>
+        <PersonalInputBox title="아이디" onChange={changeId} errorMsg={idMsg} />
+        <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} errorMsg={passwordMsg} />
+        <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} errorMsg={passworCheckdMsg} />
+        <PersonalInputBox title="이메일" onChange={changeEmail} errorMsg={emailMsg} />
         <SignUpButtonWrap>
           <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
             회원가입
