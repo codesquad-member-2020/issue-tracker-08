@@ -9,6 +9,8 @@ import com.codesquad.issuetracker.issue.infrastructure.IssueViewDAO;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.label.domain.LabelRepository;
+import com.codesquad.issuetracker.milestone.domain.MileStoneRepository;
+import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
@@ -16,6 +18,7 @@ import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,6 +34,8 @@ public class IssueService {
     private final LabelRepository labelRepository;
 
     private final UserRepository userRepository;
+
+    private final MileStoneRepository mileStoneRepository;
 
     public Issue createIssue(Issue issue) {
         Issue newIssue = Issue.of(getNextIdentity(), issue);
@@ -77,16 +82,18 @@ public class IssueService {
         issueRepository.save(issue);
     }
 
-    public IssueView readIssue(IssueId targetIssueId) {
-        IssueView issueView = issueViewDAO.read(targetIssueId);
-        List<User> assignees = (List<User>) userRepository.findAllById(issueView.getIssue().getAssignees());
-        List<Label> labels = (List<Label>) labelRepository.findAllById(issueView.getIssue().getLabels());
-        List<CommentView> commentViews = issueViewDAO.readAllComment(targetIssueId);
-        return IssueView.of(issueView, assignees, labels, commentViews);
+    public IssueView readIssue(IssueId issueId) {
+        Issue issue = findIssueById(issueId);
+        User author = userRepository.findById(issue.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다!"));
+        Milestone milestone = mileStoneRepository.findById(issue.getMilestoneId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
+        List<User> assignees = (List<User>) userRepository.findAllById(issue.getAssignees());
+        List<Label> labels = (List<Label>) labelRepository.findAllById(issue.getLabels());
+        List<CommentView> commentViews = issueViewDAO.readAllComment(issueId);
+        return IssueView.of(issue,author, milestone, assignees, labels, commentViews);
     }
 
     private Issue findIssueById(IssueId issueId) {
-        return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
+        return issueRepository.findById(issueId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 이슈입니다!"));
     }
 
     private IssueId getNextIdentity() {
