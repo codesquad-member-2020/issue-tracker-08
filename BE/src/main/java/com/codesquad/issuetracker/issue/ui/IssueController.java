@@ -1,13 +1,17 @@
 package com.codesquad.issuetracker.issue.ui;
 
+import com.codesquad.issuetracker.comment.domain.CommentView;
 import com.codesquad.issuetracker.issue.application.IssueService;
 import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.issue.infrastructure.IssueViewDAO;
+import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.label.domain.LabelRepository;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
+import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,6 +32,10 @@ public class IssueController {
 
     private final IssueViewDAO issueViewDAO;
 
+    private final LabelRepository labelRepository;
+
+    private final UserRepository userRepository;
+
     @GetMapping("")
     public List<Issue> listIssue(Filter filter) {
         return null;
@@ -47,7 +55,11 @@ public class IssueController {
     @GetMapping("/{issue_id}")
     public IssueView readIssue(@PathVariable(name = "issue_id") Long issueId) {
         IssueId targetIssueId = new IssueId(issueId);
-        return issueViewDAO.read(targetIssueId);
+        IssueView issueView = issueViewDAO.read(targetIssueId);
+        List<CommentView> commentViews = issueViewDAO.readAllComment(targetIssueId);
+        List<Label> labels = labelRepository.findAllByIssueId(targetIssueId);
+        List<User> assignees = userRepository.findByIdIssue(targetIssueId);
+        return new IssueView(issueView, assignees, labels, commentViews);
     }
 
     @PatchMapping("/{issue_id}")
