@@ -4,6 +4,7 @@ import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneBoard;
+import com.codesquad.issuetracker.milestone.domain.MilestoneDTO;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 
 @Slf4j
 @RestController
@@ -36,6 +39,17 @@ public class MilestoneController {
         return new ResponseEntity<>("마일스톤 생성 성공", HttpStatus.CREATED);
     }
 
+    @GetMapping("/{milestone_id}")
+    public ResponseEntity<?> readMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
+        MilestoneDTO milestoneDTO = null;
+        try {
+            milestoneDTO = milestoneService.readMilestoneById(new MilestoneId(milestoneId));
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(ErrorMessage.ENTITY_NOT_FOUND.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(milestoneDTO, HttpStatus.OK);
+    }
+
     @PutMapping("/{milestone_id}")
     public ResponseEntity<?> modifyMilestone(@PathVariable(name = "milestone_id") Long milestoneId,
                                              @RequestBody Milestone milestone) {
@@ -49,10 +63,12 @@ public class MilestoneController {
 
     @PatchMapping("/{milestone_id}")
     public ResponseEntity<?> changeStatus(@PathVariable(name = "milestone_id") Long milestoneId) {
-        if (milestoneService.changeStatus(new MilestoneId(milestoneId))) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            milestoneService.changeStatus(new MilestoneId(milestoneId));
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ErrorMessage.ENTITY_UPDATE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{milestone_id}")

@@ -11,7 +11,8 @@ public enum ErrorMessage {
     MILESTONE_TITLE_DUPLICATED("Title has already been taken"),
     ENTITY_UPDATE_FAILED("Failed to update"),
     ENTITY_DELETE_FAILED("Failed to delete"),
-    UNAUTHORIZED("Need to Login");
+    UNAUTHORIZED("Need to Login"),
+    ENTITY_NOT_FOUND("Failed to get");
 
     private String message;
     

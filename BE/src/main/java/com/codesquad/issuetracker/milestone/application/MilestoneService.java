@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,11 +74,25 @@ public class MilestoneService {
         mileStoneRepository.updateMilestone(milestone);
     }
 
-    public boolean changeStatus(MilestoneId milestoneId) {
-        return mileStoneRepository.changeStatus(milestoneId) > 0;
+    public void changeStatus(MilestoneId milestoneId) {
+        Milestone milestone = mileStoneRepository.findById(milestoneId).orElseThrow(EntityNotFoundException::new);
+        milestone.changeStatus();
+        mileStoneRepository.save(milestone);
     }
 
     public void deleteMilestone(MilestoneId milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
+    }
+
+    public MilestoneDTO readMilestoneById(MilestoneId milestoneId) {
+        Milestone milestone = mileStoneRepository.findById(milestoneId).orElseThrow(EntityNotFoundException::new);
+        return MilestoneDTO.builder()
+                .id(milestone.getId().getMilestoneId())
+                .title(milestone.getTitle())
+                .description(milestone.getDescription())
+                .dueDate(milestone.getDueDate())
+                .updatedAt(milestone.getModifiedAt())
+                .isOpen(milestone.isOpen())
+                .build();
     }
 }
