@@ -1,6 +1,6 @@
 package com.codesquad.issuetracker.milestone.domain;
 
-import com.codesquad.issuetracker.issue.domain.IssueDTO;
+import com.codesquad.issuetracker.issue.domain.IssueView;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,14 +21,18 @@ public class MilestoneDTO {
 
     private String title;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String description;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDate dueDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime updatedAt;
 
     @JsonProperty
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean isOpen;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -41,7 +45,7 @@ public class MilestoneDTO {
     private Long numberOfClosedIssue;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<IssueDTO> issues;
+    private List<IssueView> issues;
 
     public static MilestoneDTO from (Milestone milestone) {
         return MilestoneDTO.builder()
