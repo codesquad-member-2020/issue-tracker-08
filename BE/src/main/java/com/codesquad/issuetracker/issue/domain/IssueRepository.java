@@ -10,4 +10,10 @@ public interface IssueRepository extends CrudRepository<Issue, IssueId> {
     Issue findFirstByOrderByIdDesc();
 
     List<Issue> findAllByMilestoneId(MilestoneId milestoneId);
+
+    long count();
+
+    long countByIsOpenTrue();
+
+    long countByIsOpenFalse();
 }
