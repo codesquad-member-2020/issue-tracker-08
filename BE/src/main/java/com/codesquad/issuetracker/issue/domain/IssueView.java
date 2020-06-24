@@ -33,11 +33,11 @@ public class IssueView {
 
     private List<CommentView> comments;
 
-    public static IssueView of(IssueView issueView, List<User> assignees, List<Label> labels, List<CommentView> comments) {
+    public static IssueView of(Issue issue, User author, Milestone milestone, List<User> assignees, List<Label> labels, List<CommentView> comments) {
         return IssueView.builder()
-                .issue(issueView.issue)
-                .author(issueView.author)
-                .milestone(issueView.milestone)
+                .issue(issue)
+                .author(author)
+                .milestone(milestone)
                 .assignees(assignees)
                 .labels(labels)
                 .comments(comments)
