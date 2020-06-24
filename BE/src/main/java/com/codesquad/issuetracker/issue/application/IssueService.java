@@ -23,9 +23,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class IssueService {
 
-    private final IssueRepository issueRepository;
-
     private final IssueViewDAO issueViewDAO;
+
+    private final IssueRepository issueRepository;
 
     private final LabelRepository labelRepository;
 
