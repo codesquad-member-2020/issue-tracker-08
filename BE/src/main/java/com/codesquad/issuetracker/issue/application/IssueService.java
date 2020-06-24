@@ -1,13 +1,19 @@
 package com.codesquad.issuetracker.issue.application;
 
+import com.codesquad.issuetracker.comment.domain.CommentView;
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.IssueId;
 import com.codesquad.issuetracker.issue.domain.IssueRepository;
+import com.codesquad.issuetracker.issue.domain.IssueView;
+import com.codesquad.issuetracker.issue.infrastructure.IssueViewDAO;
+import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.label.domain.LabelRepository;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
+import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +24,12 @@ import java.util.Set;
 public class IssueService {
 
     private final IssueRepository issueRepository;
+
+    private final IssueViewDAO issueViewDAO;
+
+    private final LabelRepository labelRepository;
+
+    private final UserRepository userRepository;
 
     public Issue createIssue(Issue issue) {
         Issue newIssue = Issue.of(nextId(), issue);
@@ -66,6 +78,14 @@ public class IssueService {
         Issue issue = findIssueById(issueId);
         issue.changeMilestone(targetMilestoneId);
         issueRepository.save(issue);
+    }
+
+    public IssueView readIssue(IssueId targetIssueId) {
+        IssueView issueView = issueViewDAO.read(targetIssueId);
+        List<User> assignees = (List<User>) userRepository.findAllById(issueView.getIssue().getAssignees());
+        List<Label> labels = (List<Label>) labelRepository.findAllById(issueView.getIssue().getLabels());
+        List<CommentView> commentViews = issueViewDAO.readAllComment(targetIssueId);
+        return IssueView.of(issueView, assignees, labels, commentViews);
     }
 
     private Issue findIssueById(IssueId issueId) {
