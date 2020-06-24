@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,12 +33,8 @@ public class IssueService {
     private final UserRepository userRepository;
 
     public Issue createIssue(Issue issue) {
-        Issue newIssue = Issue.of(nextId(), issue);
+        Issue newIssue = Issue.of(getNextIdentity(), issue);
         return issueRepository.save(newIssue);
-    }
-
-    public IssueId nextId() {
-        return new IssueId(issueRepository.count() + 1);
     }
 
     public void changeStatusOfIssues(List<IssueId> issueIds) {
@@ -90,5 +87,11 @@ public class IssueService {
 
     private Issue findIssueById(IssueId issueId) {
         return issueRepository.findById(issueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이슈입니다!"));
+    }
+
+    private IssueId getNextIdentity() {
+        return Optional.ofNullable(issueRepository.findFirstByOrderByIdDesc())
+                .map(issue -> new IssueId(issue.getId().getIssueId() + 1L))
+                .orElseGet(() -> new IssueId(1L));
     }
 }
