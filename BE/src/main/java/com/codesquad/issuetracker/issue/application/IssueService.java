@@ -85,7 +85,10 @@ public class IssueService {
     public IssueView readIssue(IssueId issueId) {
         Issue issue = findIssueById(issueId);
         User author = userRepository.findById(issue.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다!"));
-        Milestone milestone = mileStoneRepository.findById(issue.getMilestoneId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
+        Milestone milestone = null;
+        if(issue.getMilestoneId() != null) {
+            milestone = mileStoneRepository.findById(issue.getMilestoneId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
+        }
         List<User> assignees = (List<User>) userRepository.findAllById(issue.getAssignees());
         List<Label> labels = (List<Label>) labelRepository.findAllById(issue.getLabels());
         List<CommentView> commentViews = issueViewDAO.readAllComment(issueId);
