@@ -9,7 +9,7 @@ import Text from "@Style/Text";
 import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
-import DatePickers from "./DatePickers";
+import DatePickers from "@CreateMilestonePage/DatePickers";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
 const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMilestoneDetail }) => {

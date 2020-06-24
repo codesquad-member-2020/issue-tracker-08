@@ -12,4 +12,5 @@ export const deleteMilestone = (milestoneId) => axios.delete(`${API_URL.mileston
 
 export const getLabel = () => axios.get(API_URL.label);
 export const createLabel = (params) => axios.post(API_URL.label, params);
+export const editLabel = ({ labelId, params }) => axios.put(`${API_URL.label}${labelId}`, params);
 export const deleteLabel = (labelName) => axios.delete(`${API_URL.label}${labelName}`);
