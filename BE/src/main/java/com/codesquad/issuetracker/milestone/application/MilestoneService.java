@@ -49,9 +49,7 @@ public class MilestoneService {
     private List<MilestoneDTO> parseMilestonesToDTO(List<Milestone> milestones) {
         return milestones.stream().map(m -> {
 
-            List<Issue> issues = StreamSupport.stream(issueRepository.findAllById(m.getIssues()).spliterator(), false)
-                    .collect(Collectors.toList());
-
+            List<Issue> issues = issueRepository.findByMilestoneId(m.getId());
             m.setMetaData(issues);
 
             // 현재는 List<IssueDTO>를 세팅하지 않지만 /milestones/{id}/issues에서 필요할 듯
