@@ -44,7 +44,7 @@ public class IssueService {
         List<IssueView> issues = StreamSupport.stream(issueRepository.findAll(IssuePredicate.search(filter)).spliterator(), false)
                 .map(i -> IssueView.of(i,
                         userRepository.findById(i.getAuthorId()).orElseThrow(EntityNotFoundException::new),
-                        mileStoneRepository.findById(i.getMilestoneId()).orElseThrow(EntityNotFoundException::new),
+                        findMilestone(i.getMilestoneId()),
                         StreamSupport.stream(userRepository.findAllById(i.getAssignees()).spliterator(), false).collect(Collectors.toList()),
                         StreamSupport.stream(labelRepository.findAllById(i.getLabels()).spliterator(), false).collect(Collectors.toList()),
                         commentRepository.countByIssueId(i.getId())))
@@ -59,9 +59,10 @@ public class IssueService {
                 .build();
     }
 
-    public Issue createIssue(Issue issue) {
-        Issue newIssue = Issue.of(getNextIdentity(), issue);
-        return issueRepository.save(newIssue);
+    public IssueView createIssue(Issue issue, UserId userId) {
+        Issue newIssue = Issue.of(getNextIdentity(), issue, userId);
+        issueRepository.save(newIssue);
+        return readIssue(newIssue.getId());
     }
 
     public void changeStatusOfIssues(List<IssueId> issueIds) {
@@ -107,10 +108,7 @@ public class IssueService {
     public IssueView readIssue(IssueId issueId) {
         Issue issue = findIssueById(issueId);
         User author = userRepository.findById(issue.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다!"));
-        Milestone milestone = null;
-        if(issue.getMilestoneId() != null) {
-            milestone = mileStoneRepository.findById(issue.getMilestoneId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
-        }
+        Milestone milestone = findMilestone(issue.getMilestoneId());
         List<User> assignees = (List<User>) userRepository.findAllById(issue.getAssignees());
         List<Label> labels = (List<Label>) labelRepository.findAllById(issue.getLabels());
         List<CommentView> commentViews = issueViewDAO.readAllComment(issueId);
@@ -125,5 +123,9 @@ public class IssueService {
         return Optional.ofNullable(issueRepository.findFirstByOrderByIdDesc())
                 .map(issue -> new IssueId(issue.getId().getIssueId() + 1L))
                 .orElseGet(() -> new IssueId(1L));
+    }
+
+    private Milestone findMilestone(MilestoneId milestoneId) {
+        return milestoneId == null ? null : mileStoneRepository.findById(milestoneId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
     }
 }
