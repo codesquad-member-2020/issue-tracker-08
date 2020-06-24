@@ -15,6 +15,11 @@ import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
 import com.codesquad.issuetracker.user.domain.UserRepository;
+import com.codesquad.issuetracker.comment.application.CommentService;
+import com.codesquad.issuetracker.issue.domain.*;
+import com.codesquad.issuetracker.label.application.LabelService;
+import com.codesquad.issuetracker.milestone.application.MilestoneService;
+import com.codesquad.issuetracker.user.application.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +28,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class IssueService {
@@ -30,6 +37,36 @@ public class IssueService {
     private final IssueViewDAO issueViewDAO;
 
     private final IssueRepository issueRepository;
+    private final LabelService labelService;
+    private final MilestoneService milestoneService;
+    private final UserService userService;
+    private final CommentService commentService;
+
+    public IssueBoard findIssuesByFilter(Filter filter) {
+
+        List<IssueResponse> issues = issueRepository.findByFilter(filter).stream()
+                .map(i -> IssueResponse.builder()
+                        .id(i.getId().getIssueId())
+                        .title(i.getTitle())
+                        .content(i.getContent())
+                        .isOpen(i.getIsOpen())
+                        .createdAt(i.getCreatedAt())
+                        .author(userService.findById(i.getAuthorId()))
+                        .assignees(userService.findAllByIds(i.getAssignees()))
+                        .labels(labelService.findAllByIds(i.getLabels()))
+                        .numberOfComment(commentService.countByIssueId(i.getId()))
+                        .milestone(milestoneService.readMilestoneById(i.getMilestoneId()))
+                        .build())
+                .collect(Collectors.toList());
+
+         return IssueBoard.builder()
+                .issues(issues)
+                .numberOfLabels(labelService.count())
+                .numberOfMilestones(milestoneService.count())
+                .numberOfOpenIssues(issueRepository.countByIsOpenTrue())
+                .numberOfClosedIssues(issueRepository.countByIsOpenFalse())
+                .build();
+    }
 
     private final LabelRepository labelRepository;
 
