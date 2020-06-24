@@ -17,6 +17,10 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   const [passworCheckdMsg, setPasswordCheckMsg] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
 
+  const debounceUserInfo = useDebounce(userInfo);
+  const debouncedpwdCheck = useDebounce(passwordCheck);
+
+
   const validId = () => {
     if (!userInfo.id.match(REGEX.ID)) return setIdMsg(ID_MSG.INVALID);
     return setIdMsg(ID_MSG.SUCCESS);
