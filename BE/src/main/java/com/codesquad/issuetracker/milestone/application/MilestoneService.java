@@ -33,7 +33,7 @@ public class MilestoneService {
                 .collect(Collectors.toList());
 
         long numberOfOpenMilestone = milestones.stream().filter(Milestone::isOpen).count();
-        long numberOfClosedMilestone = milestones.stream().filter(m -> !m.isOpen()).count();
+        long numberOfClosedMilestone = milestones.size() - numberOfOpenMilestone;
         List<MilestoneDTO> milestoneDTOS = parseMilestonesToDTO(milestones);
 
         return new MilestoneBoard(numberOfOpenMilestone, numberOfClosedMilestone, milestoneDTOS);
@@ -48,21 +48,12 @@ public class MilestoneService {
     private List<MilestoneDTO> parseMilestonesToDTO(List<Milestone> milestones) {
         return milestones.stream().map(m -> {
 
-            List<Issue> issues = issueRepository.findByMilestoneId(m.getId());
+            List<Issue> issues = issueRepository.findAllByMilestoneId(m.getId());
+
             m.setMetaData(issues);
 
             // 현재는 List<IssueDTO>를 세팅하지 않지만 /milestones/{id}/issues에서 필요할 듯
-            return MilestoneDTO.builder()
-                    .id(m.getId().getMilestoneId())
-                    .title(m.getTitle())
-                    .description(m.getDescription())
-                    .dueDate(m.getDueDate())
-                    .updatedAt(m.getModifiedAt())
-                    .isOpen(m.isOpen())
-                    .achievementRate(m.getAchievementRate())
-                    .numberOfOpenIssue(m.getNumberOfOpenIssue())
-                    .numberOfClosedIssue(m.getNumberOfClosedIssue())
-                    .build();
+            return MilestoneDTO.from(m);
         }).collect(Collectors.toList());
     }
 
@@ -83,13 +74,6 @@ public class MilestoneService {
 
     public MilestoneDTO readMilestoneById(MilestoneId milestoneId) {
         Milestone milestone = mileStoneRepository.findById(milestoneId).orElseThrow(EntityNotFoundException::new);
-        return MilestoneDTO.builder()
-                .id(milestone.getId().getMilestoneId())
-                .title(milestone.getTitle())
-                .description(milestone.getDescription())
-                .dueDate(milestone.getDueDate())
-                .updatedAt(milestone.getModifiedAt())
-                .isOpen(milestone.isOpen())
-                .build();
+        return MilestoneDTO.from(milestone);
     }
 }

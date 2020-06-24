@@ -42,4 +42,15 @@ public class MilestoneDTO {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<IssueDTO> issues;
+
+    public static MilestoneDTO from (Milestone milestone) {
+        MilestoneDTO.builder()
+                .id(milestone.getId().getMilestoneId())
+                .title(milestone.getTitle())
+                .description(milestone.getDescription())
+                .dueDate(milestone.getDueDate())
+                .updatedAt(milestone.getModifiedAt())
+                .isOpen(milestone.isOpen())
+                .build();
+    }
 }
