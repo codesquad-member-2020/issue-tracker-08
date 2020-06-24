@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Button from "@Style/Button";
+import Text from "@Style/Text";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
+import useDebounce from "@Hooks/useDebounce";
+import { REGEX, ID_MSG, PSWD1_MSG, PSWD1_INVALID_CASE, PSWD2_MSG, EMAIL_ERR_MSG } from "@Constants/validate";
 
 const SignupPage = ({ isSignupOpen, openHandler }) => {
+  const [userInfo, setUserInfo] = useState({ id: "", password: "", email: "" });
+  const [passwordCheck, setPasswordCheck] = useState("");
+
+  const [idMsg, setIdMsg] = useState("");
+  const [passwordMsg, setPasswordMsg] = useState("");
+  const [passworCheckdMsg, setPasswordCheckMsg] = useState("");
+  const [emailMsg, setEmailMsg] = useState("");
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
