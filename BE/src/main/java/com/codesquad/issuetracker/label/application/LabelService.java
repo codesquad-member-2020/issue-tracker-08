@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.label.application;
 
 import com.codesquad.issuetracker.label.domain.Label;
+import com.codesquad.issuetracker.label.domain.LabelDTO;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.label.domain.LabelRepository;
 import lombok.AllArgsConstructor;
@@ -20,12 +21,13 @@ public class LabelService {
 
     private final LabelRepository labelRepository;
 
-    public Label save(Label label) {
-        return labelRepository.save(label);
+    public void save(Label label) {
+        labelRepository.save(label);
     }
 
-    public List<Label> getAllLabels() {
+    public List<LabelDTO> getAllLabels() {
         return StreamSupport.stream(labelRepository.findAll().spliterator(), false)
+                .map(LabelDTO::from)
                 .collect(Collectors.toList());
     }
 
