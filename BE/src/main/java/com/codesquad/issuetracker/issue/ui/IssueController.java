@@ -6,6 +6,7 @@ import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/issues")
@@ -25,8 +27,9 @@ public class IssueController {
     private final IssueService issueService;
 
     @GetMapping("")
-    public List<Issue> listIssue(Filter filter) {
-        return null;
+    public IssueBoard listIssue(Filter filter) {
+        log.info("filter: {}", filter);
+        return issueService.findIssuesByFilter(filter);
     }
 
     @PostMapping("")
