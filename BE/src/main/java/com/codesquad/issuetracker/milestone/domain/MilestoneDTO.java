@@ -44,7 +44,7 @@ public class MilestoneDTO {
     private List<IssueDTO> issues;
 
     public static MilestoneDTO from (Milestone milestone) {
-        MilestoneDTO.builder()
+        return MilestoneDTO.builder()
                 .id(milestone.getId().getMilestoneId())
                 .title(milestone.getTitle())
                 .description(milestone.getDescription())
