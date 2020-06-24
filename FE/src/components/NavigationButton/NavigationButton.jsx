@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LabelIcon from "@material-ui/icons/Label";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import { useHistory } from "react-router-dom";
 
@@ -8,22 +8,21 @@ import Button from "@Style/Button";
 
 const NavigationButton = ({ isLabel, isMilestone }) => {
   let history = useHistory();
+
+  const onPassLabelListPage = () => history.push(`/LabelListPage`);
+  const onPassMilestonePage = () => history.push(`/MilestonePage`);
+
   return (
     <>
       <Wrapper>
-        <LeftButton
-          color={isLabel ? "white" : "gray4"}
-          backgroundColor={isLabel ? "blue" : "white"}
-          onClick={() => history.push(`/LabelListPage`)}
-          isLabel={isLabel}
-        >
-          <LabelIcon fontSize="small" />
+        <LeftButton color={isLabel ? "white" : "gray4"} backgroundColor={isLabel ? "blue" : "white"} onClick={onPassLabelListPage} isLabel={isLabel}>
+          <LocalOfferOutlinedIcon fontSize="small" />
           Labels
         </LeftButton>
         <RightButton
           color={isMilestone ? "white" : "gray4"}
           backgroundColor={isMilestone ? "blue" : "white"}
-          onClick={() => history.push(`/MilestonePage`)}
+          onClick={onPassMilestonePage}
           isMilestone={isMilestone}
         >
           <EventNoteIcon fontSize="small" />

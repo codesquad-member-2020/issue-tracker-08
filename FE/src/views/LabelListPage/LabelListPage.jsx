@@ -104,6 +104,7 @@ const NavBarWrap = styled.nav`
 const NavBar = styled.nav`
   width: 65%;
   max-width: 1000px;
+  min-width: 760px;
   height: 40px;
   display: flex;
   justify-content: space-between;
