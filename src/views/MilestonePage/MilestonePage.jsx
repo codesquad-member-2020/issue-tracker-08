@@ -54,7 +54,6 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
   const getHandler = async () => {
     try {
       await getMilestone();
-      console.log("render!");
     } catch (e) {
       console.log(e);
     }
