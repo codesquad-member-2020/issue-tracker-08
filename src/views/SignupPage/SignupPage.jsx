@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 import Button from "@Style/Button";
-import Text from "@Style/Text";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import useDebounce from "@Hooks/useDebounce";
 import { REGEX, ID_MSG, PSWD1_MSG, PSWD1_INVALID_CASE, PSWD2_MSG, EMAIL_MSG } from "@Constants/validate";
+import { postUser } from "@Modules/user";
 
-const SignupPage = ({ isSignupOpen, openHandler }) => {
-  const [userInfo, setUserInfo] = useState({ id: "", password: "", email: "" });
+const SignupPage = ({ isSignupOpen, openHandler, postUser, userMsg, loadingUser }) => {
+  const [userInfo, setUserInfo] = useState({ login: "", password: "", email: "" });
   const [passwordCheck, setPasswordCheck] = useState("");
 
   const [idMsg, setIdMsg] = useState("");
@@ -28,8 +29,8 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   }, [debounceUserInfo, debouncedpwdCheck]);
 
   const validId = () => {
-    if (!userInfo.id) return;
-    if (!userInfo.id.match(REGEX.ID)) return setIdMsg(ID_MSG.INVALID);
+    if (!userInfo.login) return;
+    if (!userInfo.login.match(REGEX.ID)) return setIdMsg(ID_MSG.INVALID);
     return setIdMsg(ID_MSG.SUCCESS);
   };
 
@@ -55,7 +56,7 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   };
 
   const changeId = ({ target }) => {
-    setUserInfo({ ...userInfo, id: target.value });
+    setUserInfo({ ...userInfo, login: target.value });
   };
 
   const changePassword = ({ target }) => {
@@ -74,6 +75,21 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
     return idMsg === ID_MSG.SUCCESS && passwordMsg === PSWD1_MSG.SUCCESS && passwordCheckMsg === PSWD2_MSG.SUCCESS && emailMsg === EMAIL_MSG.SUCCESS;
   };
 
+  const params = { login: userInfo.login, email: userInfo.email };
+
+  const postHandler = () => {
+    const fn = async () => {
+      try {
+        await postUser(params);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+    console.log(!loadingUser && userMsg);
+    // openHandler();
+  };
+
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
@@ -82,7 +98,7 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
         <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} errorMsg={passwordCheckMsg} />
         <PersonalInputBox title="이메일" onChange={changeEmail} errorMsg={emailMsg} />
         <SignUpButtonWrap>
-          <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler} disabled={validAllCheck() ? false : true}>
+          <Button backgroundColor="blue" style={loginButtonStyle} onClick={postHandler} disabled={validAllCheck() ? false : true}>
             회원가입
           </Button>
         </SignUpButtonWrap>
@@ -106,4 +122,12 @@ const loginButtonStyle = {
   textAlign: "center",
 };
 
-export default SignupPage;
+export default connect(
+  ({ user, loading }) => ({
+    userMsg: user.userMsg,
+    loadingUser: loading["user/POST_USER"],
+  }),
+  {
+    postUser,
+  }
+)(SignupPage);
