@@ -1,6 +1,5 @@
 package com.codesquad.issuetracker.milestone.ui;
 
-import com.codesquad.issuetracker.common.exception.ErrorMessage;
 import com.codesquad.issuetracker.milestone.application.MilestoneService;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneBoard;
@@ -8,7 +7,6 @@ import com.codesquad.issuetracker.milestone.domain.MilestoneDTO;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,17 +48,15 @@ public class MilestoneController {
 
     @PatchMapping("/{milestone_id}")
     public ResponseEntity<?> changeStatus(@PathVariable(name = "milestone_id") Long milestoneId) {
-        milestoneService.changeStatus(new MilestoneId(milestoneId));
+        MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+        milestoneService.changeStatus(targetMilestoneId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{milestone_id}")
     public ResponseEntity<?> deleteMilestone(@PathVariable(name = "milestone_id") Long milestoneId) {
-        try {
-            milestoneService.deleteMilestone(new MilestoneId(milestoneId));
-        } catch (EmptyResultDataAccessException e) {
-            return new ResponseEntity<>(ErrorMessage.ENTITY_DELETE_FAILED.getMessage(), HttpStatus.NOT_FOUND);
-        }
+        MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+        milestoneService.deleteMilestone(targetMilestoneId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
