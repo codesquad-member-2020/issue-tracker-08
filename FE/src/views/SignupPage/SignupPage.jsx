@@ -6,7 +6,7 @@ import Text from "@Style/Text";
 
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import useDebounce from "@Hooks/useDebounce";
-import { REGEX, ID_MSG, PSWD1_MSG, PSWD1_INVALID_CASE, PSWD2_MSG, EMAIL_ERR_MSG } from "@Constants/validate";
+import { REGEX, ID_MSG, PSWD1_MSG, PSWD1_INVALID_CASE, PSWD2_MSG, EMAIL_MSG } from "@Constants/validate";
 
 const SignupPage = ({ isSignupOpen, openHandler }) => {
   const [userInfo, setUserInfo] = useState({ id: "", password: "", email: "" });
@@ -14,7 +14,7 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
 
   const [idMsg, setIdMsg] = useState("");
   const [passwordMsg, setPasswordMsg] = useState("");
-  const [passworCheckdMsg, setPasswordCheckMsg] = useState("");
+  const [passwordCheckMsg, setPasswordCheckMsg] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
 
   const debounceUserInfo = useDebounce(userInfo);
@@ -44,13 +44,14 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
 
   const validPasswordCheck = () => {
     if (!passwordCheck) return;
-    if (userInfo.password !== passwordCheck) return setPasswordCheckMsg(PSWD2_MSG.FAIL);
+    if (userInfo.password !== passwordCheck) return setPasswordCheckMsg(PSWD2_MSG.INVALID);
     return setPasswordCheckMsg(PSWD2_MSG.SUCCESS);
   };
 
   const validEmail = () => {
     if (!userInfo.email) return;
-    if (!userInfo.email.match(REGEX.EMAIL)) return setEmailMsg(EMAIL_ERR_MSG);
+    if (!userInfo.email.match(REGEX.EMAIL)) return setEmailMsg(EMAIL_MSG.INVALID);
+    return setEmailMsg(EMAIL_MSG.SUCCESS);
   };
 
   const changeId = ({ target }) => {
@@ -74,7 +75,7 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
       <SignupWrap isSignupOpen={isSignupOpen}>
         <PersonalInputBox title="아이디" onChange={changeId} errorMsg={idMsg} />
         <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} errorMsg={passwordMsg} />
-        <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} errorMsg={passworCheckdMsg} />
+        <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} errorMsg={passwordCheckMsg} />
         <PersonalInputBox title="이메일" onChange={changeEmail} errorMsg={emailMsg} />
         <SignUpButtonWrap>
           <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
