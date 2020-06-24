@@ -58,7 +58,7 @@ public class IssueController {
         IssueView issueView = issueViewDAO.read(targetIssueId);
         List<CommentView> commentViews = issueViewDAO.readAllComment(targetIssueId);
         List<Label> labels = labelRepository.findAllByIssueId(targetIssueId);
-        List<User> assignees = userRepository.findByIdIssue(targetIssueId);
+        List<User> assignees = userRepository.findByIdIssueId(targetIssueId);
         return new IssueView(issueView, assignees, labels, commentViews);
     }
 
