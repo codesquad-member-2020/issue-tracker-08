@@ -18,6 +18,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Optional;
 
 import static com.codesquad.issuetracker.utils.GithubApiUtils.requestApi;
 
@@ -49,8 +50,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) throws IOException {
-        User loginUser = userRepository.findById(user.getId()).orElseThrow(() -> new EntityNotFoundException("없는 유저입니다!"));
+        User loginUser = Optional.ofNullable(userRepository.findByNickname(user.getNickname())).orElseThrow(() -> new EntityNotFoundException("없는 유저입니다!"));
         loginUser.checkPassword(user);
+
+        loginService.login(loginUser, response);
         response.sendRedirect("/IssueListPage");
 
         return new ResponseEntity<>("로그인 성공", HttpStatus.CREATED);
@@ -65,7 +68,7 @@ public class UserController {
     public ResponseEntity<Void> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
         String accessToken = loginService.getGithubToken(githubProperty, code).getAccessToken();
         User user = requestApi(accessToken, githubProperty.getUserApiUrl(), User.class);
-        UserId userId = user.getId();
+        UserId userId = userService.getNextIdentity();
 
         loginService.login(user, response);
         userService.createUser(userId, user);
