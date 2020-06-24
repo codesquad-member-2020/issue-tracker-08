@@ -36,13 +36,13 @@ public class Milestone extends BaseTimeEntity {
     private boolean isOpen = true;
 
     @Transient
-    public long numberOfOpenIssue;
+    public Long numberOfOpenIssue;
 
     @Transient
-    public long numberOfClosedIssue;
+    public Long numberOfClosedIssue;
 
     @Transient
-    public int achievementRate;
+    public Integer achievementRate;
 
     public static Milestone of(MilestoneId milestoneId, Milestone milestone) {
         return Milestone.builder()
