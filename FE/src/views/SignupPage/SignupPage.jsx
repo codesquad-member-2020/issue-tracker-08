@@ -38,13 +38,38 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   const validEmail = () => {
     if (!userInfo.email.match(REGEX.EMAIL)) return setEmailMsg(EMAIL_ERR_MSG);
   };
+
+  const changeId = ({ target }) => {
+    setUserInfo({ ...userInfo, id: target.value });
+    validId();
+  };
+
+  const changePassword = ({ target }) => {
+    setUserInfo({ ...userInfo, password: target.value });
+    validPassword();
+  };
+
+  const changePasswordCheck = ({ target }) => {
+    setPasswordCheck(target.value);
+    validPasswordCheck();
+  };
+
+  const changeEmail = ({ target }) => {
+    setUserInfo({ ...userInfo, email: target.value });
+    validEmail();
+  };
+
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
-        <PersonalInputBox title="아이디" />
-        <PersonalInputBox title="비밀번호" type="password" />
-        <PersonalInputBox title="비밀번호 확인" type="password" />
-        <PersonalInputBox title="이메일" />
+        <PersonalInputBox title="아이디" onChange={changeId} />
+        <Text>{idMsg}</Text>
+        <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} />
+        <Text>{passwordMsg}</Text>
+        <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} />
+        <Text>{passworCheckdMsg}</Text>
+        <PersonalInputBox title="이메일" onChange={changeEmail} />
+        <Text>{emailMsg}</Text>
         <SignUpButtonWrap>
           <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
             회원가입
