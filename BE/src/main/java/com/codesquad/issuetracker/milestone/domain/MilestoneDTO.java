@@ -48,6 +48,9 @@ public class MilestoneDTO {
     private List<IssueView> issues;
 
     public static MilestoneDTO from (Milestone milestone) {
+        if (milestone == null) {
+            return null;
+        }
         return MilestoneDTO.builder()
                 .id(milestone.getId().getMilestoneId())
                 .title(milestone.getTitle())
@@ -55,6 +58,9 @@ public class MilestoneDTO {
                 .dueDate(milestone.getDueDate())
                 .updatedAt(milestone.getModifiedAt())
                 .isOpen(milestone.isOpen())
+                .achievementRate(milestone.getAchievementRate())
+                .numberOfOpenIssue(milestone.getNumberOfOpenIssue())
+                .numberOfClosedIssue(milestone.getNumberOfClosedIssue())
                 .build();
     }
 }
