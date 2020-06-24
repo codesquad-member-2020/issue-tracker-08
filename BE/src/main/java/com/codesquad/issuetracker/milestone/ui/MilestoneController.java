@@ -32,7 +32,8 @@ public class MilestoneController {
     @PostMapping("")
     public ResponseEntity<String> createMilestone(@RequestBody Milestone milestone) {
         try {
-            milestoneService.createMilestone(milestone);
+            MilestoneId milestoneId = milestoneService.getNextIdentity();
+            milestoneService.save(milestoneId, milestone);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -54,7 +55,8 @@ public class MilestoneController {
     public ResponseEntity<?> modifyMilestone(@PathVariable(name = "milestone_id") Long milestoneId,
                                              @RequestBody Milestone milestone) {
         try {
-            milestoneService.modifyMilestone(Milestone.of(new MilestoneId(milestoneId), milestone));
+            MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+            milestoneService.save(targetMilestoneId, milestone);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
