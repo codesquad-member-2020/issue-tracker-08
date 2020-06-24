@@ -36,6 +36,7 @@ const ContentWrapper = styled.div`
 const Content = styled.div`
   width: 65%;
   max-width: 1000px;
+  min-width: 760px;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.colors.gray2};

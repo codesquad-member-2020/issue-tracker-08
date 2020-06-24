@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
+import { configureDate } from "@Lib/configureDate";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -26,21 +28,13 @@ const useStyles = makeStyles((theme) => ({
 const DatePickers = ({ defaultValue, onChange }) => {
   const classes = useStyles();
 
-  const configureDate = (date) => {
-    const defaultDate = new Date(date);
-    const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(defaultDate);
-    const month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(defaultDate);
-    const day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(defaultDate);
-    return `${year}-${month}-${day}`;
-  };
-
   return (
     <>
       <form className={classes.container} noValidate>
         <TextField
           id="date"
           type="date"
-          defaultValue={defaultValue && configureDate(defaultValue)}
+          defaultValue={defaultValue && configureDate(defaultValue, "2-digit")}
           onChange={onChange}
           className={classes.textField}
           InputLabelProps={{

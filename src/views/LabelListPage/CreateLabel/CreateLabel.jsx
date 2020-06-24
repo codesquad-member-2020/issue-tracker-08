@@ -107,6 +107,7 @@ const Wrapper = styled.div`
 const Contents = styled.form`
   width: ${({ isEdit }) => (isEdit ? "100%" : "65%")};
   max-width: 1000px;
+  min-width: 760px;
   height: 150px;
   padding: 16px;
   border-radius: 3px;
