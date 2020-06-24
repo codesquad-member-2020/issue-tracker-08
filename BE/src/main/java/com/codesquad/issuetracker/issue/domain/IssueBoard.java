@@ -11,13 +11,13 @@ import java.util.List;
 @Builder
 public class IssueBoard {
 
-    private List<IssueResponse> issues;
+    private List<IssueView> issues;
 
     private long numberOfLabels;
 
     private long numberOfMilestones;
 
-    private long numberOfOpenIssues;
+    private long numberOfOpenIssue;
 
-    private long numberOfClosedIssues;
+    private long numberOfClosedIssue;
 }
