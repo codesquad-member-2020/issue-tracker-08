@@ -20,12 +20,14 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
     const fn = async () => {
       try {
         await getMilestoneDetail(milestoneId);
-        initContent();
       } catch (e) {
         console.log(e);
       }
     };
-    if (milestoneId) fn();
+    if (milestoneId) {
+      fn();
+      initContent();
+    }
   }, [getMilestoneDetail, postMilestone, putMilestone]);
 
   const postHandler = (params) => {
@@ -55,10 +57,6 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
     return !loadingMilestoneDetail && milestoneDetail;
   };
 
-  // const [titleContent, setTitleContent] = useState(data("title"));
-  // const [dateContent, setDateContent] = useState(data("dueDate"));
-  // const [descriptionContent, setDescriptionContent] = useState(data("description"));
-  // 수정할때 바꾸지 않은 데이터는 초기값이 안넘어가는 문제 해결중
   const [titleContent, setTitleContent] = useState("");
   const [dateContent, setDateContent] = useState("");
   const [descriptionContent, setDescriptionContent] = useState("");
@@ -68,9 +66,6 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
     setTitleContent(data("title"));
     setDateContent(data("dueDate"));
     setDescriptionContent(data("description"));
-    // setTitleContent(milestoneDetail[title]);
-    // setDateContent(milestoneDetail[dueDate]);
-    // setDescriptionContent(milestoneDetail[description]);
   };
 
   const onSetTitle = ({ target }) => setTitleContent(target.value);
