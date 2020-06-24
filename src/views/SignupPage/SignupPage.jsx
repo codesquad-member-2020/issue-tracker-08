@@ -16,6 +16,28 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
   const [passwordMsg, setPasswordMsg] = useState("");
   const [passworCheckdMsg, setPasswordCheckMsg] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
+
+  const validId = () => {
+    if (!userInfo.id.match(REGEX.ID)) return setIdMsg(ID_MSG.INVALID);
+    return setIdMsg(ID_MSG.SUCCESS);
+  };
+
+  const validPassword = () => {
+    if (!userInfo.password.match(REGEX.PSWD_LEN)) return setPasswordMsg(PSWD1_MSG.INVALID_LEN);
+    if (!userInfo.password.match(REGEX.DOWN_CASE)) return setPasswordMsg(PSWD1_INVALID_CASE.ENG_DOWN + PSWD1_MSG.INVALID);
+    if (!userInfo.password.match(REGEX.NUMBER)) return setPasswordMsg(PSWD1_INVALID_CASE.NUMBER + PSWD1_MSG.INVALID);
+    if (!userInfo.password.match(REGEX.CHARACTOR)) return setPasswordMsg(PSWD1_INVALID_CASE.CHARACTOR + PSWD1_MSG.INVALID);
+    return setPasswordMsg(PSWD1_MSG.SUCCESS);
+  };
+
+  const validPasswordCheck = () => {
+    if (userInfo.password !== passwordCheck) return setPasswordCheckMsg(PSWD2_MSG.FAIL);
+    return setPasswordCheckMsg(PSWD2_MSG.SUCCESS);
+  };
+
+  const validEmail = () => {
+    if (!userInfo.email.match(REGEX.EMAIL)) return setEmailMsg(EMAIL_ERR_MSG);
+  };
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
