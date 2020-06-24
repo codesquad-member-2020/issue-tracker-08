@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -33,8 +34,10 @@ public class IssueController {
     }
 
     @PostMapping("")
-    public Issue createIssue(@RequestBody Issue issue) {
-        return issueService.createIssue(issue);
+    public IssueView createIssue(@RequestBody Issue issue,
+                             HttpServletRequest request) {
+        UserId authorId = new UserId((Long) request.getAttribute("id"));
+        return issueService.createIssue(issue, authorId);
     }
 
     @PatchMapping("")
