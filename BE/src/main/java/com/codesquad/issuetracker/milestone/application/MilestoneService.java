@@ -31,11 +31,9 @@ public class MilestoneService {
         List<Milestone> milestones = StreamSupport.stream(mileStoneRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        long numberOfOpenMilestone = milestones.stream().filter(Milestone::isOpen).count();
-        long numberOfClosedMilestone = milestones.size() - numberOfOpenMilestone;
         List<MilestoneDTO> milestoneDTOS = parseMilestonesToDTO(milestones);
 
-        return new MilestoneBoard(numberOfOpenMilestone, numberOfClosedMilestone, milestoneDTOS);
+        return new MilestoneBoard(milestoneDTOS);
     }
 
     public MilestoneId getNextIdentity() {
@@ -54,11 +52,6 @@ public class MilestoneService {
             // 현재는 List<IssueDTO>를 세팅하지 않지만 /milestones/{id}/issues에서 필요할 듯
             return MilestoneDTO.from(m);
         }).collect(Collectors.toList());
-    }
-
-    public void modifyMilestone(Milestone milestone) {
-        // save는 Milestone의 모든 정보를 변경하므로 update 쿼리를 직접 작성한다.
-        mileStoneRepository.updateMilestone(milestone);
     }
 
     public void changeStatus(MilestoneId milestoneId) {
