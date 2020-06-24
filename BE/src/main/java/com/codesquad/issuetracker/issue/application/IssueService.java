@@ -115,6 +115,18 @@ public class IssueService {
         return IssueView.of(issue,author, milestone, assignees, labels, commentViews);
     }
 
+    public void deleteMilestoneOfIssue(MilestoneId milestoneId) {
+        List<Issue> issues = issueRepository.findAllByMilestoneId(milestoneId);
+        issues.forEach(Issue::deleteMilestone);
+        issueRepository.saveAll(issues);
+    }
+
+    public void deleteLabelOfIssue(LabelId labelId) {
+        List<Issue> issues = issueRepository.findAllByLabelId(labelId);
+        issues.forEach(i -> i.deleteLabel(labelId));
+        issueRepository.saveAll(issues);
+    }
+
     private Issue findIssueById(IssueId issueId) {
         return issueRepository.findById(issueId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 이슈입니다!"));
     }
