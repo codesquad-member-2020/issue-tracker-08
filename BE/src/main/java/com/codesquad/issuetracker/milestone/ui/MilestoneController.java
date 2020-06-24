@@ -31,12 +31,8 @@ public class MilestoneController {
 
     @PostMapping("")
     public ResponseEntity<String> createMilestone(@RequestBody Milestone milestone) {
-        try {
-            MilestoneId milestoneId = milestoneService.getNextIdentity();
-            milestoneService.save(milestoneId, milestone);
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        MilestoneId milestoneId = milestoneService.getNextIdentity();
+        milestoneService.save(milestoneId, milestone);
         return new ResponseEntity<>("마일스톤 생성 성공", HttpStatus.CREATED);
     }
 
