@@ -3,20 +3,17 @@ package com.codesquad.issuetracker.label.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 @ToString
-@Builder
-public class Label {
-
-    @EmbeddedId
-    private LabelId id;
+public class LabelProperty {
 
     @Size(max = 50)
     @Column(name = "name", unique = true)
@@ -28,14 +25,5 @@ public class Label {
 
     @JsonProperty("isFontColorBlack")
     private boolean isFontColorBlack;
-
-    public static Label of(LabelId labelId, Label label) {
-        return Label.builder()
-                .id(labelId)
-                .name(label.name)
-                .description(label.description)
-                .color(label.color)
-                .isFontColorBlack(label.isFontColorBlack)
-                .build();
-    }
 }
+

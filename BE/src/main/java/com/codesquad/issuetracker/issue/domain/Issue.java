@@ -10,8 +10,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Issue")
 @Getter
+@Setter
 @Table(name = "issue")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,9 +30,13 @@ public class Issue extends BaseTimeEntity {
     private Boolean isOpen;
 
     @Embedded
+    @AttributeOverride(
+            name = "userId",
+            column = @Column(name = "author_id")
+    )
     private UserId authorId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "assigner",
             joinColumns = @JoinColumn(name = "issue_id")
@@ -41,10 +46,47 @@ public class Issue extends BaseTimeEntity {
     @Embedded
     private MilestoneId milestoneId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "tag",
             joinColumns = @JoinColumn(name = "issue_id")
     )
     private Set<LabelId> labels = new HashSet<>();
+
+    public static Issue of(IssueId issueId, Issue issue) {
+        return Issue.builder()
+                .id(issueId)
+                .title(issue.title)
+                .content(issue.content)
+                .authorId(issue.authorId)
+                .assignees(issue.assignees)
+                .labels(issue.labels)
+                .milestoneId(issue.milestoneId)
+                .isOpen(true)
+                .build();
+    }
+
+    public void changeStatus() {
+        this.isOpen = !isOpen;
+    }
+
+    public void editTitle(String title) {
+        this.title = title;
+    }
+
+    public void editContent(String content) {
+        this.content = content;
+    }
+
+    public void reassign(Set<UserId> assignees) {
+        this.assignees = assignees;
+    }
+
+    public void putLabels(Set<LabelId> labels) {
+        this.labels = labels;
+    }
+
+    public void changeMilestone(MilestoneId milestoneId) {
+        this.milestoneId = milestoneId;
+    }
 }

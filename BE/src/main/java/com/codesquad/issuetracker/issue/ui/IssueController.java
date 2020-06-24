@@ -1,86 +1,98 @@
 package com.codesquad.issuetracker.issue.ui;
 
-import com.codesquad.issuetracker.issue.application.IssueRequest;
 import com.codesquad.issuetracker.issue.application.IssueService;
-import com.codesquad.issuetracker.issue.domain.Filter;
-import com.codesquad.issuetracker.issue.domain.Issue;
-import com.codesquad.issuetracker.issue.domain.IssueBoard;
-import com.codesquad.issuetracker.issue.domain.IssueDTO;
+import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/issues")
 public class IssueController {
 
+    private final Logger logger = LoggerFactory.getLogger(IssueController.class);
+
     private final IssueService issueService;
 
     @GetMapping("")
     public List<Issue> listIssue(Filter filter) {
-        log.info("filter: {}", filter);
         return null;
     }
 
     @PostMapping("")
-    public Issue createIssue(@RequestBody IssueDTO requestIssue) {
-        String title = requestIssue.getTitle();
-        String content = requestIssue.getContent();
-
-        Set<UserId> assignees = requestIssue.getAssignees().stream().map(UserId::new).collect(Collectors.toSet());
-        Set<LabelId> labels = requestIssue.getLabels().stream().map(LabelId::new).collect(Collectors.toSet());
-
-        MilestoneId milestoneId = new MilestoneId(requestIssue.getMilestoneId());
-
-        return issueService.createIssue(new IssueRequest(title, content, assignees, labels, milestoneId));
+    public Issue createIssue(@RequestBody Issue issue) {
+        return issueService.createIssue(issue);
     }
 
     @PatchMapping("")
-    public IssueBoard changeStatusOfIssues() {
-        return null;
+    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody List<IssueId> issueIds) {
+        issueService.changeStatusOfIssues(issueIds);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{issue_id}")
-    public IssueBoard readIssue() {
-        return null;
+    public IssueView readIssue(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        return issueService.readIssue(targetIssueId);
     }
 
     @PatchMapping("/{issue_id}")
-    public IssueBoard changeStatus() {
+    public IssueBoard changeStatus(@PathVariable(name = "issue_id") Long issueId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.changeStatus(targetIssueId);
         return null;
     }
 
     @PatchMapping("/{issue_id}/titles")
-    public IssueBoard editTitle() {
+    public IssueBoard editTitle(@PathVariable(name = "issue_id") Long issueId,
+                                @RequestBody String title) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.editTitle(targetIssueId, title);
         return null;
     }
 
     @PatchMapping("/{issue_id}/content")
-    public IssueBoard editContent() {
+    public IssueBoard editContent(@PathVariable(name = "issue_id") Long issueId,
+                                  @RequestBody String content) {
+        IssueId targetIssueId = new IssueId(issueId);
+        issueService.editContent(targetIssueId, content);
         return null;
     }
 
     @PutMapping("/{issue_id}/assignees")
-    public IssueBoard modifyAssignees() {
+    public IssueBoard reassign(@PathVariable(name = "issue_id") Long issueId,
+                                      @RequestBody Issue issue) {
+        IssueId targetIssueId = new IssueId(issueId);
+        Set<UserId> assignees = issue.getAssignees();
+        issueService.reassign(targetIssueId, assignees);
         return null;
     }
 
     @PutMapping("/{issue_id}/labels")
-    public IssueBoard modifyLabels() {
+    public IssueBoard putLabels(@PathVariable(name = "issue_id") Long issueId,
+                                   @RequestBody Issue issue) {
+        IssueId targetIssueId = new IssueId(issueId);
+        Set<LabelId> labels = issue.getLabels();
+        issueService.putLabels(targetIssueId, labels);
         return null;
     }
 
     @PutMapping("/{issue_id}/milestone")
-    public IssueBoard modifyMilestone() {
+    public IssueBoard changeMilestone(@PathVariable(name = "issue_id") Long issueId,
+                                      @RequestBody Long milestoneId) {
+        IssueId targetIssueId = new IssueId(issueId);
+        MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+        issueService.changeMilestone(targetIssueId, targetMilestoneId);
         return null;
     }
 }

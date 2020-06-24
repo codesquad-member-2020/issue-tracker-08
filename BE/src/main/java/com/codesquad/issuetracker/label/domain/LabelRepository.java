@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface LabelRepository extends CrudRepository<Label, LabelId> {
 
-    public Label findFirstByOrderByIdDesc();
+    Label findFirstByOrderByIdDesc();
 }
