@@ -63,16 +63,12 @@ public class Milestone extends BaseTimeEntity {
 
     public void setMetaData(List<Issue> issues) {
         this.numberOfOpenIssue = countNumberOfOpenIssue(issues);
-        this.numberOfClosedIssue = countNumberOfClosedIssue(issues);
+        this.numberOfClosedIssue = issues.size() - numberOfOpenIssue;
         this.achievementRate = calculateAchievementRate(issues.size());
     }
 
     private long countNumberOfOpenIssue(List<Issue> issue) {
         return issue.stream().filter(Issue::getIsOpen).count();
-    }
-
-    private long countNumberOfClosedIssue(List<Issue> issue) {
-        return issue.stream().filter(i -> !i.getIsOpen()).count();
     }
 
     private int calculateAchievementRate(int numberOfIssue) {
