@@ -16,4 +16,12 @@ public class UserDTO {
     private String nickname;
 
     private String avatarUrl;
+
+    public static UserDTO from (User user) {
+        return UserDTO.builder()
+                .id(user.getId().getUserId())
+                .nickname(user.getNickname())
+                .avatarUrl(user.getAvatarUrl())
+                .build();
+    }
 }
