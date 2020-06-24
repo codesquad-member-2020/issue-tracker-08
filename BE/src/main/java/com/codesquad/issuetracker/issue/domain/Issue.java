@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Issue")
 @Getter
 @Setter
 @Table(name = "issue")
