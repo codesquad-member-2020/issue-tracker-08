@@ -14,6 +14,7 @@ const LoginPage = () => {
   let history = useHistory();
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
+  const onPassIssueListPage = () => history.push(`/IssueListPage`);
   const loginHandler = () => {
     window.location.href = API_URL.oauth;
   };
@@ -31,7 +32,7 @@ const LoginPage = () => {
             <PersonalInputBox title="아이디" />
             <PersonalInputBox title="비밀번호" type="password" />
             <ButtonWrap>
-              <Button backgroundColor="blue" style={loginButtonStyle} onClick={() => history.push(`/IssueListPage`)}>
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={onPassIssueListPage}>
                 로그인
               </Button>
               <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>

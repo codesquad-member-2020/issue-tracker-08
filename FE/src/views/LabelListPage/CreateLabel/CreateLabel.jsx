@@ -6,43 +6,52 @@ import Badge from "@Style/Badge";
 import Button from "@Style/Button";
 import Text from "@Style/Text";
 
-import { isDark, randomColor } from "@/lib/getRandomColor";
-import { createLabel } from "@Modules/label";
+import { isDark, randomColor, isInvalid } from "@/lib/getRandomColor";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 
-const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, description }) => {
+const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, description, createHandler, editHandler }) => {
   const initLabelName = name ? name : "";
+  const [color, dark] = randomColor();
 
-  const [backgroundColor, setbackgroundColor] = useState(defaultColor ? defaultColor : randomColor);
-  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : isDark);
+  const [backgroundColor, setBackgroundColor] = useState(defaultColor ? defaultColor : color);
+  const [isBackDark, setBDark] = useState(isColorDark ? isColorDark : dark);
   const [inputName, setInputName] = useState(initLabelName);
   const [inputDesc, setInputDesc] = useState(description ? description : "");
+  const [isInvalidColor, setIsInvalidColor] = useState(isInvalid(color));
 
   const params = {
     name: inputName,
     description: inputDesc,
     color: backgroundColor,
+    isFontColorBlack: isBackDark,
   };
 
+  const isDisabled = () => initLabelName === inputName || isInvalidColor;
+
   const colorReset = () => {
-    setbackgroundColor(randomColor);
-    setBDark(isDark);
+    const [resetColor, resetDark] = randomColor();
+
+    setBackgroundColor(resetColor);
+    setBDark(resetDark);
   };
 
   const onChangeName = ({ target }) => setInputName(target.value);
 
   const onChangeDesc = ({ target }) => setInputDesc(target.value);
 
-  const createHandler = () => {
-    const fn = async () => {
-      try {
-        await createLabel(params);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fn();
+  const onChangeColor = ({ target }) => {
+    setBackgroundColor(target.value);
+    setIsInvalidColor(isInvalid(target.value));
+    setBDark(isDark(target.value));
+  };
 
+  const onCreate = () => {
+    createHandler(params);
+    close();
+  };
+
+  const onEdit = () => {
+    editHandler({ labelId, params });
     close();
   };
 
@@ -56,7 +65,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
             </Badge>
           </BadgeWrapper>
           <LabelInputWrapper>
-            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} />
+            <PersonalInputBox title="Label name" placeholder="Label name" value={name ? name : ""} onChange={onChangeName} maxLength={20} />
             <PersonalInputBox
               title="Description"
               placeholder="Description (optional)"
@@ -70,14 +79,15 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, name, descripti
                 <ColorResetButton onClick={colorReset} backgroundColor={backgroundColor}>
                   <CachedRoundedIcon fontSize="small" style={{ color: isBackDark ? "white" : "black" }} />
                 </ColorResetButton>
-                <PersonalInputBox widthSize="80px" value={backgroundColor} />
+                <PersonalInputBox widthSize="80px" isRandom value={backgroundColor} onChange={onChangeColor} maxLength={7} />
               </ColorInputBoxWrapper>
+              {isInvalidColor && <InvalidColor children="유효하지 않은 색상입니다." fontWeight="bold" fontSize="xsm" color="red" />}
             </ColorBoxWrapper>
             <BurrontWrapper>
               <Button color="black" backgroundColor="white" onClick={close}>
                 Cancel
               </Button>
-              <Button disabled={initLabelName === inputName} onClick={createHandler}>
+              <Button disabled={isDisabled()} onClick={isEdit ? onEdit : onCreate}>
                 {isEdit ? "Save Changes" : "Create Label"}
               </Button>
             </BurrontWrapper>
@@ -97,6 +107,7 @@ const Wrapper = styled.div`
 const Contents = styled.form`
   width: ${({ isEdit }) => (isEdit ? "100%" : "65%")};
   max-width: 1000px;
+  min-width: 760px;
   height: 150px;
   padding: 16px;
   border-radius: 3px;
@@ -118,12 +129,19 @@ const ColorBoxWrapper = styled.div`
   text-align: initial;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const ColorInputBoxWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const InvalidColor = styled(Text)`
+  position: absolute;
+  bottom: 7px;
+  left: 1px;
 `;
 
 const ColorResetButton = styled.div`

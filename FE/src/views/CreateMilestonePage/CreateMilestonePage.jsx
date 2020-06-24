@@ -9,10 +9,10 @@ import Text from "@Style/Text";
 import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
-import DatePickers from "./DatePickers";
+import DatePickers from "@CreateMilestonePage/DatePickers";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
-const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMilestoneDetail }) => {
+const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, milestoneDetail, loadingMilestoneDetail }) => {
   let history = useHistory();
   let { milestoneId } = useParams();
 
@@ -24,8 +24,11 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
         console.log(e);
       }
     };
-    if (milestoneId) fn();
-  }, [getMilestoneDetail]);
+    if (milestoneId) {
+      fn();
+      initContent();
+    }
+  }, [getMilestoneDetail, postMilestone, putMilestone]);
 
   const postHandler = (params) => {
     const fn = async () => {
@@ -41,7 +44,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
   const putHandler = (params) => {
     const fn = async () => {
       try {
-        await putMilestone(milestoneId, params);
+        await putMilestone({ milestoneId, params });
       } catch (e) {
         console.log(e);
       }
@@ -49,47 +52,44 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
     if (milestoneId) fn();
   };
 
-  const [titleContent, setTitleContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.title);
-  const [dateContent, setDateContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.dueDate);
-  const [descriptionContent, setDescriptionContent] = useState(!loadingMilestoneDetail && milestoneDetail && milestoneDetail.description);
-  // const [titleContent, setTitleContent] = useState("");
-  // const [dateContent, setDateContent] = useState("연도. 월. 일");
-  // const [descriptionContent, setDescriptionContent] = useState("");
-
-  const onSetTitle = (e) => {
-    setTitleContent(e.target.value);
+  const data = (key) => {
+    if (key) return !loadingMilestoneDetail && milestoneDetail && milestoneDetail[key];
+    return !loadingMilestoneDetail && milestoneDetail;
   };
 
-  const onSetDescription = (e) => {
-    setDescriptionContent(e.target.value);
+  const [titleContent, setTitleContent] = useState("");
+  const [dateContent, setDateContent] = useState("");
+  const [descriptionContent, setDescriptionContent] = useState("");
+
+  const initContent = () => {
+    if (!data()) return;
+    setTitleContent(data("title"));
+    setDateContent(data("dueDate"));
+    setDescriptionContent(data("description"));
   };
 
-  const onSetDate = (e) => {
-    setDateContent(e.target.value);
-  };
+  const onSetTitle = ({ target }) => setTitleContent(target.value);
+  const onSetDescription = ({ target }) => setDescriptionContent(target.value);
+  const onSetDate = ({ target }) => setDateContent(target.value);
 
-  const onPassMilestonePage = () => {
-    history.push(`/MilestonePage`);
-  };
+  const onPassMilestonePage = () => history.push(`/MilestonePage`);
+
+  const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
 
   const onCreateMilestone = () => {
-    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
-    console.log(params);
     postHandler(params);
     onPassMilestonePage();
   };
 
   const onSaveMilestone = () => {
-    const params = { title: titleContent, due_date: dateContent, description: descriptionContent };
-    console.log(params);
-    // putHandler(params);
+    putHandler(params);
     onPassMilestonePage();
   };
 
   return (
     <>
       <Header />
-      {(!milestoneId || (!loadingMilestoneDetail && milestoneDetail)) && (
+      {(!milestoneId || data()) && (
         <Wrapper>
           <ContentWrapper>
             <InfoWrapper>
@@ -110,13 +110,13 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
                 widthSize="50%"
                 backgroundColor="gray1"
                 placeholder="Title"
-                value={milestoneId && milestoneDetail.title}
+                value={milestoneId && data("title")}
                 onChange={onSetTitle}
               ></PersonalInputBox>
               <Text fontWeight="bold">Due date (optional)</Text>
-              <DatePickers defaultValue={milestoneId && milestoneDetail.dueDate} onChange={onSetDate}></DatePickers>
+              <DatePickers defaultValue={milestoneId && data("dueDate")} onChange={onSetDate}></DatePickers>
               <Text fontWeight="bold">Description (optional)</Text>
-              <DescriptionBox defaultValue={milestoneId && milestoneDetail.description} onChange={onSetDescription}></DescriptionBox>
+              <DescriptionBox defaultValue={milestoneId && data("description")} onChange={onSetDescription}></DescriptionBox>
             </Content>
             <ButtonWrapper>
               {milestoneId ? (
@@ -127,7 +127,9 @@ const CreateMilestonePage = ({ getMilestoneDetail, milestoneDetail, loadingMiles
                   <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
                     Close milestone
                   </Button>
-                  <Button onClick={onSaveMilestone}>Save changes</Button>
+                  <Button onClick={onSaveMilestone} disabled={titleContent ? false : true}>
+                    Save changes
+                  </Button>
                 </>
               ) : (
                 <Button onClick={onCreateMilestone} disabled={titleContent ? false : true}>
@@ -151,6 +153,7 @@ const Wrapper = styled.div`
 const ContentWrapper = styled.div`
   width: 65%;
   max-width: 1000px;
+  min-width: 760px;
   flex-direction: column;
 `;
 
@@ -202,5 +205,7 @@ export default connect(
   }),
   {
     getMilestoneDetail,
+    postMilestone,
+    putMilestone,
   }
 )(CreateMilestonePage);
