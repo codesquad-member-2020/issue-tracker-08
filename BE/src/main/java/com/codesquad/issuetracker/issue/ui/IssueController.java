@@ -86,7 +86,7 @@ public class IssueController {
     }
 
     @PutMapping("/{issue_id}/assignees")
-    public IssueBoard modifyAssignees(@PathVariable(name = "issue_id") Long issueId,
+    public IssueBoard reassign(@PathVariable(name = "issue_id") Long issueId,
                                       @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         Set<UserId> assignees = issue.getAssignees();
@@ -95,7 +95,7 @@ public class IssueController {
     }
 
     @PutMapping("/{issue_id}/labels")
-    public IssueBoard modifyLabels(@PathVariable(name = "issue_id") Long issueId,
+    public IssueBoard putLabels(@PathVariable(name = "issue_id") Long issueId,
                                    @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         Set<LabelId> labels = issue.getLabels();
@@ -104,7 +104,7 @@ public class IssueController {
     }
 
     @PutMapping("/{issue_id}/milestone")
-    public IssueBoard modifyMilestone(@PathVariable(name = "issue_id") Long issueId,
+    public IssueBoard changeMilestone(@PathVariable(name = "issue_id") Long issueId,
                                       @RequestBody Long milestoneId) {
         IssueId targetIssueId = new IssueId(issueId);
         MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
