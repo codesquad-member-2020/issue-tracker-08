@@ -27,7 +27,10 @@ export const PSWD1_INVALID_CASE = {
 
 export const PSWD2_MSG = {
   SUCCESS: "비밀번호가 일치합니다.",
-  FAIL: "비밀번호가 일치하지 않습니다.",
+  INVALID: "비밀번호가 일치하지 않습니다.",
 };
 
-export const EMAIL_ERR_MSG = "이메일 주소를 다시 확인해주세요.";
+export const EMAIL_MSG = {
+  SUCCESS: "사용 가능한 이메일입니다.",
+  INVALID: "이메일 주소를 다시 확인해주세요.",
+};
