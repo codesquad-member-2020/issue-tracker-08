@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
@@ -44,6 +45,15 @@ public class UserController {
         UserId userId = userService.getNextIdentity();
         userService.createUser(userId, user);
         return new ResponseEntity<>("유저 생성 성공", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) throws IOException {
+        User loginUser = userRepository.findById(user.getId()).orElseThrow(() -> new EntityNotFoundException("없는 유저입니다!"));
+        loginUser.checkPassword(user);
+        response.sendRedirect("/IssueListPage");
+
+        return new ResponseEntity<>("로그인 성공", HttpStatus.CREATED);
     }
 
     @GetMapping("/oauth/code")
