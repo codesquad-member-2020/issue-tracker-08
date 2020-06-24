@@ -30,10 +30,7 @@ public class IssueService {
     }
 
     public void changeStatusOfIssues(List<IssueId> issueIds) {
-        issueRepository.findAllById(issueIds).forEach(issue -> {
-            issue.changeStatus();
-            issueRepository.save(issue);
-        });
+        issueIds.forEach(this::changeStatus);
     }
 
     public void changeStatus(IssueId issueId) {
