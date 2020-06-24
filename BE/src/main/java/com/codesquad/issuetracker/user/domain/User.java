@@ -27,7 +27,7 @@ public class User {
     private String nickname;
 
     @JsonProperty("avatar_url")
-    private String avatarUrl;
+    private String avatarUrl = "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg";
 
     @JsonProperty("email")
     private String email;
