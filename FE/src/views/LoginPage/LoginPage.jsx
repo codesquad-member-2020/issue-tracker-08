@@ -17,6 +17,8 @@ const LoginPage = () => {
     window.location.href = API_URL.oauth;
   };
 
+  const openHandler = () => setIsSignupOpen(!isSignupOpen);
+
   return (
     <>
       <LoginPageWrap>
