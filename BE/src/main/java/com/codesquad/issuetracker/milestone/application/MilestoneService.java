@@ -23,10 +23,9 @@ public class MilestoneService {
     private final IssueRepository issueRepository;
 
     public void createMilestone(Milestone milestone) {
-        MilestoneId id = new MilestoneId(getNextIdentity());
-        milestone.setId(id);
-
-        mileStoneRepository.save(milestone);
+        MilestoneId id = getNextIdentity();
+        Milestone newMilestone = Milestone.of(id, milestone);
+        mileStoneRepository.save(newMilestone);
     }
 
     public MilestoneBoard getAllMilestones() {
@@ -40,10 +39,10 @@ public class MilestoneService {
         return new MilestoneBoard(numberOfOpenMilestone, numberOfClosedMilestone, milestoneDTOS);
     }
 
-    private long getNextIdentity() {
+    private MilestoneId getNextIdentity() {
         return Optional.ofNullable(mileStoneRepository.findFirstByOrderByIdDesc())
-                .map(milestone -> milestone.getId().getMilestoneId())
-                .orElse(0L) + 1;
+                .map(milestone -> new MilestoneId(milestone.getId().getMilestoneId() + 1))
+                .orElseGet(() -> new MilestoneId(1L));
     }
 
     private List<MilestoneDTO> parseMilestonesToDTO(List<Milestone> milestones) {
