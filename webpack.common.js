@@ -56,6 +56,7 @@ module.exports = {
       "@Constants": path.resolve(__dirname, "src/constants/"),
       "@Modules": path.resolve(__dirname, "src/modules/"),
       "@Components": path.resolve(__dirname, "src/components/"),
+      "@Hooks": path.resolve(__dirname, "src/hooks/"),
     },
   },
 
