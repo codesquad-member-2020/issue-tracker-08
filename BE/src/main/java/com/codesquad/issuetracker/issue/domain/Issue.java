@@ -30,8 +30,10 @@ public class Issue extends BaseTimeEntity {
     private Boolean isOpen;
 
     @Embedded
-    @AttributeOverride(name = "userId",
-            column = @Column(name = "author_id"))
+    @AttributeOverride(
+            name = "userId",
+            column = @Column(name = "author_id")
+    )
     private UserId authorId;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -56,6 +58,7 @@ public class Issue extends BaseTimeEntity {
                 .id(issueId)
                 .title(issue.title)
                 .content(issue.content)
+                .authorId(issue.authorId)
                 .assignees(issue.assignees)
                 .labels(issue.labels)
                 .milestoneId(issue.milestoneId)
