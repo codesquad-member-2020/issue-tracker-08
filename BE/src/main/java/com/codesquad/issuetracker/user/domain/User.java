@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.user.domain;
 
 import com.codesquad.issuetracker.common.exception.UnauthorizedException;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -21,7 +22,7 @@ public class User {
     @EmbeddedId
     private UserId id;
 
-    @JsonProperty("login")
+    @JsonAlias({"login", "nickname"})
     @Size(max = 50)
     @Column(name = "nickname", unique = true)
     private String nickname;
