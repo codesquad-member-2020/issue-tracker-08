@@ -70,6 +70,10 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
     setUserInfo({ ...userInfo, email: target.value });
   };
 
+  const validAllCheck = () => {
+    return idMsg === ID_MSG.SUCCESS && passwordMsg === PSWD1_MSG.SUCCESS && passwordCheckMsg === PSWD2_MSG.SUCCESS && emailMsg === EMAIL_MSG.SUCCESS;
+  };
+
   return (
     <>
       <SignupWrap isSignupOpen={isSignupOpen}>
@@ -78,7 +82,7 @@ const SignupPage = ({ isSignupOpen, openHandler }) => {
         <PersonalInputBox title="비밀번호 확인" type="password" onChange={changePasswordCheck} errorMsg={passwordCheckMsg} />
         <PersonalInputBox title="이메일" onChange={changeEmail} errorMsg={emailMsg} />
         <SignUpButtonWrap>
-          <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
+          <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler} disabled={validAllCheck() ? false : true}>
             회원가입
           </Button>
         </SignUpButtonWrap>
