@@ -13,18 +13,14 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 public class IssueView {
 
     @JsonIgnoreProperties({"authorId", "assignees", "milestoneId", "labels"})
-    @NonNull
     private Issue issue;
 
-    @NonNull
     private User author;
 
-    @NonNull
     private Milestone milestone;
 
     private List<User> assignees;
@@ -32,6 +28,12 @@ public class IssueView {
     private List<Label> labels;
 
     private List<CommentView> comments;
+
+    public IssueView(Issue issue, User author, Milestone milestone) {
+        this.issue = issue;
+        this.author = author;
+        this.milestone = milestone;
+    }
 
     public static IssueView of(Issue issue, User author, Milestone milestone, List<User> assignees, List<Label> labels, List<CommentView> comments) {
         return IssueView.builder()
