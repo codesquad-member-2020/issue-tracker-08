@@ -4,4 +4,5 @@ export const API_URL = {
   milestone: process.env.URL + process.env.MILESTONE,
   user: process.env.URL + process.env.USER,
   oauth: process.env.URL + process.env.OAUTH,
+  login: process.env.URL + process.env.LOGIN,
 };
