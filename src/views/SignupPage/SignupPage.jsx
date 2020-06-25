@@ -20,13 +20,16 @@ const SignupPage = ({ isSignupOpen, openHandler, postUser, userMsg, loadingUser 
 
   const debounceUserInfo = useDebounce(userInfo);
   const debouncedpwdCheck = useDebounce(passwordCheck);
+  const DUPLICATE = "중복된 아이디입니다.";
 
   useEffect(() => {
     validId();
     validPassword();
     validPasswordCheck();
     validEmail();
-  }, [debounceUserInfo, debouncedpwdCheck]);
+    if (userMsg === 201) openHandler();
+    if (userMsg === 202) alert(DUPLICATE);
+  }, [debounceUserInfo, debouncedpwdCheck, userMsg]);
 
   const validId = () => {
     if (!userInfo.login) return;
@@ -75,19 +78,15 @@ const SignupPage = ({ isSignupOpen, openHandler, postUser, userMsg, loadingUser 
     return idMsg === ID_MSG.SUCCESS && passwordMsg === PSWD1_MSG.SUCCESS && passwordCheckMsg === PSWD2_MSG.SUCCESS && emailMsg === EMAIL_MSG.SUCCESS;
   };
 
-  const params = { login: userInfo.login, email: userInfo.email };
-
   const postHandler = () => {
-    const fn = async () => {
+    (async () => {
       try {
-        await postUser(params);
+        console.log(userInfo);
+        await postUser(userInfo);
       } catch (e) {
         console.log(e);
       }
-    };
-    fn();
-    console.log(!loadingUser && userMsg);
-    // openHandler();
+    })();
   };
 
   return (
