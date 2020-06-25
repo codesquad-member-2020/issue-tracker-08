@@ -29,11 +29,11 @@ const milestone = handleActions(
   {
     [GET_MILESTONE_SUCCESS]: (state, action) => ({
       ...state,
-      milestones: action.payload,
+      milestones: action.payload.data,
     }),
     [GET_MILESTONE_DETAIL_SUCCESS]: (state, action) => ({
       ...state,
-      milestoneDetail: action.payload,
+      milestoneDetail: action.payload.data,
     }),
   },
   initialState

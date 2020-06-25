@@ -19,7 +19,7 @@ const label = handleActions(
   {
     [GET_LABEL_SUCCESS]: (state, action) => ({
       ...state,
-      labels: action.payload,
+      labels: action.payload.data,
     }),
   },
   initialState
