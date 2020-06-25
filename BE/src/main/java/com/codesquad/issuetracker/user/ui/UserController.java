@@ -54,9 +54,14 @@ public class UserController {
         loginUser.checkPassword(user);
 
         loginService.login(loginUser, response);
-        response.sendRedirect("/IssueListPage");
+//        response.sendRedirect("/IssueListPage");
 
-        return new ResponseEntity<>("로그인 성공", HttpStatus.FOUND);
+        URI uri = UriComponentsBuilder.fromUriString("http://3.34.110.161/IssueListPage").build().toUri();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(uri);
+
+        return new ResponseEntity<>("로그인 성공", headers, HttpStatus.FOUND);
     }
 
     @GetMapping("/oauth/code")
