@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Text from "@Style/Text";
 import Button from "@Style/Button";
@@ -9,10 +10,13 @@ import Button from "@Style/Button";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import SignupPage from "@SignupPage/SignupPage";
 import { API_URL } from "@Constants/url";
+import { postLogin } from "@Modules/user";
 
-const LoginPage = () => {
+const LoginPage = ({ postLogin, userMsg, loadingUser }) => {
   let history = useHistory();
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({ login: "", password: "" });
+
 
   const onPassIssueListPage = () => history.push(`/IssueListPage`);
   const loginHandler = () => {
@@ -20,6 +24,14 @@ const LoginPage = () => {
   };
 
   const openHandler = () => setIsSignupOpen(!isSignupOpen);
+
+  const changeId = ({ target }) => {
+    setLoginInfo({ ...loginInfo, login: target.value });
+  };
+
+  const changePassword = ({ target }) => {
+    setLoginInfo({ ...loginInfo, password: target.value });
+  };
 
   return (
     <>
@@ -29,8 +41,8 @@ const LoginPage = () => {
         </Text>
         <BoxWrap>
           <LoginWrap isSignupOpen={isSignupOpen}>
-            <PersonalInputBox title="아이디" />
-            <PersonalInputBox title="비밀번호" type="password" />
+            <PersonalInputBox title="아이디" onChange={changeId} />
+            <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} />
             <ButtonWrap>
               <Button backgroundColor="blue" style={loginButtonStyle} onClick={onPassIssueListPage}>
                 로그인
