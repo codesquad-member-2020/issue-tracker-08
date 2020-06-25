@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleDuplicateEntryException(DataIntegrityViolationException e) {
         log.error("handleDuplicateEntryException", e);
-        return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(ErrorMessage.MILESTONE_TITLE_DUPLICATED.getMessage(), HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
