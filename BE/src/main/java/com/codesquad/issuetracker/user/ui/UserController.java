@@ -56,7 +56,7 @@ public class UserController {
         loginService.login(loginUser, response);
         response.sendRedirect("/IssueListPage");
 
-        return new ResponseEntity<>("로그인 성공", HttpStatus.CREATED);
+        return new ResponseEntity<>("로그인 성공", HttpStatus.FOUND);
     }
 
     @GetMapping("/oauth/code")
