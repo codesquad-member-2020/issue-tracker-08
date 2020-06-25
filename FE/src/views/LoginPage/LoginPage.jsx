@@ -17,9 +17,22 @@ const LoginPage = ({ postLogin, userMsg, loadingUser }) => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [loginInfo, setLoginInfo] = useState({ login: "", password: "" });
 
+  useEffect(() => {
+    if (userMsg === 200) history.push(`/IssueListPage`);
+  }, [userMsg]);
 
-  const onPassIssueListPage = () => history.push(`/IssueListPage`);
-  const loginHandler = () => {
+  const generalLoginHandler = () => {
+    (async () => {
+      try {
+        console.log(loginInfo);
+        await postLogin(loginInfo);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
+  const oauthLoginHandler = () => {
     window.location.href = API_URL.oauth;
   };
 
@@ -44,14 +57,14 @@ const LoginPage = ({ postLogin, userMsg, loadingUser }) => {
             <PersonalInputBox title="아이디" onChange={changeId} />
             <PersonalInputBox title="비밀번호" type="password" onChange={changePassword} />
             <ButtonWrap>
-              <Button backgroundColor="blue" style={loginButtonStyle} onClick={onPassIssueListPage}>
+              <Button backgroundColor="blue" style={loginButtonStyle} onClick={generalLoginHandler}>
                 로그인
               </Button>
               <Button backgroundColor="blue" style={loginButtonStyle} onClick={openHandler}>
                 회원가입
               </Button>
             </ButtonWrap>
-            <Button backgroundColor="gray4" style={githubButtonStyle} onClick={loginHandler}>
+            <Button backgroundColor="gray4" style={githubButtonStyle} onClick={oauthLoginHandler}>
               Sign in with Github
               <GitHubIcon style={githubLogoStyle} />
             </Button>
@@ -105,4 +118,12 @@ const githubLogoStyle = {
   margin: "5px",
 };
 
-export default LoginPage;
+export default connect(
+  ({ user, loading }) => ({
+    userMsg: user.userMsg,
+    loadingUser: loading["user/POST_LOGIN"],
+  }),
+  {
+    postLogin,
+  }
+)(LoginPage);
