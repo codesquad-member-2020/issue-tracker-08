@@ -28,6 +28,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                              HttpServletResponse response,
                              Object handler) {
 
+        if (request.getMethod().equals("OPTIONS")) {
+            log.debug("options for preflight passed");
+            return true;
+        }
+
         Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElseThrow(UnauthorizedException::new);
         String jwtToken = getJwtToken(cookies);
 
