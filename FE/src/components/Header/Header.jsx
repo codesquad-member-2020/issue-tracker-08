@@ -15,7 +15,9 @@ const Header = () => {
   const logoutHandler = () => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
-    document.cookie += ";Expires=" + date.toUTCString();
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + date.toUTCString() + ";path=/");
+    });
     history.push("/");
   };
 

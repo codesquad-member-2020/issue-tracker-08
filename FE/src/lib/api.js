@@ -14,3 +14,13 @@ export const getLabel = () => axios.get(API_URL.label);
 export const createLabel = (params) => axios.post(API_URL.label, params);
 export const editLabel = ({ labelId, params }) => axios.put(`${API_URL.label}${labelId}`, params);
 export const deleteLabel = (labelName) => axios.delete(`${API_URL.label}${labelName}`);
+
+export const postUser = (params) => axios.post(API_URL.user, params);
+export const postLogin = (params) =>
+  axios({
+    url: API_URL.login,
+    data: params,
+    method: "post",
+    mode: "cors",
+    credentials: "include",
+  });
