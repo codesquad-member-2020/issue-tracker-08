@@ -95,9 +95,9 @@ public class IssueController {
 
     @PutMapping("/{issue_id}/milestone")
     public IssueBoard changeMilestone(@PathVariable(name = "issue_id") Long issueId,
-                                      @RequestBody Long milestoneId) {
+                                      @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
-        MilestoneId targetMilestoneId = new MilestoneId(milestoneId);
+        MilestoneId targetMilestoneId = new MilestoneId(issue.getMilestoneId().getMilestoneId());
         issueService.changeMilestone(targetIssueId, targetMilestoneId);
         return null;
     }
