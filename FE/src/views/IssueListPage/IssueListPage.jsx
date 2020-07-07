@@ -27,7 +27,9 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
 
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
-  const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
+  const IssueList = () => (
+    <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}</>
+  );
 
   useEffect(() => {
     const fn = async () => {
