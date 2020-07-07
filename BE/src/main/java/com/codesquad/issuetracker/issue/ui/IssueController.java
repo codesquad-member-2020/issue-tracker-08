@@ -53,52 +53,52 @@ public class IssueController {
     }
 
     @PatchMapping("/{issue_id}")
-    public IssueBoard changeStatus(@PathVariable(name = "issue_id") Long issueId) {
+    public ResponseEntity<Void> changeStatus(@PathVariable(name = "issue_id") Long issueId) {
         IssueId targetIssueId = new IssueId(issueId);
         issueService.changeStatus(targetIssueId);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{issue_id}/titles")
-    public IssueBoard editTitle(@PathVariable(name = "issue_id") Long issueId,
+    public ResponseEntity<Void> editTitle(@PathVariable(name = "issue_id") Long issueId,
                                 @RequestBody String title) {
         IssueId targetIssueId = new IssueId(issueId);
         issueService.editTitle(targetIssueId, title);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{issue_id}/content")
-    public IssueBoard editContent(@PathVariable(name = "issue_id") Long issueId,
+    public ResponseEntity<Void> editContent(@PathVariable(name = "issue_id") Long issueId,
                                   @RequestBody String content) {
         IssueId targetIssueId = new IssueId(issueId);
         issueService.editContent(targetIssueId, content);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{issue_id}/assignees")
-    public IssueBoard reassign(@PathVariable(name = "issue_id") Long issueId,
+    public ResponseEntity<Void> reassign(@PathVariable(name = "issue_id") Long issueId,
                                       @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         Set<UserId> assignees = issue.getAssignees();
         issueService.reassign(targetIssueId, assignees);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{issue_id}/labels")
-    public IssueBoard putLabels(@PathVariable(name = "issue_id") Long issueId,
+    public ResponseEntity<Void> putLabels(@PathVariable(name = "issue_id") Long issueId,
                                    @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         Set<LabelId> labels = issue.getLabels();
         issueService.putLabels(targetIssueId, labels);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{issue_id}/milestone")
-    public IssueBoard changeMilestone(@PathVariable(name = "issue_id") Long issueId,
+    public ResponseEntity<Void> changeMilestone(@PathVariable(name = "issue_id") Long issueId,
                                       @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
         MilestoneId targetMilestoneId = new MilestoneId(issue.getMilestoneId().getMilestoneId());
         issueService.changeMilestone(targetIssueId, targetMilestoneId);
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
