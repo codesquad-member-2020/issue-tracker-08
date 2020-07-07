@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import EventNoteIcon from "@material-ui/icons/EventNote";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import TimeAgo from "react-timeago";
 import koreaStrings from "react-timeago/lib/language-strings/ko";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
@@ -22,6 +23,12 @@ const Issue = ({ issue }) => {
       {label.name}
     </Badge>
   ));
+
+  const avatarList = issue.assignees.map((assignee) => <Avatar className="avatar" key={assignee.id} src={assignee.avatarUrl}></Avatar>);
+  const assignedUserList = issue.assignees.reduce((acc, cur) => {
+    if (!acc) return cur.nickname;
+    return acc + " and " + cur.nickname;
+  }, "");
 
   return (
     <>
@@ -53,6 +60,22 @@ const Issue = ({ issue }) => {
             </Text>
           </Info>
         </IssueWrapper>
+        {issue.assignees && (
+          <>
+            <AvatarWrapper>
+              {avatarList}
+              <MessageBox className="message">Assigned to {assignedUserList}</MessageBox>
+            </AvatarWrapper>
+          </>
+        )}
+        <CommentWrapper>
+          {issue.comments && (
+            <>
+              <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
+              {issue.comments}
+            </>
+          )}
+        </CommentWrapper>
       </Wrapper>
     </>
   );
