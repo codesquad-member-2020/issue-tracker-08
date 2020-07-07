@@ -34,7 +34,7 @@ const Issue = ({ issue, checkedItemHandler }) => {
     <>
       <Wrapper>
         <CheckboxWrapper>
-          <Checkbox />
+          <input type="checkbox" checked={bChecked} onChange={(e) => checkHandler(e)} />
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
@@ -74,8 +74,6 @@ const Wrapper = styled.div`
 const CheckboxWrapper = styled.div`
   padding-right: 10px;
 `;
-
-const Checkbox = styled.input.attrs({ type: "checkbox" })``;
 
 const OpenIcon = styled(ErrorOutlineIcon)`
   color: ${({ theme }) => theme.colors.green};
