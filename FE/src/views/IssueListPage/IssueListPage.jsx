@@ -30,6 +30,14 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   const IssueList = () => (
     <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}</>
   );
+  // 개발용 목데이터 불러오는 코드
+  // const IssueList = () => (
+  //   <>
+  //     {mockOfIssues.map((issue) => (
+  //       <Issue key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>
+  //     ))}
+  //   </>
+  // );
 
   useEffect(() => {
     const fn = async () => {
@@ -171,5 +179,84 @@ const labels = [
     name: "priority: critical",
     color: "#b60205",
     description: "",
+  },
+];
+
+const mockOfIssues = [
+  {
+    id: 1,
+    title: "이슈 보여라",
+    content: "성공",
+    isOpen: true,
+    createdAt: "2020-07-06 21:42:55",
+    numberOfComment: 0,
+    author: {
+      id: 1,
+      nickname: "jay",
+      avatarUrl: "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg",
+    },
+    milestone: {
+      id: 1,
+      title: "BE 1주차",
+      description: "issue 목록",
+      dueDate: "2020-07-10",
+      updatedAt: "2020-07-06 21:42:30",
+      isOpen: true,
+    },
+    assignees: [
+      {
+        id: 1,
+        nickname: "jay",
+        avatarUrl: "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg",
+      },
+    ],
+    labels: [
+      {
+        id: 1,
+        name: "FE",
+        description: "프론트용 라벨",
+        color: "#7be0d4",
+        isFontColorBlack: false,
+      },
+    ],
+    comments: null,
+  },
+  {
+    id: 2,
+    title: "테스트",
+    content: "성공",
+    isOpen: true,
+    createdAt: "2020-07-07 15:42:55",
+    numberOfComment: 0,
+    author: {
+      id: 1,
+      nickname: "jay",
+      avatarUrl: "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg",
+    },
+    milestone: {
+      id: 1,
+      title: "BE 1주차",
+      description: "issue 목록",
+      dueDate: "2020-07-10",
+      updatedAt: "2020-07-06 21:42:30",
+      isOpen: true,
+    },
+    assignees: [
+      {
+        id: 1,
+        nickname: "jay",
+        avatarUrl: "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg",
+      },
+    ],
+    labels: [
+      {
+        id: 1,
+        name: "FE",
+        description: "프론트용 라벨",
+        color: "#7be0d4",
+        isFontColorBlack: false,
+      },
+    ],
+    comments: null,
   },
 ];
