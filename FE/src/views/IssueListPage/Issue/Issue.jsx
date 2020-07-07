@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
@@ -12,8 +12,15 @@ import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const Issue = ({ issue }) => {
+const Issue = ({ issue, checkedItemHandler }) => {
   let history = useHistory();
+
+  const [bChecked, setChecked] = useState(false);
+
+  const checkHandler = (e) => {
+    setChecked(!bChecked);
+    checkedItemHandler(issue.id, e.target.checked);
+  };
 
   const onPassIssueDetailPage = () => history.push(`/IssueDetailPage/${issue.id}`);
 
