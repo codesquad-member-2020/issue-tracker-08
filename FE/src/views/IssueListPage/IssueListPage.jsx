@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
@@ -16,6 +16,14 @@ import { getIssue } from "@Modules/issue";
 
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
+
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  const checkedItemHandler = (id, isChecked) => {
+    if (isChecked && checkedItems.includes(id)) return;
+    if (!isChecked && checkedItems.includes(id)) setCheckedItems([...checkedItems].filter((x) => x !== id));
+    else setCheckedItems([...checkedItems, id]);
+  };
 
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
