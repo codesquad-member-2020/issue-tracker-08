@@ -18,7 +18,7 @@ const LoginPage = ({ postLogin, userMsg, loadingUser }) => {
   const [loginInfo, setLoginInfo] = useState({ login: "", password: "" });
 
   useEffect(() => {
-    if (userMsg === 200) history.push(`/IssueListPage`);
+    if (userMsg === 204) history.push(`/IssueListPage`);
   }, [userMsg]);
 
   const generalLoginHandler = () => {
