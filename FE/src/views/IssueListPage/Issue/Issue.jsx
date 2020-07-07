@@ -48,7 +48,7 @@ const Issue = ({ issue }) => {
             <Text fontSize="sm">
               <Milestone>
                 <EventNoteIcon style={{ fontSize: 15 }} />
-                스프린트2
+                {issue.milestone.title}
               </Milestone>
             </Text>
           </Info>
