@@ -33,6 +33,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        // By.Jay - 개발용 코드
+        if (!request.getMethod().equals("POST")) {
+            return true;
+        }
+
         Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElseThrow(UnauthorizedException::new);
         String jwtToken = getJwtToken(cookies);
 
