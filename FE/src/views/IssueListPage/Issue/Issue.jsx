@@ -69,10 +69,10 @@ const Issue = ({ issue }) => {
           </>
         )}
         <CommentWrapper>
-          {issue.comments && (
+          {issue.numberOfComment && (
             <>
               <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
-              {issue.comments}
+              {issue.numberOfComment}
             </>
           )}
         </CommentWrapper>
