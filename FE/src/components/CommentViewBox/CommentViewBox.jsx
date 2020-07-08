@@ -10,17 +10,17 @@ import Avatar from "@Style/Avatar";
 
 const formatter = buildFormatter(engStrings);
 
-const CommentViewBox = ({ owner }) => {
+const CommentViewBox = ({ owner, createdAt, content, author }) => {
   return (
     <>
       <Wrapper>
-        <Avatar src="https://avatars1.githubusercontent.com/u/30427711?s=88&u=0f6f414055ea0bec267856e35e8902b9f728fe1a&v=4"></Avatar>
+        <Avatar src={owner ? author.avatarUrl : author.avatar_url}></Avatar>
         <CommentGroup>
           <CommentHeader owner={owner ? true : false}>
             <CommentText>
-              <Text fontWeight="extraBold">choisohyun</Text>
+              <Text fontWeight="extraBold">{author.nickname}</Text>
               <Text color="gray4">
-                commented <TimeAgo date="May 25, 2020" formatter={formatter} />
+                commented <TimeAgo date={createdAt} formatter={formatter} />
               </Text>
             </CommentText>
             <CommentAction>
@@ -33,7 +33,7 @@ const CommentViewBox = ({ owner }) => {
               <Text color="gray4">Delete</Text>
             </CommentAction>
           </CommentHeader>
-          <CommentContent></CommentContent>
+          <CommentContent>{content}</CommentContent>
         </CommentGroup>
       </Wrapper>
     </>
@@ -95,9 +95,9 @@ const CommentHeader = styled.div`
 
 const CommentContent = styled.div`
   width: 100%;
-  height: 200px;
   padding: 15px;
   overflow: visible;
+  word-break: break-all;
 `;
 
 const CommentText = styled.div`
