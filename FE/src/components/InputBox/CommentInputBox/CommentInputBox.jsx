@@ -9,17 +9,21 @@ import Avatar from "@Style/Avatar";
 const MarkdownInputBox = ({ isIssue, onPass }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState("");
+  const [titleContent, setTitleContent] = useState("");
 
   const onSetRawContent = (e) => {
     setRawContent(e.target.value);
   };
 
+  const onSetTitleContent = (e) => {
+    setTitleContent(e.target.value);
+  };
   return (
     <>
       <Wrapper>
         <Avatar src="https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4"></Avatar>
         <CommentGroup>
-          {isIssue && <Title type="text" placeholder="Title" />}
+          {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
             <WriteButton onClick={() => setIsRawOpen(true)} isRawOpen={isRawOpen}>
               Write
