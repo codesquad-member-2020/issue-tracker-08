@@ -6,6 +6,7 @@ import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
 import Text from "@Style/Text";
 import Badge from "@Style/Badge";
+import Avatar from "@Style/Avatar";
 
 const formatter = buildFormatter(engStrings);
 
@@ -54,15 +55,6 @@ const Wrapper = styled.div`
     content: "";
     background-color: ${({ theme }) => theme.colors.gray2};
   }
-`;
-
-const Avatar = styled.img`
-  position: absolute;
-  left: -72px;
-  z-index: 1;
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
 `;
 
 const CommentGroup = styled.div`

@@ -89,7 +89,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
   return (
     <>
       <Header />
-      {(!milestoneId || (data() && initContent())) && (
+      {(!milestoneId || data()) && (
         <Wrapper>
           <ContentWrapper>
             <InfoWrapper>
