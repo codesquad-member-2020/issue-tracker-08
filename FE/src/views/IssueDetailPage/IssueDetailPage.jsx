@@ -12,6 +12,25 @@ import { getDetailIssue } from "@Modules/issue";
 const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue }) => {
   const { issueId } = useParams();
 
+  const CommentList = () => (
+    <>
+      {!loadingDetailIssue &&
+        detailIssue &&
+        detailIssue.comments.map((comment) => {
+          const {
+            comment: {
+              id: { commentId },
+              createdAt,
+              content,
+            },
+            user,
+          } = comment;
+
+          return <CommentViewBox key={commentId} createdAt={createdAt} content={content} author={user} />;
+        })}
+    </>
+  );
+
   useEffect(() => {
     const fn = async () => {
       try {
