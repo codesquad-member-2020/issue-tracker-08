@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import EventNoteIcon from "@material-ui/icons/EventNote";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import TimeAgo from "react-timeago";
 import koreaStrings from "react-timeago/lib/language-strings/ko";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
@@ -22,6 +23,12 @@ const Issue = ({ issue }) => {
       {label.name}
     </Badge>
   ));
+
+  const avatarList = issue.assignees.map((assignee) => <Avatar className="avatar" key={assignee.id} src={assignee.avatarUrl}></Avatar>);
+  const assignedUserList = issue.assignees.reduce((acc, cur) => {
+    if (!acc) return cur.nickname;
+    return acc + " and " + cur.nickname;
+  }, "");
 
   return (
     <>
@@ -53,6 +60,22 @@ const Issue = ({ issue }) => {
             </Text>
           </Info>
         </IssueWrapper>
+        {issue.assignees && (
+          <>
+            <AvatarWrapper>
+              {avatarList}
+              <MessageBox className="message">Assigned to {assignedUserList}</MessageBox>
+            </AvatarWrapper>
+          </>
+        )}
+        <CommentWrapper>
+          {issue.numberOfComment && (
+            <>
+              <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
+              {issue.numberOfComment}
+            </>
+          )}
+        </CommentWrapper>
       </Wrapper>
     </>
   );
@@ -62,6 +85,7 @@ const Wrapper = styled.div`
   display: flex;
   padding: 15px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
+  position: relative;
 `;
 
 const CheckboxWrapper = styled.div`
@@ -94,6 +118,47 @@ const Milestone = styled.span`
   align-items: center;
   &:hover {
     color: ${({ theme }) => theme.colors.gray2};
+    cursor: pointer;
+  }
+`;
+
+const AvatarWrapper = styled.div`
+  position: absolute;
+  right: 10%;
+  &:hover .avatar {
+    margin-left: 3px;
+  }
+  &:hover .message {
+    display: block;
+  }
+`;
+
+const Avatar = styled.img`
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  margin-left: -15px;
+`;
+
+const MessageBox = styled.div`
+  position: fixed;
+  right: 18%;
+  display: none;
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  padding: 5px;
+  font-size: 10px;
+  border-radius: 3px;
+`;
+
+const CommentWrapper = styled.span`
+  position: absolute;
+  left: 95%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    color: ${({ theme }) => theme.colors.blue};
     cursor: pointer;
   }
 `;

@@ -51,17 +51,17 @@ const Milestone = ({ milestone, patchHandler, deleteHandler }) => {
         </TitleWrapper>
         <ProgressWrapper>
           <ProgressBar>
-            <Progress achievementRate={milestone.achievementRate}></Progress>
+            <Progress achievementRate={milestone.achievementRate ? milestone.numberOfClosedIssue : 0}></Progress>
           </ProgressBar>
           <StatusBar>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.achievementRate}%</Text> complete
+              <Text>{milestone.achievementRate ? milestone.achievementRate : "0"}%</Text> complete
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.numberOfOpenIssue}</Text> open
+              <Text>{milestone.numberOfOpenIssue ? milestone.numberOfOpenIssue : "0"}</Text> open
             </Text>
             <Text fontSize="sm" fontWeight="semiBold">
-              <Text>{milestone.numberOfClosedIssue}</Text> closed
+              <Text>{milestone.numberOfClosedIssue ? milestone.numberOfClosedIssue : "0"}</Text> closed
             </Text>
           </StatusBar>
           <AdminWrapper>
