@@ -33,6 +33,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        log.debug("Remote Host:{}", request.getRemoteHost());
+        log.debug("Remote Address:{}", request.getRemoteAddr());
+        log.debug("Remote User :{}", request.getRemoteUser());
+
         // By.Jay - 개발용 코드
         if (!request.getMethod().equals("POST")) {
             return true;
