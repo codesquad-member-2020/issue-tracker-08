@@ -34,9 +34,14 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
           </CommentContent>
           <ButtonWrap isIssue={isIssue}>
             {isIssue ? (
-              <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
-                Cancel
-              </Button>
+              <>
+                <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
+                  Cancel
+                </Button>
+                <Button onClick={onPass} disabled={titleContent ? false : true}>
+                  Submit new issue
+                </Button>
+              </>
             ) : (
               <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }}>
                 <CloseIssueIcon>
@@ -48,7 +53,6 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
                 Close issue
               </Button>
             )}
-            <Button onClick={onPass}>Submit new issue</Button>
           </ButtonWrap>
         </CommentGroup>
       </Wrapper>
