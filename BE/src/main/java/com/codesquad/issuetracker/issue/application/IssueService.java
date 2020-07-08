@@ -65,8 +65,10 @@ public class IssueService {
         return readIssue(newIssue.getId());
     }
 
-    public void changeStatusOfIssues(List<IssueId> issueIds) {
-        issueIds.forEach(this::changeStatus);
+    public void changeStatusOfIssues(List<Number> issueIds, boolean isOpen) {
+        Iterable<Issue> issues = issueRepository.findAllById(issueIds.stream().map(Number::longValue).map(IssueId::new).collect(Collectors.toList()));
+        issues.forEach(i -> i.changeStatus(isOpen));
+        issueRepository.saveAll(issues);
     }
 
     public void changeStatus(IssueId issueId) {
