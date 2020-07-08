@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+import { useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+import { postComment } from "@Modules/issue";
+
 const MarkdownInputBox = ({ isIssue, onPass }) => {
+  const { issueId } = useParams();
+
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState("");
   const [titleContent, setTitleContent] = useState("");
@@ -18,6 +22,24 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
   const onSetTitleContent = (e) => {
     setTitleContent(e.target.value);
   };
+
+  const postHandler = () => {
+    const params = rawContent;
+    const fn = async () => {
+      try {
+        await postComment({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
+
+  const onComment = () => {
+    postHandler();
+    window.location.reload();
+  };
+
   return (
     <>
       <Wrapper>
