@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -41,8 +43,14 @@ public class IssueController {
     }
 
     @PatchMapping("")
-    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody List<IssueId> issueIds) {
-        issueService.changeStatusOfIssues(issueIds);
+    public ResponseEntity<Void> changeStatusOfIssues(@RequestBody Map<String, Object> requestBody) {
+        List<IssueId> issueIds = ((List<Number>) requestBody.get("issues"))
+                .stream()
+                .map(Number::longValue)
+                .map(IssueId::new)
+                .collect(Collectors.toList());
+        boolean isOpen = (boolean) requestBody.get("isOpen");
+        issueService.changeStatusOfIssues(issueIds, isOpen);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
