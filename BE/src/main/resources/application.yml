@@ -8,6 +8,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
 
   # API 호출시, SQL 문을 콘솔에 출력한다
   jpa:
