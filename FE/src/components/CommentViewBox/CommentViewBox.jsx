@@ -106,6 +106,7 @@ const CommentContent = styled.div`
   height: 200px;
   padding: 15px;
   overflow: visible;
+  word-break: break-all;
 `;
 
 const CommentText = styled.div`
