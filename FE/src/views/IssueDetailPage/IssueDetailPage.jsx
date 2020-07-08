@@ -48,9 +48,10 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue }) =>
       <ContentWrapper>
         <Content>
           <CommentViewBoxWrapper>
-            <CommentViewBox owner />
-            <CommentViewBox />
-            <CommentViewBox />
+            {!loadingDetailIssue && detailIssue && (
+              <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
+            )}
+            <CommentList />
             <CommentInputBox />
           </CommentViewBoxWrapper>
           <FilterVerticalList />
