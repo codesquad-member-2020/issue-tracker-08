@@ -4,6 +4,7 @@ import { API_URL } from "@Constants/url";
 export const getIssue = () => axios.get(API_URL.issue);
 export const getDetailIssue = (issueId) => axios.get(`${API_URL.issue}${issueId}`);
 export const postComment = ({ issueId, params }) => axios.post(`${API_URL.issue}${issueId}/comments`, params);
+export const deleteComment = ({ issueId, commentId }) => axios.delete(`${API_URL.issue}${issueId}/comments/${commentId}`);
 
 export const getMilestone = () => axios.get(API_URL.milestone);
 export const getMilestoneDetail = (milestoneId) => axios.get(`${API_URL.milestone}${milestoneId}`);
