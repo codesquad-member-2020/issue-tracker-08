@@ -24,10 +24,9 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
   };
 
   const postHandler = () => {
-    const params = rawContent;
     const fn = async () => {
       try {
-        await postComment({ issueId, params });
+        await postComment({ issueId, rawContent });
       } catch (e) {
         console.log(e);
       }

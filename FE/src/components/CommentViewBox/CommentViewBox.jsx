@@ -3,14 +3,35 @@ import styled from "styled-components";
 import TimeAgo from "react-timeago";
 import engStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import { useParams } from "react-router-dom";
 
 import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Avatar from "@Style/Avatar";
 
+import { deleteComment } from "@Modules/issue";
+
 const formatter = buildFormatter(engStrings);
 
-const CommentViewBox = ({ owner, createdAt, content, author }) => {
+const CommentViewBox = ({ key, owner, createdAt, content, author }) => {
+  const { issueId } = useParams();
+
+  const deleteHandler = () => {
+    const fn = async () => {
+      try {
+        await deleteComment({ issueId, key });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  };
+
+  const onDelete = () => {
+    deleteHandler();
+    window.location.reload();
+  };
+
   return (
     <>
       <Wrapper>
@@ -30,7 +51,9 @@ const CommentViewBox = ({ owner, createdAt, content, author }) => {
                 </Badge>
               )}
               <Text color="gray4">Edit</Text>
-              <Text color="gray4">Delete</Text>
+              <Text color="gray4" onClick={onDelete}>
+                Delete
+              </Text>
             </CommentAction>
           </CommentHeader>
           <CommentContent>{content}</CommentContent>
