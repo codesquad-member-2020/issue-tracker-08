@@ -83,7 +83,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
           <Button onClick={onPassCreateIssuePage}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={<IssueList />} />
+      <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
     </>
   );
 };
