@@ -56,7 +56,7 @@ spring:
   profiles: production
 
   datasource:
-    url: ENC(e3w9hMoYfqs+5rqvRbCMhKK9PMEO7x9tfpsdBorh+oLcpQ5K/HezMg1FzdP+OvfVixOkIbCK49jjxGVAdugm73JH6RpOeGlNjqE9vx4hcw1SHqKAhOX6Lf7QT3wsuZhYt6EWaI2BWShafJS1rAf/qXYaMZuwad7Az2Yh3WKQapTfIVIs3RWJId6CqYLujzJZ)
+    url: ENC(xwiWLpHJ7FJPLtOs2pDeyPhXmREXndlkwS1TUniPX4wzZUtU6Jz114Ltm84Hzg4gR1LdnFEe2CPJQ/TxIvUa1/sr1GB38j0wkYo8p4PyNUzAXAs5vRszxHmk41IdEujZRpllGl+fZe5OPo97shn7dfwvB4mUQunTmik76o2JjrQRwMSE1CnyjjV8PXD1XqvmXB9yLNVkiox8MBrNTddw6A==)
     username: ENC(dWFI/DAXSod1mpm9fOEXhd70DB1D8lOmuYHCA/z7y0CfA5k699XdBzzNQLw5ewHN)
     password: ENC(kBF9VO2QdavUtJyL2oUkx/vjv+AyevUXEQZ5ZCpvDVk5fU7IpGtg5e/R4kh69YeA)
 
