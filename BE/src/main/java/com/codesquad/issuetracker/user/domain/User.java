@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.user.domain;
 
 import com.codesquad.issuetracker.common.exception.UnauthorizedException;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -30,9 +31,10 @@ public class User {
     @JsonProperty("avatar_url")
     private String avatarUrl = "https://codesquad-project.s3.ap-northeast-2.amazonaws.com/sad.jpg";
 
-    @JsonProperty("email")
+    @JsonIgnore
     private String email;
 
+    @JsonIgnore
     private String password;
 
     public static User of(UserId userId, User user) {
