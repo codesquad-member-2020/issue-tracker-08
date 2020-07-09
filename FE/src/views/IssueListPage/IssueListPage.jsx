@@ -17,7 +17,7 @@ import { getIssue } from "@Modules/issue";
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
 
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState(new Set());
 
   const checkedItemHandler = (id, isChecked) => {
     if (isChecked && checkedItems.includes(id)) return;
