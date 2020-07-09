@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import Header from "@Header/Header";
+import { postIssue } from "@Modules/issue";
 
-const CreateIssuePage = () => {
+const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
   let history = useHistory();
   const passIssueListPage = () => {
     history.push(`/IssueListPage`);
@@ -44,4 +46,12 @@ const IssueBoxWrapper = styled.div`
   width: 75%;
 `;
 
-export default CreateIssuePage;
+export default connect(
+  ({ issue, loading }) => ({
+    detailIssue: issue.detailIssue,
+    loadingIssue: loading["issue/POST_ISSUE"],
+  }),
+  {
+    postIssue,
+  }
+)(CreateIssuePage);
