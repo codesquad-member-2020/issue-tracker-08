@@ -57,10 +57,12 @@ const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
             </Text>
             <Text fontSize="sm">by {issue.author.nickname}</Text>
             <Text fontSize="sm">
-              <Milestone>
-                <EventNoteIcon style={{ fontSize: 15 }} />
-                {issue.milestone.title}
-              </Milestone>
+              {issue.milestone && (
+                <Milestone>
+                  <EventNoteIcon style={{ fontSize: 15 }} />
+                  {issue.milestone.title}
+                </Milestone>
+              )}
             </Text>
           </Info>
         </IssueWrapper>
