@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import FilterButton from "@FilterButton/FilterButton";
 
-const IssueListHeader = () => {
+const IssueListHeader = ({ allCheckedHandler }) => {
+  const [bChecked, setChecked] = useState(false);
+
+  const checkHandler = ({ target }) => {
+    setChecked(!bChecked);
+    allCheckedHandler(target.checked);
+  };
+
   return (
     <>
-      <Checkbox />
+      <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
       <FilterButtonWrapper>
         <FilterButton filter title="Author" data={labels}></FilterButton>
         <FilterButton filter title="Label" data={labels}></FilterButton>
