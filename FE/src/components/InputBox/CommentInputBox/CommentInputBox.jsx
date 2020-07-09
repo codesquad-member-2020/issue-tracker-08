@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
-
 import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
-const MarkdownInputBox = ({ isIssue, onPass }) => {
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+import getCookieValue from "@Lib/getCookieValue";
+import useDebounce from "@Hooks/useDebounce";
+
+const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState("");
 
@@ -160,4 +162,4 @@ const CloseIssueIcon = styled.svg`
   margin-right: 5px;
 `;
 
-export default MarkdownInputBox;
+export default CommentInputBox;
