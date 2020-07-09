@@ -59,7 +59,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
                 Close issue
               </Button>
             )}
-            <Button onClick={onPass}>Submit new issue</Button>
+            <Button onClick={() => submitHandler(params)}>Submit new issue</Button>
           </ButtonWrap>
         </CommentGroup>
       </Wrapper>
