@@ -18,6 +18,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
 
   const [checkedItems, setCheckedItems] = useState(new Set());
+  const [isAllChecked, setIsAllChecked] = useState(false);
 
   const isGetIssues = () => !loadingIssue && issues;
 
