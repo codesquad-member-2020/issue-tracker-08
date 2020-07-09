@@ -17,6 +17,12 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
 
   const onSetRawContent = ({ target }) => setRawContent(target.value);
 
+  let params = {
+    title: title,
+    description: rawContent,
+    assignees: [],
+    labels: [],
+    milestonesId: null,
   };
 
   return (
