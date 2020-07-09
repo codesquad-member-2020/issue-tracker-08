@@ -47,7 +47,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{comment_id}")
-    public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
+    public ResponseEntity<Void> changeStatus(@PathVariable("issue_id") Long issueId,
                                                @PathVariable("comment_id") Long commentId,
                                                HttpServletRequest request) {
 
@@ -56,11 +56,11 @@ public class CommentController {
 
         commentService.changeStatus(compositeCommentId);
 
-        return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{comment_id}")
-    public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
+    public ResponseEntity<Void> delete(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
                                          HttpServletRequest request) {
 
@@ -69,7 +69,7 @@ public class CommentController {
 
         commentService.delete(compositeCommentId);
 
-        return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
 
