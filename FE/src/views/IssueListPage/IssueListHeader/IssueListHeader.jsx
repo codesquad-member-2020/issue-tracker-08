@@ -15,10 +15,10 @@ const IssueListHeader = ({ allCheckedHandler }) => {
     <>
       <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
       <FilterButtonWrapper>
-        <FilterButton filter title="Author" data={labels}></FilterButton>
-        <FilterButton filter title="Label" data={labels}></FilterButton>
-        <FilterButton filter title="Milestones" data={labels}></FilterButton>
-        <FilterButton filter title="Assignee" data={labels}></FilterButton>
+        {bChecked ? <FilterButton filter title="Mark as" data={labels} /> : <FilterButton filter title="Author" data={labels} />}
+        <FilterButton filter title="Label" data={labels} />
+        <FilterButton filter title="Milestones" data={labels} />
+        <FilterButton filter title="Assignee" data={labels} />
       </FilterButtonWrapper>
     </>
   );
