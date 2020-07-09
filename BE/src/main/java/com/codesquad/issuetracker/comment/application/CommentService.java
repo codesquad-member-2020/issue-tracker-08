@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Slf4j
@@ -46,7 +47,7 @@ public class CommentService {
     }
 
     private Comment findCommentById(CommentId commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다!"));
+        return commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 댓글입니다!"));
     }
 
     public long countByIssueId(IssueId issueId) {
