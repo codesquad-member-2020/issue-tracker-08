@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
@@ -12,7 +12,7 @@ import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const Issue = ({ issue, checkedItemHandler }) => {
+const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
   let history = useHistory();
 
   const [bChecked, setChecked] = useState(false);
@@ -22,6 +22,8 @@ const Issue = ({ issue, checkedItemHandler }) => {
     checkedItemHandler(issue.id, target.checked);
   };
 
+  const allCheckHandler = () => setChecked(isAllChecked);
+
   const onPassIssueDetailPage = () => history.push(`/IssueDetailPage/${issue.id}`);
 
   const badgeList = issue.labels.map((label) => (
@@ -29,6 +31,8 @@ const Issue = ({ issue, checkedItemHandler }) => {
       {label.name}
     </Badge>
   ));
+
+  useEffect(() => allCheckHandler(), [isAllChecked]);
 
   return (
     <>
