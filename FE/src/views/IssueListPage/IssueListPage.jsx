@@ -40,7 +40,10 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
   const IssueList = () => (
-    <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}</>
+    <>
+      {isGetIssues() &&
+        issues.map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
+    </>
   );
   // 개발용 목데이터 불러오는 코드
   // const IssueList = () => (
