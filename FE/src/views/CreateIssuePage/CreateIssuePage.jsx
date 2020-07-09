@@ -10,8 +10,18 @@ import { postIssue } from "@Modules/issue";
 
 const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
   let history = useHistory();
-  const passIssueListPage = () => {
-    history.push(`/IssueListPage`);
+
+  const passIssueListPage = () => history.push(`/IssueListPage`);
+
+  const submitHandler = (params) => {
+    (async () => {
+      try {
+        console.log(params);
+        await postIssue(params);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   };
 
   return (
@@ -20,7 +30,7 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
       <ContentWrapper>
         <Content>
           <IssueBoxWrapper>
-            <CommentInputBox isIssue={true} onPass={passIssueListPage} />
+            <CommentInputBox isIssue onPass={passIssueListPage} submitHandler={submitHandler} />
           </IssueBoxWrapper>
           <FilterVerticalList />
         </Content>
