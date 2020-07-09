@@ -19,7 +19,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
   return (
     <>
       <Wrapper>
-        <Avatar src="https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4"></Avatar>
+        <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" />}
           <ButtonTab>
