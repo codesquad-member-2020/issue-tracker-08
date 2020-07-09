@@ -55,7 +55,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
       }
     };
     fn();
-  }, [getIssue]);
+  }, []);
 
   return (
     <>
