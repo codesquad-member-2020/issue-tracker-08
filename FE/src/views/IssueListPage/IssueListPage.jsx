@@ -20,9 +20,8 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   const [checkedItems, setCheckedItems] = useState(new Set());
 
   const checkedItemHandler = (id, isChecked) => {
-    if (isChecked && checkedItems.includes(id)) return;
-    if (!isChecked && checkedItems.includes(id)) setCheckedItems([...checkedItems].filter((x) => x !== id));
-    else setCheckedItems([...checkedItems, id]);
+    if (isChecked) setCheckedItems(checkedItems.add(id));
+    else if (!isChecked && checkedItems.has(id)) checkedItems.delete(id);
   };
 
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
