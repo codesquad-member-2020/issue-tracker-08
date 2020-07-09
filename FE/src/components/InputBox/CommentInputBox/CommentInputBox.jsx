@@ -10,10 +10,13 @@ import useDebounce from "@Hooks/useDebounce";
 
 const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
+  const [title, setTitle] = useState("");
   const [rawContent, setRawContent] = useState("");
 
-  const onSetRawContent = (e) => {
-    setRawContent(e.target.value);
+  const onSetTitle = ({ target }) => setTitle(target.value);
+
+  const onSetRawContent = ({ target }) => setRawContent(target.value);
+
   };
 
   return (
@@ -21,7 +24,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
       <Wrapper>
         <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
-          {isIssue && <Title type="text" placeholder="Title" />}
+          {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitle} />}
           <ButtonTab>
             <WriteButton onClick={() => setIsRawOpen(true)} isRawOpen={isRawOpen}>
               Write
