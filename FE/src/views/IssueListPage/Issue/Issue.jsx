@@ -17,9 +17,9 @@ const Issue = ({ issue, checkedItemHandler }) => {
 
   const [bChecked, setChecked] = useState(false);
 
-  const checkHandler = (e) => {
+  const checkHandler = ({ target }) => {
     setChecked(!bChecked);
-    checkedItemHandler(issue.id, e.target.checked);
+    checkedItemHandler(issue.id, target.checked);
   };
 
   const onPassIssueDetailPage = () => history.push(`/IssueDetailPage/${issue.id}`);
