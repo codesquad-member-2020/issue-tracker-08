@@ -4,6 +4,7 @@ import styled from "styled-components";
 import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 
 import Button from "@Style/Button";
+import Avatar from "@Style/Avatar";
 
 const MarkdownInputBox = ({ isIssue, onPass }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
@@ -60,15 +61,6 @@ const Wrapper = styled.div`
   display: flex;
   padding: 16px 0;
   margin: 0 16px;
-`;
-
-const Avatar = styled.img`
-  position: absolute;
-  left: -72px;
-  z-index: 1;
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
 `;
 
 const CommentGroup = styled.div`

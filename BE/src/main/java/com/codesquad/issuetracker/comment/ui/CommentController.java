@@ -25,7 +25,7 @@ public class CommentController {
 
         Long commentId = commentService.getNextIdentity();
         Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.save(compositeCommentId, content);
 
@@ -39,7 +39,7 @@ public class CommentController {
                                          HttpServletRequest request) {
 
         Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.update(compositeCommentId, content);
 
