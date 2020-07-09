@@ -27,6 +27,16 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
     else if (!isChecked && checkedItems.has(id)) checkedItems.delete(id);
   };
 
+  const allCheckedHandler = (isChecked) => {
+    if (isGetIssues() && isChecked) {
+      setCheckedItems(new Set(issues.map(({ id }) => id)));
+      setIsAllChecked(true);
+    } else if (!isChecked) {
+      checkedItems.clear();
+      setIsAllChecked(false);
+    }
+  };
+
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
   const IssueList = () => (
