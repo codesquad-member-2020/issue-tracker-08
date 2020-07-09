@@ -19,6 +19,8 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
 
   const [checkedItems, setCheckedItems] = useState(new Set());
 
+  const isGetIssues = () => !loadingIssue && issues;
+
   const checkedItemHandler = (id, isChecked) => {
     if (isChecked) setCheckedItems(checkedItems.add(id));
     else if (!isChecked && checkedItems.has(id)) checkedItems.delete(id);
