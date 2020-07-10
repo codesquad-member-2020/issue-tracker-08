@@ -11,9 +11,9 @@ import com.codesquad.issuetracker.label.domain.LabelRepository;
 import com.codesquad.issuetracker.milestone.domain.MileStoneRepository;
 import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.application.UserService;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
-import com.codesquad.issuetracker.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class IssueService {
 
     private final IssueRepository issueRepository;
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private final CommentRepository commentRepository;
 
@@ -43,10 +43,10 @@ public class IssueService {
     public IssueBoard findIssuesByFilter(Filter filter) {
         List<IssueView> issues = StreamSupport.stream(issueRepository.findAll(IssuePredicate.search(filter)).spliterator(), false)
                 .map(i -> IssueView.of(i,
-                        userRepository.findById(i.getAuthorId()).orElseThrow(EntityNotFoundException::new),
+                        userService.findById(i.getAuthorId()),
                         findMilestone(i.getMilestoneId()),
-                        StreamSupport.stream(userRepository.findAllById(i.getAssignees()).spliterator(), false).collect(Collectors.toList()),
-                        StreamSupport.stream(labelRepository.findAllById(i.getLabels()).spliterator(), false).collect(Collectors.toList()),
+                        userService.findAllById(i.getAssignees()),
+                        findAllLabelsById(i.getLabels()),
                         commentRepository.countByIssueId(i.getId())))
                 .collect(Collectors.toList());
 
@@ -91,39 +91,45 @@ public class IssueService {
 
     public void reassign(IssueId issueId, Set<UserId> assignees) {
         Issue issue = findIssueById(issueId);
-        issue.reassign(assignees);
+        issue.reassign(userService.findAllById(assignees));
         issueRepository.save(issue);
     }
 
     public void putLabels(IssueId issueId, Set<LabelId> labels) {
         Issue issue = findIssueById(issueId);
-        issue.putLabels(labels);
+        issue.putLabels(findAllLabelsById(labels));
         issueRepository.save(issue);
     }
 
     public void changeMilestone(IssueId issueId, MilestoneId targetMilestoneId) {
         Issue issue = findIssueById(issueId);
-        issue.changeMilestone(targetMilestoneId);
+        issue.changeMilestone(findMilestone(targetMilestoneId));
+        issueRepository.save(issue);
+    }
+
+    public void deleteMilestone(IssueId issueId) {
+        Issue issue = findIssueById(issueId);
+        issue.deleteMilestone();
         issueRepository.save(issue);
     }
 
     public IssueView readIssue(IssueId issueId) {
         Issue issue = findIssueById(issueId);
-        User author = userRepository.findById(issue.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다!"));
+        User author = userService.findById(issue.getAuthorId());
         Milestone milestone = findMilestone(issue.getMilestoneId());
-        List<User> assignees = (List<User>) userRepository.findAllById(issue.getAssignees());
-        List<Label> labels = (List<Label>) labelRepository.findAllById(issue.getLabels());
+        List<User> assignees = userService.findAllById(issue.getAssignees());
+        List<Label> labels = findAllLabelsById(issue.getLabels());
         List<CommentView> commentViews = issueViewDAO.readAllComment(issueId);
         return IssueView.of(issue,author, milestone, assignees, labels, commentViews);
     }
 
-    public void deleteMilestoneOfIssue(MilestoneId milestoneId) {
+    public void deleteMilestoneOfIssues(MilestoneId milestoneId) {
         List<Issue> issues = issueRepository.findAllByMilestoneId(milestoneId);
         issues.forEach(Issue::deleteMilestone);
         issueRepository.saveAll(issues);
     }
 
-    public void deleteLabelOfIssue(LabelId labelId) {
+    public void deleteLabelOfIssues(LabelId labelId) {
         List<Issue> issues = issueRepository.findAllByLabelId(labelId);
         issues.forEach(i -> i.deleteLabel(labelId));
         issueRepository.saveAll(issues);
@@ -141,5 +147,13 @@ public class IssueService {
 
     private Milestone findMilestone(MilestoneId milestoneId) {
         return milestoneId == null ? null : mileStoneRepository.findById(milestoneId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 마일스톤입니다!"));
+    }
+
+    private List<Label> findAllLabelsById(Set<LabelId> labelIds) {
+        List<Label> labels = (List<Label>) labelRepository.findAllById(labelIds);
+        if (labels.size() == labelIds.size()) {
+            return labels;
+        }
+        throw new EntityNotFoundException("존재하지 않는 라벨입니다!");
     }
 }
