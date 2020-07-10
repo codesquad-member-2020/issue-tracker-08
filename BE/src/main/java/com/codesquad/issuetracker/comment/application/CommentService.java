@@ -19,7 +19,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     public Long getNextIdentity() {
-        return Optional.ofNullable(commentRepository.findFirstByOrderByIdDesc())
+        return Optional.ofNullable(commentRepository.findFirstByOrderById_commentIdDesc())
                 .map(comment -> comment.getId().getCommentId() + 1L)
                 .orElseGet(() -> 1L);
     }
