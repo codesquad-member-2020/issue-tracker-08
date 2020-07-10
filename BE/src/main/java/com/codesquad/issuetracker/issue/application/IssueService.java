@@ -45,7 +45,7 @@ public class IssueService {
                 .map(i -> IssueView.of(i,
                         userService.findById(i.getAuthorId()),
                         findMilestone(i.getMilestoneId()),
-                        userService.findAllById(i.getAssignees()),
+                        userService.getAllById(i.getAssignees()),
                         findAllLabelsById(i.getLabels()),
                         commentRepository.countByIssueId(i.getId())))
                 .collect(Collectors.toList());
@@ -60,6 +60,20 @@ public class IssueService {
     }
 
     public IssueView createIssue(Issue issue, UserId userId) {
+        if (!userService.containsAll(issue.getAssignees())) {
+            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+        }
+
+        if (!containsAllLabels(issue.getLabels())) {
+            throw new EntityNotFoundException("존재하지 않는 라벨입니다!");
+        }
+
+        Optional.ofNullable(issue.getMilestoneId()).ifPresent(milestoneId -> {
+            if (mileStoneRepository.countById(milestoneId) == 0) {
+                throw new EntityNotFoundException("존재하지 않는 마일스톤입니다!");
+            }
+        });
+
         Issue newIssue = Issue.of(getNextIdentity(), issue, userId);
         issueRepository.save(newIssue);
         return readIssue(newIssue.getId());
@@ -91,7 +105,7 @@ public class IssueService {
 
     public void reassign(IssueId issueId, Set<UserId> assignees) {
         Issue issue = findIssueById(issueId);
-        issue.reassign(userService.findAllById(assignees));
+        issue.reassign(userService.getAllById(assignees));
         issueRepository.save(issue);
     }
 
@@ -117,7 +131,7 @@ public class IssueService {
         Issue issue = findIssueById(issueId);
         User author = userService.findById(issue.getAuthorId());
         Milestone milestone = findMilestone(issue.getMilestoneId());
-        List<User> assignees = userService.findAllById(issue.getAssignees());
+        List<User> assignees = userService.getAllById(issue.getAssignees());
         List<Label> labels = findAllLabelsById(issue.getLabels());
         List<CommentView> commentViews = issueViewDAO.readAllComment(issueId);
         return IssueView.of(issue,author, milestone, assignees, labels, commentViews);
@@ -155,5 +169,9 @@ public class IssueService {
             return labels;
         }
         throw new EntityNotFoundException("존재하지 않는 라벨입니다!");
+    }
+
+    private boolean containsAllLabels(Set<LabelId> labelIds) {
+        return labelIds.size() == ((List<Label>) labelRepository.findAllById(labelIds)).size();
     }
 }
