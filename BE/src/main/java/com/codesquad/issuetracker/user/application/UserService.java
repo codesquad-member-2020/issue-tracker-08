@@ -32,11 +32,19 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원입니다!"));
     }
 
-    public List<User> findAllById(Set<UserId> userIds) {
-        List<User> users = (List<User>) userRepository.findAllById(userIds);
+    public List<User> getAllById(Set<UserId> userIds) {
+        List<User> users = findAllById(userIds);
         if (users.size() == userIds.size()) {
             return users;
         }
         throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+    }
+
+    public boolean containsAll(Set<UserId> userIds) {
+        return userIds.size() == findAllById(userIds).size();
+    }
+
+    private List<User> findAllById(Set<UserId> userIds) {
+        return (List<User>) userRepository.findAllById(userIds);
     }
 }
