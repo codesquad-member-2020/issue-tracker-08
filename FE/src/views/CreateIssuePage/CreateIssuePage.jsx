@@ -16,7 +16,6 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
   const submitHandler = (params) => {
     (async () => {
       try {
-        console.log(params);
         await postIssue(params);
       } catch (e) {
         console.error(e);
