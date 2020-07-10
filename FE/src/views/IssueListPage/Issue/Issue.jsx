@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
@@ -13,8 +13,17 @@ import Badge from "@Style/Badge";
 
 const formatter = buildFormatter(koreaStrings);
 
-const Issue = ({ issue }) => {
+const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
   let history = useHistory();
+
+  const [bChecked, setChecked] = useState(false);
+
+  const checkHandler = ({ target }) => {
+    setChecked(!bChecked);
+    checkedItemHandler(issue.id, target.checked);
+  };
+
+  const allCheckHandler = () => setChecked(isAllChecked);
 
   const onPassIssueDetailPage = () => history.push(`/IssueDetailPage/${issue.id}`);
 
@@ -23,6 +32,8 @@ const Issue = ({ issue }) => {
       {label.name}
     </Badge>
   ));
+
+  useEffect(() => allCheckHandler(), [isAllChecked]);
 
   const avatarList = issue.assignees.map((assignee) => <Avatar className="avatar" key={assignee.id} src={assignee.avatarUrl}></Avatar>);
   const assignedUserList = issue.assignees.reduce((acc, cur) => {
@@ -34,7 +45,7 @@ const Issue = ({ issue }) => {
     <>
       <Wrapper>
         <CheckboxWrapper>
-          <Checkbox />
+          <input type="checkbox" checked={bChecked} onChange={(e) => checkHandler(e)} />
         </CheckboxWrapper>
         <OpenIcon />
         <IssueWrapper>
@@ -93,8 +104,6 @@ const Wrapper = styled.div`
 const CheckboxWrapper = styled.div`
   padding-right: 10px;
 `;
-
-const Checkbox = styled.input.attrs({ type: "checkbox" })``;
 
 const OpenIcon = styled(ErrorOutlineIcon)`
   color: ${({ theme }) => theme.colors.green};

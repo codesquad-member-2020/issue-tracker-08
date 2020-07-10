@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, CommentId> {
-    Comment findFirstByOrderByIdDesc();
+
+    Comment findFirstByOrderById_commentIdDesc();
 
     @Query("SELECT count(comment_id) " +
             "FROM  Comment " +

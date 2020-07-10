@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
@@ -17,9 +17,34 @@ import { getIssue } from "@Modules/issue";
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
 
+  const [checkedItems, setCheckedItems] = useState(new Set());
+  const [isAllChecked, setIsAllChecked] = useState(false);
+
+  const isGetIssues = () => !loadingIssue && issues;
+
+  const checkedItemHandler = (id, isChecked) => {
+    if (isChecked) setCheckedItems(checkedItems.add(id));
+    else if (!isChecked && checkedItems.has(id)) checkedItems.delete(id);
+  };
+
+  const allCheckedHandler = (isChecked) => {
+    if (isGetIssues() && isChecked) {
+      setCheckedItems(new Set(issues.map(({ id }) => id)));
+      setIsAllChecked(true);
+    } else if (!isChecked) {
+      checkedItems.clear();
+      setIsAllChecked(false);
+    }
+  };
+
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
-  const IssueList = () => <>{!loadingIssue && issues && issues.map((issue) => <Issue key={issue.id} issue={issue}></Issue>)}</>;
+  const IssueList = () => (
+    <>
+      {isGetIssues() &&
+        issues.map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
+    </>
+  );
 
   useEffect(() => {
     const fn = async () => {
@@ -30,7 +55,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
       }
     };
     fn();
-  }, [getIssue]);
+  }, []);
 
   return (
     <>
@@ -50,7 +75,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
           <Button onClick={onPassCreateIssuePage}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader />} tableList={<IssueList />} />
+      <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
     </>
   );
 };
