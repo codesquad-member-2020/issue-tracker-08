@@ -38,7 +38,8 @@ public class IssueController {
     @PostMapping("")
     public IssueView createIssue(@RequestBody Issue issue,
                              HttpServletRequest request) {
-        UserId authorId = new UserId((Long) request.getAttribute("id"));
+//        UserId authorId = new UserId((Long) request.getAttribute("id"));
+        UserId authorId = new UserId(1L);
         return issueService.createIssue(issue, authorId);
     }
 
