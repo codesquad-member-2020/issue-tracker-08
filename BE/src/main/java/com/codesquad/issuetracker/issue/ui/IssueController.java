@@ -106,8 +106,12 @@ public class IssueController {
     public ResponseEntity<Void> changeMilestone(@PathVariable(name = "issue_id") Long issueId,
                                       @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
-        MilestoneId targetMilestoneId = new MilestoneId(issue.getMilestoneId().getMilestoneId());
-        issueService.changeMilestone(targetIssueId, targetMilestoneId);
+        if (issue.getMilestoneId() == null) {
+            issueService.deleteMilestone(targetIssueId);
+        } else {
+            MilestoneId targetMilestoneId = new MilestoneId(issue.getMilestoneId().getMilestoneId());
+            issueService.changeMilestone(targetIssueId, targetMilestoneId);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
