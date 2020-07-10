@@ -19,10 +19,11 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
 
   let params = {
     title: title,
-    description: rawContent,
+    content: rawContent,
     assignees: [],
     labels: [],
-    milestonesId: null,
+    milestoneId: null,
+  };
   };
 
   return (
