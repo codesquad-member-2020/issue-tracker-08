@@ -17,6 +17,8 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
 
   const onSetRawContent = ({ target }) => setRawContent(target.value);
 
+  // const debounceRawContent = useDebounce(rawContent);
+
   let params = {
     title: title,
     content: rawContent,
@@ -24,6 +26,12 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
     labels: [],
     milestoneId: null,
   };
+
+  const isDisabled = () => {
+    if (isIssue && title && rawContent) return false;
+    if (!isIssue && rawContent) return false;
+
+    return true;
   };
 
   return (
@@ -60,7 +68,9 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
                 Close issue
               </Button>
             )}
-            <Button onClick={() => submitHandler(params)}>Submit new issue</Button>
+            <Button disabled={isDisabled()} onClick={() => submitHandler(params)}>
+              Submit new issue
+            </Button>
           </ButtonWrap>
         </CommentGroup>
       </Wrapper>
