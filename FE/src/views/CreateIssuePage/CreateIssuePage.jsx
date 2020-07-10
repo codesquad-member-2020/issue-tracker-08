@@ -13,6 +13,8 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
 
   const passIssueListPage = () => history.push(`/IssueListPage`);
 
+  const passIssueDetailPage = () => history.push(`/IssueDetailPage/${detailIssue.id}`);
+
   const submitHandler = (params) => {
     (async () => {
       try {
@@ -21,6 +23,7 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
         console.error(e);
       }
     })();
+    if (!loadingIssue && detailIssue) passIssueDetailPage();
   };
 
   return (
