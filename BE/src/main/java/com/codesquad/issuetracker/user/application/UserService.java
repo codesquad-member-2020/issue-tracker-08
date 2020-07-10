@@ -10,8 +10,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +29,14 @@ public class UserService {
     }
 
     public User findById(UserId userId) {
-        return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원입니다!"));
     }
 
-    public List<User> findAllByIds(Set<UserId> userIds) {
-        return StreamSupport.stream(userRepository.findAllById(userIds).spliterator(), false).collect(Collectors.toList());
+    public List<User> findAllById(Set<UserId> userIds) {
+        List<User> users = (List<User>) userRepository.findAllById(userIds);
+        if (users.size() == userIds.size()) {
+            return users;
+        }
+        throw new EntityNotFoundException("존재하지 않는 회원입니다!");
     }
 }
