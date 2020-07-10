@@ -67,7 +67,7 @@ public class MilestoneService {
     @Transactional
     public void deleteMilestone(MilestoneId milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
-        issueService.deleteMilestoneOfIssue(milestoneId);
+        issueService.deleteMilestoneOfIssues(milestoneId);
     }
 
     public MilestoneDTO readMilestoneById(MilestoneId milestoneId) {
