@@ -6,9 +6,8 @@ import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
 import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
-import { postComment } from "@Modules/issue";
 
-const MarkdownInputBox = ({ isIssue, onPass }) => {
+const MarkdownInputBox = ({ isIssue, onPass, postHandler }) => {
   const { issueId } = useParams();
 
   const [isRawOpen, setIsRawOpen] = useState(true);
@@ -23,19 +22,9 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
     setTitleContent(e.target.value);
   };
 
-  const postHandler = () => {
-    const fn = async () => {
-      try {
-        await postComment({ issueId, rawContent });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
-  };
-
   const onComment = () => {
-    postHandler();
+    const params = rawContent;
+    postHandler({ issueId, params });
     window.location.reload();
   };
 
