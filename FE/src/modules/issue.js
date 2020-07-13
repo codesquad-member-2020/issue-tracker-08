@@ -18,7 +18,6 @@ export const getIssue = createRequestThunk(GET_ISSUE, api.getIssue);
 export const getDetailIssue = createRequestThunk(GET_DETAIL_ISSUE, api.getDetailIssue);
 export const postComment = createRequestThunk(POST_COMMENT, api.postComment);
 export const deleteComment = createRequestThunk(DELETE_COMMENT, api.deleteComment);
-export const getDetailIssue = createRequestThunk(GET_DETAIL_ISSUE, api.getDetailIssue);
 export const postIssue = createRequestThunk(POST_ISSUE, api.postIssue);
 
 const initialState = {
