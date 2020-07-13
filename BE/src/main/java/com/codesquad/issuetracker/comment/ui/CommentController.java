@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.comment.ui;
 
 import com.codesquad.issuetracker.comment.application.CommentService;
+import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content,
+                                         @RequestBody Comment comment,
                                          HttpServletRequest request) {
 
         Long commentId = commentService.getNextIdentity();
@@ -28,7 +29,7 @@ public class CommentController {
         Long userId = 1L;
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
-        commentService.save(compositeCommentId, content);
+        commentService.save(compositeCommentId, comment.getContent());
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
     }
@@ -36,14 +37,14 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content,
+                                         @RequestBody Comment comment,
                                          HttpServletRequest request) {
 
 //        Long userId = (Long) request.getAttribute("id");
         Long userId = 1L;
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
-        commentService.update(compositeCommentId, content);
+        commentService.update(compositeCommentId, comment.getContent());
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
     }
