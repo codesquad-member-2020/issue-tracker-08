@@ -42,9 +42,11 @@ const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHa
               <Text color="gray4" isClick>
                 Edit
               </Text>
+              {!owner && (
                 <Text color="gray4" onClick={onDelete} isClick>
                   Delete
                 </Text>
+              )}
             </CommentAction>
           </CommentHeader>
           <CommentContent>{content}</CommentContent>
