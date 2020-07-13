@@ -15,7 +15,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
   const [rawContent, setRawContent] = useState("");
   const [titleContent, setTitleContent] = useState("");
 
-  const onSetTitle = ({ target }) => setTitle(target.value);
+  const onSetTitleContent = ({ target }) => setTitleContent(target.value);
 
   const onSetRawContent = ({ target }) => setRawContent(target.value);
 
@@ -27,10 +27,6 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
     assignees: [],
     labels: [],
     milestoneId: null,
-  };
-
-  const onSetTitleContent = (e) => {
-    setTitleContent(e.target.value);
   };
 
   const onComment = () => {
