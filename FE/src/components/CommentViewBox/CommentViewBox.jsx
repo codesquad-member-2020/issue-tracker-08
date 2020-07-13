@@ -49,7 +49,9 @@ const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHa
               )}
             </CommentAction>
           </CommentHeader>
-          <CommentContent>{content}</CommentContent>
+          <CommentContent>
+            <MarkdownConverted content={content} isComment />
+          </CommentContent>
         </CommentGroup>
       </Wrapper>
     </>
