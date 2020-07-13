@@ -21,6 +21,17 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
       }
     })();
   };
+
+  const deleteHandler = ({ issueId, commentId }) => {
+    (async () => {
+      try {
+        await deleteComment({ issueId, commentId });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
   const CommentList = () => (
     <>
       {!loadingDetailIssue &&
@@ -35,7 +46,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
             user,
           } = comment;
 
-          return <CommentViewBox key={commentId} createdAt={createdAt} content={content} author={user} />;
+          return (
+            <CommentViewBox
+              key={commentId}
+              commentId={commentId}
+              createdAt={createdAt}
+              content={content}
+              author={user}
+              deleteHandler={deleteHandler}
+            />
+          );
         })}
     </>
   );
