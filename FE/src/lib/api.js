@@ -3,6 +3,13 @@ import { API_URL } from "@Constants/url";
 
 export const getIssue = () => axios.get(API_URL.issue);
 export const getDetailIssue = (issueId) => axios.get(`${API_URL.issue}${issueId}`);
+export const postIssue = (params) =>
+  axios({
+    url: API_URL.issue,
+    data: params,
+    method: "post",
+    credentials: true,
+  });
 
 export const getMilestone = () => axios.get(API_URL.milestone);
 export const getMilestoneDetail = (milestoneId) => axios.get(`${API_URL.milestone}${milestoneId}`);

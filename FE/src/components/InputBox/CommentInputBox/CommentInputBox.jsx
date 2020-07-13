@@ -1,25 +1,45 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
-
 import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
-const MarkdownInputBox = ({ isIssue, onPass }) => {
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+import getCookieValue from "@Lib/getCookieValue";
+import useDebounce from "@Hooks/useDebounce";
+
+const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
   const [isRawOpen, setIsRawOpen] = useState(true);
+  const [title, setTitle] = useState("");
   const [rawContent, setRawContent] = useState("");
 
-  const onSetRawContent = (e) => {
-    setRawContent(e.target.value);
+  const onSetTitle = ({ target }) => setTitle(target.value);
+
+  const onSetRawContent = ({ target }) => setRawContent(target.value);
+
+  // const debounceRawContent = useDebounce(rawContent);
+
+  let params = {
+    title: title,
+    content: rawContent,
+    assignees: [],
+    labels: [],
+    milestoneId: null,
+  };
+
+  const isDisabled = () => {
+    if (isIssue && title && rawContent) return false;
+    if (!isIssue && rawContent) return false;
+
+    return true;
   };
 
   return (
     <>
       <Wrapper>
-        <Avatar src="https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4"></Avatar>
+        <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
-          {isIssue && <Title type="text" placeholder="Title" />}
+          {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitle} />}
           <ButtonTab>
             <WriteButton onClick={() => setIsRawOpen(true)} isRawOpen={isRawOpen}>
               Write
@@ -48,7 +68,9 @@ const MarkdownInputBox = ({ isIssue, onPass }) => {
                 Close issue
               </Button>
             )}
-            <Button onClick={onPass}>Submit new issue</Button>
+            <Button disabled={isDisabled()} onClick={() => submitHandler(params)}>
+              Submit new issue
+            </Button>
           </ButtonWrap>
         </CommentGroup>
       </Wrapper>
@@ -160,4 +182,4 @@ const CloseIssueIcon = styled.svg`
   margin-right: 5px;
 `;
 
-export default MarkdownInputBox;
+export default CommentInputBox;
