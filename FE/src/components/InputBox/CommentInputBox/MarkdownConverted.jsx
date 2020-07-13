@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MarkdownIt from "markdown-it";
 
-const MarkdownConverted = ({ content, isRawOpen }) => {
+const MarkdownConverted = ({ content, isRawOpen, isComment }) => {
   const text = content ? content : "Nothing to preview";
   const mdParser = new MarkdownIt({
     html: true,
@@ -13,7 +13,7 @@ const MarkdownConverted = ({ content, isRawOpen }) => {
 
   const convertedText = mdParser.render(text);
 
-  return <ConvertedText dangerouslySetInnerHTML={{ __html: convertedText }} isRawOpen={isRawOpen} />;
+  return <ConvertedText dangerouslySetInnerHTML={{ __html: convertedText }} isRawOpen={isRawOpen} isComment={isComment} />;
 };
 
 const ConvertedText = styled.div`
@@ -21,7 +21,7 @@ const ConvertedText = styled.div`
   display: ${(props) => (props.isRawOpen ? "none" : "block")};
   width: -webkit-fill-available;
   height: 100%;
-  min-height: 200px;
+  min-height: ${(props) => (props.isComment ? "" : "200px")};
   & pre {
     background-color: #f6f8fa;
     padding: 5px;
