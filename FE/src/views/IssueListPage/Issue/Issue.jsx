@@ -65,10 +65,12 @@ const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
             <Text fontSize="sm">by {issue.author.nickname}</Text>
             <Text fontSize="sm">
               {issue.milestone && (
-                <Milestone>
-                  <EventNoteIcon style={{ fontSize: 15 }} />
-                  {issue.milestone.title}
-                </Milestone>
+                <>
+                  <Milestone>
+                    <EventNoteIcon style={{ fontSize: 15 }} />
+                    {issue.milestone.title}
+                  </Milestone>
+                </>
               )}
             </Text>
           </Info>
@@ -82,7 +84,7 @@ const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
           </>
         )}
         <CommentWrapper>
-          {issue.numberOfComment && (
+          {issue.numberOfComment > 0 && (
             <>
               <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
               {issue.numberOfComment}

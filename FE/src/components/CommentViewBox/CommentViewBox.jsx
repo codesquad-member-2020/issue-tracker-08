@@ -3,14 +3,24 @@ import styled from "styled-components";
 import TimeAgo from "react-timeago";
 import engStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import { useParams } from "react-router-dom";
 
 import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Avatar from "@Style/Avatar";
 
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+
 const formatter = buildFormatter(engStrings);
 
-const CommentViewBox = ({ owner, createdAt, content, author }) => {
+const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHandler }) => {
+  const { issueId } = useParams();
+
+  const onDelete = () => {
+    deleteHandler({ issueId, commentId });
+    window.location.reload();
+  };
+
   return (
     <>
       <Wrapper>
@@ -29,11 +39,19 @@ const CommentViewBox = ({ owner, createdAt, content, author }) => {
                   Owner
                 </Badge>
               )}
-              <Text color="gray4">Edit</Text>
-              <Text color="gray4">Delete</Text>
+              <Text color="gray4" isClick>
+                Edit
+              </Text>
+              {!owner && (
+                <Text color="gray4" onClick={onDelete} isClick>
+                  Delete
+                </Text>
+              )}
             </CommentAction>
           </CommentHeader>
-          <CommentContent>{content}</CommentContent>
+          <CommentContent>
+            <MarkdownConverted content={content} isComment />
+          </CommentContent>
         </CommentGroup>
       </Wrapper>
     </>

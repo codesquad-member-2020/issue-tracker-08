@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
@@ -8,30 +9,30 @@ import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
 
-const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
+const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
+  const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
-  const [title, setTitle] = useState("");
   const [rawContent, setRawContent] = useState("");
+  const [titleContent, setTitleContent] = useState("");
 
-  const onSetTitle = ({ target }) => setTitle(target.value);
+  const onSetTitleContent = ({ target }) => setTitleContent(target.value);
 
   const onSetRawContent = ({ target }) => setRawContent(target.value);
 
   // const debounceRawContent = useDebounce(rawContent);
 
   let params = {
-    title: title,
+    title: titleContent,
     content: rawContent,
     assignees: [],
     labels: [],
     milestoneId: null,
   };
 
-  const isDisabled = () => {
-    if (isIssue && title && rawContent) return false;
-    if (!isIssue && rawContent) return false;
-
-    return true;
+  const onComment = () => {
+    const params = { content: rawContent };
+    postHandler({ issueId, params });
+    window.location.reload();
   };
 
   return (
@@ -39,7 +40,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
       <Wrapper>
         <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
-          {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitle} />}
+          {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
             <WriteButton onClick={() => setIsRawOpen(true)} isRawOpen={isRawOpen}>
               Write
@@ -54,23 +55,30 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler }) => {
           </CommentContent>
           <ButtonWrap isIssue={isIssue}>
             {isIssue ? (
-              <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
-                Cancel
-              </Button>
+              <>
+                <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
+                  Cancel
+                </Button>
+                <Button onClick={onPass} disabled={titleContent ? false : true} onClick={() => submitHandler(params)}>
+                  Submit new issue
+                </Button>
+              </>
             ) : (
-              <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }}>
-                <CloseIssueIcon>
-                  <path
-                    fillRule="evenodd"
-                    d="M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
-                  ></path>
-                </CloseIssueIcon>
-                Close issue
-              </Button>
+              <>
+                <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }}>
+                  <CloseIssueIcon>
+                    <path
+                      fillRule="evenodd"
+                      d="M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
+                    ></path>
+                  </CloseIssueIcon>
+                  Close issue
+                </Button>
+                <Button onClick={onComment} disabled={rawContent ? false : true}>
+                  Comment
+                </Button>
+              </>
             )}
-            <Button disabled={isDisabled()} onClick={() => submitHandler(params)}>
-              Submit new issue
-            </Button>
           </ButtonWrap>
         </CommentGroup>
       </Wrapper>

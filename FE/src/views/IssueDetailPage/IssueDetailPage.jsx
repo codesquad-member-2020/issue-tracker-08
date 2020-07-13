@@ -7,10 +7,30 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue } from "@Modules/issue";
+import { getDetailIssue, postComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue }) => {
+const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, deleteComment }) => {
   const { issueId } = useParams();
+
+  const postHandler = ({ issueId, params }) => {
+    (async () => {
+      try {
+        await postComment({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
+  const deleteHandler = ({ issueId, commentId }) => {
+    (async () => {
+      try {
+        await deleteComment({ issueId, commentId });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
 
   const CommentList = () => (
     <>
@@ -26,7 +46,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue }) =>
             user,
           } = comment;
 
-          return <CommentViewBox key={commentId} createdAt={createdAt} content={content} author={user} />;
+          return (
+            <CommentViewBox
+              key={commentId}
+              commentId={commentId}
+              createdAt={createdAt}
+              content={content}
+              author={user}
+              deleteHandler={deleteHandler}
+            />
+          );
         })}
     </>
   );
@@ -52,7 +81,7 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue }) =>
               <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
             )}
             <CommentList />
-            <CommentInputBox />
+            <CommentInputBox postHandler={postHandler} />
           </CommentViewBoxWrapper>
           <FilterVerticalList />
         </Content>
@@ -89,5 +118,7 @@ export default connect(
   }),
   {
     getDetailIssue,
+    postComment,
+    deleteComment,
   }
 )(IssueDetailPage);
