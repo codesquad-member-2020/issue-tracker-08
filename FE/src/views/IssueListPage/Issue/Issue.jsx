@@ -73,7 +73,7 @@ const Issue = ({ issue }) => {
           </>
         )}
         <CommentWrapper>
-          {issue.numberOfComment && (
+          {issue.numberOfComment > 0 && (
             <>
               <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
               {issue.numberOfComment}
