@@ -9,26 +9,15 @@ import Text from "@Style/Text";
 import Badge from "@Style/Badge";
 import Avatar from "@Style/Avatar";
 
-import { deleteComment } from "@Modules/issue";
+import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 
 const formatter = buildFormatter(engStrings);
 
-const CommentViewBox = ({ key, owner, createdAt, content, author }) => {
+const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHandler }) => {
   const { issueId } = useParams();
 
-  const deleteHandler = () => {
-    const fn = async () => {
-      try {
-        await deleteComment({ issueId, key });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
-  };
-
   const onDelete = () => {
-    deleteHandler();
+    deleteHandler({ issueId, commentId });
     window.location.reload();
   };
 
