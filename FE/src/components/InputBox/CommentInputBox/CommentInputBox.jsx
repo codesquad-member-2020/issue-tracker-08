@@ -23,7 +23,7 @@ const MarkdownInputBox = ({ isIssue, onPass, postHandler }) => {
   };
 
   const onComment = () => {
-    const params = rawContent;
+    const params = { content: rawContent };
     postHandler({ issueId, params });
     window.location.reload();
   };
