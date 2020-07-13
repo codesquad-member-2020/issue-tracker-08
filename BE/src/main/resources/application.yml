@@ -8,6 +8,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
 
   # API 호출시, SQL 문을 콘솔에 출력한다
   jpa:
@@ -55,7 +56,7 @@ spring:
   profiles: production
 
   datasource:
-    url: ENC(e3w9hMoYfqs+5rqvRbCMhKK9PMEO7x9tfpsdBorh+oLcpQ5K/HezMg1FzdP+OvfVixOkIbCK49jjxGVAdugm73JH6RpOeGlNjqE9vx4hcw1SHqKAhOX6Lf7QT3wsuZhYt6EWaI2BWShafJS1rAf/qXYaMZuwad7Az2Yh3WKQapTfIVIs3RWJId6CqYLujzJZ)
+    url: ENC(yjgAelenlAAG8sVCykb+Ngfte7hdJZGji7QIG0M0ZN2v3mahYC/5Z7TlfmtvpWvIl4McOrZHHLkAt0aTygqxwUqz+1Da5HJU8s57r5vyNWTVXtrEAUlKDyiCOct6OL9re94s77d5meg1pwiNRS9lBvZhP4uUME/ipx6vpdPVoIQRHlkEMNC2Vlptbt+GB6vO)
     username: ENC(dWFI/DAXSod1mpm9fOEXhd70DB1D8lOmuYHCA/z7y0CfA5k699XdBzzNQLw5ewHN)
     password: ENC(kBF9VO2QdavUtJyL2oUkx/vjv+AyevUXEQZ5ZCpvDVk5fU7IpGtg5e/R4kh69YeA)
 

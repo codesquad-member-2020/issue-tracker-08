@@ -1,14 +1,19 @@
 package com.codesquad.issuetracker.issue.domain;
 
 import com.codesquad.issuetracker.common.BaseTimeEntity;
+import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.LabelId;
+import com.codesquad.issuetracker.milestone.domain.Milestone;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
+import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "Issue")
 @Getter
@@ -82,16 +87,20 @@ public class Issue extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void reassign(Set<UserId> assignees) {
-        this.assignees = assignees;
+    public void reassign(List<User> assignees) {
+        this.assignees = assignees.stream()
+                .map(User::getId)
+                .collect(Collectors.toSet());
     }
 
-    public void putLabels(Set<LabelId> labels) {
-        this.labels = labels;
+    public void putLabels(List<Label> labels) {
+        this.labels = labels.stream()
+                .map(Label::getId)
+                .collect(Collectors.toSet());
     }
 
-    public void changeMilestone(MilestoneId milestoneId) {
-        this.milestoneId = milestoneId;
+    public void changeMilestone(Milestone milestone) {
+        this.milestoneId = milestone.getId();
     }
 
     public void deleteMilestone() {

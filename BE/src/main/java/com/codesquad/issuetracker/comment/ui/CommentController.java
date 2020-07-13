@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.comment.ui;
 
 import com.codesquad.issuetracker.comment.application.CommentService;
+import com.codesquad.issuetracker.comment.domain.Comment;
 import com.codesquad.issuetracker.comment.domain.CommentId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +21,15 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<String> create(@PathVariable("issue_id") Long issueId,
-                                         @RequestBody String content,
+                                         @RequestBody Comment comment,
                                          HttpServletRequest request) {
 
         Long commentId = commentService.getNextIdentity();
-        Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+//        Long userId = (Long) request.getAttribute("id");
+        Long userId = 1L;
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
-        commentService.save(compositeCommentId, content);
+        commentService.save(compositeCommentId, comment.getContent());
 
         return new ResponseEntity<>("댓글 생성 성공", HttpStatus.CREATED);
     }
@@ -35,41 +37,44 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public ResponseEntity<String> update(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
-                                         @RequestBody String content,
+                                         @RequestBody Comment comment,
                                          HttpServletRequest request) {
 
-        Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+//        Long userId = (Long) request.getAttribute("id");
+        Long userId = 1L;
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
-        commentService.update(compositeCommentId, content);
+        commentService.update(compositeCommentId, comment.getContent());
 
         return new ResponseEntity<>("댓글 수정 성공", HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{comment_id}")
-    public ResponseEntity<String> changeStatus(@PathVariable("issue_id") Long issueId,
+    public ResponseEntity<Void> changeStatus(@PathVariable("issue_id") Long issueId,
                                                @PathVariable("comment_id") Long commentId,
                                                HttpServletRequest request) {
 
-        Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+//        Long userId = (Long) request.getAttribute("id");
+        Long userId = 1L;
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.changeStatus(compositeCommentId);
 
-        return new ResponseEntity<>("댓글 상태 변경 성공", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{comment_id}")
-    public ResponseEntity<String> delete(@PathVariable("issue_id") Long issueId,
+    public ResponseEntity<Void> delete(@PathVariable("issue_id") Long issueId,
                                          @PathVariable("comment_id") Long commentId,
                                          HttpServletRequest request) {
 
-        Long userId = (Long) request.getAttribute("id");
-        CommentId compositeCommentId = new CommentId(issueId, commentId, userId);
+//        Long userId = (Long) request.getAttribute("id");
+        Long userId = 1L;
+        CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.delete(compositeCommentId);
 
-        return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
 

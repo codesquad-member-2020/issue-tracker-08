@@ -35,20 +35,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         log.debug("Remote Host:{}", request.getRemoteHost());
         log.debug("Remote Address:{}", request.getRemoteAddr());
-        log.debug("Remote User :{}", request.getRemoteUser());
 
-        // By.Jay - 개발용 코드
-        if (!request.getMethod().equals("POST")) {
-            return true;
+        if ((request.getRequestURI().equals("/issues") && request.getMethod().equals("POST"))) {
+            Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElseThrow(UnauthorizedException::new);
+            String jwtToken = getJwtToken(cookies);
+
+            Claims claims = JwtUtils.decrypt(jwtToken);
+            User loginUser = new ObjectMapper().convertValue(claims, User.class);
+
+            request.setAttribute("id", loginUser.getId().getUserId());
         }
-
-        Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElseThrow(UnauthorizedException::new);
-        String jwtToken = getJwtToken(cookies);
-
-        Claims claims = JwtUtils.decrypt(jwtToken);
-        User loginUser = new ObjectMapper().convertValue(claims, User.class);
-
-        request.setAttribute("id", loginUser.getId().getUserId());
         return true;
     }
 

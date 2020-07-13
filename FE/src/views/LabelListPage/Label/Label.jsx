@@ -7,23 +7,12 @@ import Button from "@Style/Button";
 
 import CreateLabel from "@LabelListPage/CreateLabel/CreateLabel";
 
-const Label = ({
-  label: {
-    id: { labelId },
-    name,
-    description,
-    color,
-    isFontColorBlack,
-  },
-  createHandler,
-  editHandler,
-  deleteHandler,
-}) => {
+const Label = ({ label: { id, name, description, color, isFontColorBlack }, createHandler, editHandler, deleteHandler }) => {
   const [isOpenEditLabel, setIsOpenEditLabel] = useState(false);
 
   const editLabelOpenHandler = () => setIsOpenEditLabel(!isOpenEditLabel);
 
-  const onDelete = () => deleteHandler(labelId);
+  const onDelete = () => deleteHandler(id);
 
   return (
     <>
@@ -35,7 +24,7 @@ const Label = ({
           close={editLabelOpenHandler}
           defaultColor={color}
           isColorDark={isFontColorBlack}
-          labelId={labelId}
+          labelId={id}
           name={name}
           description={description}
         />

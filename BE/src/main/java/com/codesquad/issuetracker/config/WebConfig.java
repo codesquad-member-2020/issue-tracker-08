@@ -36,8 +36,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/issues/**") // By.Jay - 개발용 코드
-                .excludePathPatterns(Arrays.asList("/users", "/users/**"));
+//                .excludePathPatterns(Arrays.asList("/users", "/users/**"));
+                .excludePathPatterns("/**");
     }
 
     @Override

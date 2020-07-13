@@ -19,4 +19,6 @@ public interface MileStoneRepository extends CrudRepository<Milestone, Milestone
             "      due_date = :#{#milestone.dueDate} " +
             "WHERE milestone_id = :#{#milestone.id.milestoneId}")
     public void updateMilestone(@Param("milestone") Milestone milestone);
+
+    public Long countById(MilestoneId milestoneId);
 }

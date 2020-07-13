@@ -1,7 +1,7 @@
 package com.codesquad.issuetracker.comment.domain;
 
 import com.codesquad.issuetracker.user.domain.User;
-import lombok.AllArgsConstructor;
+import com.codesquad.issuetracker.user.domain.UserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,10 +9,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 public class CommentView {
 
     private Comment comment;
 
-    private User user;
+    private UserDTO user;
+
+    public CommentView(Comment comment, User user) {
+        this.comment = comment;
+        this.user = UserDTO.from(user);
+    }
 }

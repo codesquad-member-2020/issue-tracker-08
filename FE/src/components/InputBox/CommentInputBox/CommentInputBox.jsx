@@ -6,16 +6,27 @@ import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
 import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
+import getCookieValue from "@Lib/getCookieValue";
+import useDebounce from "@Hooks/useDebounce";
 
-const MarkdownInputBox = ({ isIssue, onPass, postHandler }) => {
+const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
   const { issueId } = useParams();
-
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState("");
   const [titleContent, setTitleContent] = useState("");
 
-  const onSetRawContent = (e) => {
-    setRawContent(e.target.value);
+  const onSetTitle = ({ target }) => setTitle(target.value);
+
+  const onSetRawContent = ({ target }) => setRawContent(target.value);
+
+  // const debounceRawContent = useDebounce(rawContent);
+
+  let params = {
+    title: titleContent,
+    content: rawContent,
+    assignees: [],
+    labels: [],
+    milestoneId: null,
   };
 
   const onSetTitleContent = (e) => {
@@ -31,7 +42,7 @@ const MarkdownInputBox = ({ isIssue, onPass, postHandler }) => {
   return (
     <>
       <Wrapper>
-        <Avatar src="https://avatars3.githubusercontent.com/u/45891045?s=460&u=8603b06db3cddd4f864bd55455f78c28558dfc8b&v=4"></Avatar>
+        <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
@@ -52,7 +63,7 @@ const MarkdownInputBox = ({ isIssue, onPass, postHandler }) => {
                 <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
                   Cancel
                 </Button>
-                <Button onClick={onPass} disabled={titleContent ? false : true}>
+                <Button onClick={onPass} disabled={titleContent ? false : true} onClick={() => submitHandler(params)}>
                   Submit new issue
                 </Button>
               </>
@@ -183,4 +194,4 @@ const CloseIssueIcon = styled.svg`
   margin-right: 5px;
 `;
 
-export default MarkdownInputBox;
+export default CommentInputBox;
