@@ -24,7 +24,7 @@ const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHa
   return (
     <>
       <Wrapper>
-        <Avatar src={owner ? author.avatarUrl : author.avatar_url}></Avatar>
+        <Avatar src={author.avatarUrl}></Avatar>
         <CommentGroup>
           <CommentHeader owner={owner ? true : false}>
             <CommentText>
