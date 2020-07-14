@@ -23,6 +23,8 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
     })();
   };
 
+  const editClickHandler = (commentId) => setEditCommentInfo({ isEdit: true, editComment: commentId });
+
   const deleteHandler = ({ issueId, commentId }) => {
     (async () => {
       try {
