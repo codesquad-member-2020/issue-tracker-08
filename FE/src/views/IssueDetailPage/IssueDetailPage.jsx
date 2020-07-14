@@ -131,7 +131,7 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
 };
 
 const ContentWrapper = styled.div`
-  display: flex;
+  display: grid;
   justify-content: center;
   margin-bottom: 50px;
 `;
