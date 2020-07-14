@@ -35,6 +35,12 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
     })();
 
     setEditCommentInfo({ isEdit: false, editComment: commentId });
+
+    detailIssue.comments.forEach(({ comment }) => {
+      if (comment.id.commentId === commentId) {
+        comment.content = params.content;
+      }
+    });
   };
 
   const deleteHandler = ({ issueId, commentId }) => {
