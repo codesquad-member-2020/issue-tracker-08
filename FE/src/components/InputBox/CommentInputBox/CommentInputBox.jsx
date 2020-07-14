@@ -15,11 +15,15 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
   const [titleContent, setTitleContent] = useState("");
 
+  // const debounceRawContent = useDebounce(rawContent);
+
   const onSetTitleContent = ({ target }) => setTitleContent(target.value);
 
   const onSetRawContent = ({ target }) => setRawContent(target.value);
 
-  // const debounceRawContent = useDebounce(rawContent);
+  const rawOpen = () => setIsRawOpen(true);
+
+  const markdownOpen = () => setIsRawOpen(false);
 
   let params = {
     title: titleContent,
@@ -42,10 +46,10 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
-            <WriteButton onClick={() => setIsRawOpen(true)} isRawOpen={isRawOpen}>
+            <WriteButton onClick={rawOpen} isRawOpen={isRawOpen}>
               Write
             </WriteButton>
-            <PreviewButton onClick={() => setIsRawOpen(false)} isRawOpen={isRawOpen}>
+            <PreviewButton onClick={markdownOpen} isRawOpen={isRawOpen}>
               Preview
             </PreviewButton>
           </ButtonTab>
