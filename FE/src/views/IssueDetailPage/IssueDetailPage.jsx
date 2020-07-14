@@ -78,6 +78,16 @@ const IssueDetailPage = ({
     })();
   };
 
+  const titleSaveHandler = ({ issueId, params }) => {
+    (async () => {
+      try {
+        await patchIssueTitle({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
   const CommentList = () => (
     <>
       {detailIssue.comments.map((comment) => {
@@ -123,18 +133,27 @@ const IssueDetailPage = ({
     <>
       <Header />
       <ContentWrapper>
-        <Content>
-          <CommentViewBoxWrapper>
-            {!loadingDetailIssue && detailIssue && (
-              <>
+        {!loadingDetailIssue && detailIssue && (
+          <>
+            <IssueDetailTitle
+              title={detailIssue.title}
+              id={detailIssue.id}
+              isOpen={detailIssue.title}
+              nickname={detailIssue.author.nickname}
+              createdAt={detailIssue.createdAt}
+              numberOfComment={detailIssue.numberOfComment}
+              titleSaveHandler={titleSaveHandler}
+            />
+            <Content>
+              <CommentViewBoxWrapper>
                 <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
                 <CommentList />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
-              </>
-            )}
-          </CommentViewBoxWrapper>
-          <FilterVerticalList />
-        </Content>
+              </CommentViewBoxWrapper>
+              <FilterVerticalList />
+            </Content>
+          </>
+        )}
       </ContentWrapper>
     </>
   );
