@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
@@ -14,6 +14,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
   const [titleContent, setTitleContent] = useState("");
+  const inputRef = useRef();
 
   // const debounceRawContent = useDebounce(rawContent);
 
@@ -39,6 +40,14 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
     window.location.reload();
   };
 
+  useEffect(() => {
+    if (editContent) {
+      inputRef.current.focus();
+      inputRef.current.selectionStart = inputRef.current.value.length;
+      inputRef.current.selectionEnd = inputRef.current.value.length;
+    }
+  }, []);
+
   return (
     <>
       <Wrapper>
@@ -54,7 +63,14 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
             </PreviewButton>
           </ButtonTab>
           <CommentContent>
-            <RawContent type="text" onChange={onSetRawContent} placeholder="Leave a comment" isRawOpen={isRawOpen} />
+            <RawContent
+              type="text"
+              ref={inputRef}
+              defaultValue={editContent}
+              placeholder="Leave a comment"
+              onChange={onSetRawContent}
+              isRawOpen={isRawOpen}
+            />
             <MarkdownConverted content={rawContent} isRawOpen={isRawOpen} />
           </CommentContent>
           <ButtonWrap isIssue={isIssue}>
