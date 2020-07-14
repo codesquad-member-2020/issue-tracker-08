@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
@@ -7,10 +7,13 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, postComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, deleteComment }) => {
+const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment }) => {
   const { issueId } = useParams();
+  const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
+
+  const checkEditCommentInfo = (commentId) => editCommentInfo.isEdit && editCommentInfo.editComment === commentId;
 
   const postHandler = ({ issueId, params }) => {
     (async () => {
@@ -20,6 +23,26 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
         console.log(e);
       }
     })();
+  };
+
+  const editClickHandler = (commentId) => setEditCommentInfo({ isEdit: true, editComment: commentId });
+
+  const editCommentHandler = ({ issueId, commentId, params }) => {
+    (async () => {
+      try {
+        await putComment({ issueId, commentId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+
+    setEditCommentInfo({ isEdit: false, editComment: commentId });
+
+    detailIssue.comments.forEach(({ comment }) => {
+      if (comment.id.commentId === commentId) {
+        comment.content = params.content;
+      }
+    });
   };
 
   const deleteHandler = ({ issueId, commentId }) => {
@@ -46,13 +69,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
             user,
           } = comment;
 
-          return (
+          return checkEditCommentInfo(commentId) ? (
+            <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} onPass={editCommentHandler} />
+          ) : (
             <CommentViewBox
               key={commentId}
               commentId={commentId}
               createdAt={createdAt}
               content={content}
               author={user}
+              editClickHandler={editClickHandler}
               deleteHandler={deleteHandler}
             />
           );
@@ -119,6 +145,7 @@ export default connect(
   {
     getDetailIssue,
     postComment,
+    putComment,
     deleteComment,
   }
 )(IssueDetailPage);

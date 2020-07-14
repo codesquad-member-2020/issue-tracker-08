@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 import Text from "@Style/Text";
 import Button from "@Style/Button";
