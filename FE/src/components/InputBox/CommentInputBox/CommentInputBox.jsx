@@ -9,7 +9,7 @@ import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
 
-const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentId, editContent, author }) => {
+const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, changeIssueOpenClose, commentId, editContent, author, issueCloseInfo }) => {
   const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
@@ -26,6 +26,8 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
 
   const markdownOpen = () => setIsRawOpen(false);
 
+  const checkIssueClose = () => issueCloseInfo.isClose && issueCloseInfo.issueId === issueId;
+
   const submitParams = {
     title: titleContent,
     content: rawContent,
@@ -35,6 +37,8 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
   };
 
   const editParams = { content: rawContent };
+
+  const changeIssueClickHandler = () => changeIssueOpenClose();
 
   const submiClicktHandler = () => submitHandler(submitParams);
 
@@ -91,14 +95,18 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
               </>
             ) : (
               <>
-                <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }}>
-                  <CloseIssueIcon>
-                    <path
-                      fillRule="evenodd"
-                      d="M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
-                    ></path>
-                  </CloseIssueIcon>
-                  Close issue
+                <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }} onClick={changeIssueClickHandler}>
+                  {checkIssueClose() ? (
+                    ""
+                  ) : (
+                    <CloseIssueIcon>
+                      <path
+                        fillRule="evenodd"
+                        d="M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
+                      ></path>
+                    </CloseIssueIcon>
+                  )}
+                  {checkIssueClose() ? "Reopen issue" : "Close issue"}
                 </Button>
                 <Button onClick={onComment} disabled={!rawContent}>
                   Comment

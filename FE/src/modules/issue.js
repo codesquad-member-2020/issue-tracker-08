@@ -8,6 +8,9 @@ const GET_ISSUE_SUCCESS = "issue/GET_ISSUE_SUCCESS";
 const GET_DETAIL_ISSUE = "issue/GET_DETAIL_ISSUE";
 const GET_DETAIL_ISSUE_SUCCESS = "issue/GET_DETAIL_ISSUE_SUCCESS";
 
+const CHANGE_ISSUE_STATUS = "issue/CHANGE_ISSUE_STATUS";
+const CHANGE_ISSUE_STATUS_SUCCESS = "issue/CHANGE_ISSUE_STATUS_SUCCESS";
+
 const POST_ISSUE = "issue/POST_ISSUE";
 const POST_ISSUE_SUCCESS = "issue/POST_ISSUE_SUCCESS";
 
@@ -21,6 +24,7 @@ const DELETE_COMMENT = "issue/DELETE_COMMENT";
 export const getIssue = createRequestThunk(GET_ISSUE, api.getIssue);
 export const getDetailIssue = createRequestThunk(GET_DETAIL_ISSUE, api.getDetailIssue);
 export const postIssue = createRequestThunk(POST_ISSUE, api.postIssue);
+export const changeIssueStatus = createRequestThunk(CHANGE_ISSUE_STATUS, api.changeIssueStatus);
 export const postComment = createRequestThunk(POST_COMMENT, api.postComment);
 export const putComment = createRequestThunk(PUT_COMMENT, api.putComment);
 export const deleteComment = createRequestThunk(DELETE_COMMENT, api.deleteComment);
@@ -28,6 +32,7 @@ export const deleteComment = createRequestThunk(DELETE_COMMENT, api.deleteCommen
 const initialState = {
   issues: null,
   detailIssue: null,
+  statusCode: null,
 };
 
 const issue = handleActions(
@@ -43,6 +48,10 @@ const issue = handleActions(
     [POST_ISSUE_SUCCESS]: (state, action) => ({
       ...state,
       detailIssue: action.payload.data,
+    }),
+    [CHANGE_ISSUE_STATUS_SUCCESS]: (state, action) => ({
+      ...state,
+      statusCode: action.payload.status,
     }),
   },
   initialState
