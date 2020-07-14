@@ -13,13 +13,15 @@ import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 
 const formatter = buildFormatter(engStrings);
 
-const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHandler }) => {
+const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHandler, editClickHandler }) => {
   const { issueId } = useParams();
 
   const onDelete = () => {
     deleteHandler({ issueId, commentId });
     window.location.reload();
   };
+
+  const editClick = () => editClickHandler(commentId);
 
   return (
     <>
@@ -39,7 +41,7 @@ const CommentViewBox = ({ commentId, owner, createdAt, content, author, deleteHa
                   Owner
                 </Badge>
               )}
-              <Text color="gray4" isClick>
+              <Text color="gray4" isClick onClick={editClick}>
                 Edit
               </Text>
               {!owner && (
