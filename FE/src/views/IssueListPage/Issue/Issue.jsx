@@ -87,7 +87,7 @@ const Issue = ({ isAllChecked, issue, checkedItemHandler }) => {
           {issue.numberOfComment > 0 && (
             <>
               <ChatBubbleOutlineIcon style={{ fontSize: 15 }} />
-              {issue.numberOfComment}
+              &nbsp;{issue.numberOfComment}
             </>
           )}
         </CommentWrapper>
