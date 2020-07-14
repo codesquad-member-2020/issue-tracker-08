@@ -74,7 +74,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
                   </CloseIssueIcon>
                   Close issue
                 </Button>
-                <Button onClick={onComment} disabled={rawContent ? false : true}>
+                <Button onClick={onComment} disabled={!rawContent}>
                   Comment
                 </Button>
               </>
