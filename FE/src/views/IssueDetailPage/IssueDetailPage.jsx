@@ -7,9 +7,18 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, postComment, putComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, changeIssueStatus, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment }) => {
+const IssueDetailPage = ({
+  getDetailIssue,
+  detailIssue,
+  loadingDetailIssue,
+  postComment,
+  putComment,
+  deleteComment,
+  changeIssueStatus,
+  statusCode,
+}) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
 
@@ -140,10 +149,13 @@ const CommentViewBoxWrapper = styled.div`
 export default connect(
   ({ issue, loading }) => ({
     detailIssue: issue.detailIssue,
+    statusCode: issue.statusCode,
     loadingDetailIssue: loading["issue/GET_DETAIL_ISSUE"],
+    loadingStatusCode: loading["issue/CHANGE_ISSUE_STATUS_SUCCESS"],
   }),
   {
     getDetailIssue,
+    changeIssueStatus,
     postComment,
     putComment,
     deleteComment,
