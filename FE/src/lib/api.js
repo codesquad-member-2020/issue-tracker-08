@@ -3,6 +3,7 @@ import { API_URL } from "@Constants/url";
 
 export const getIssue = () => axios.get(API_URL.issue);
 export const getDetailIssue = (issueId) => axios.get(`${API_URL.issue}${issueId}`);
+export const changeIssueStatus = (issueId) => axios.patch(`${API_URL.issue}/${issueId}`);
 export const postIssue = (params) =>
   axios({
     url: API_URL.issue,
