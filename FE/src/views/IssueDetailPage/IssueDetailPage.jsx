@@ -3,13 +3,23 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
+import IssueDetailTitle from "@IssueDetailPage/IssueDetailTitle/IssueDetailTitle";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, changeIssueStatus, postComment, putComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, changeIssueStatus, patchIssueTitle, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment, changeIssueStatus }) => {
+const IssueDetailPage = ({
+  getDetailIssue,
+  detailIssue,
+  loadingDetailIssue,
+  patchIssueTitle,
+  postComment,
+  putComment,
+  deleteComment,
+  changeIssueStatus,
+}) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
   const [issueCloseInfo, setIssueCloseInfo] = useState({ isClose: false, issueId: null });
@@ -161,6 +171,7 @@ export default connect(
   {
     getDetailIssue,
     changeIssueStatus,
+    patchIssueTitle,
     postComment,
     putComment,
     deleteComment,
