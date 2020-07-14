@@ -25,6 +25,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
 
   const editClickHandler = (commentId) => setEditCommentInfo({ isEdit: true, editComment: commentId });
 
+  const editCommentHandler = ({ issueId, commentId, params }) => {
+    (async () => {
+      try {
+        await putComment({ issueId, commentId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
   const deleteHandler = ({ issueId, commentId }) => {
     (async () => {
       try {
