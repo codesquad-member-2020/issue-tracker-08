@@ -96,14 +96,13 @@ const IssueDetailPage = ({
   );
 
   useEffect(() => {
-    const fn = async () => {
+    (async () => {
       try {
         await getDetailIssue(issueId);
       } catch (e) {
         console.log(e);
       }
-    };
-    fn();
+    })();
   }, []);
 
   return (
