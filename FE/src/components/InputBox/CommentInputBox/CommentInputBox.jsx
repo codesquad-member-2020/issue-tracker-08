@@ -9,7 +9,7 @@ import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
 
-const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
+const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentId, editContent, author }) => {
   const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
@@ -42,7 +42,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
   return (
     <>
       <Wrapper>
-        <Avatar src={decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
+        <Avatar src={author ? author.avatarUrl : decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
