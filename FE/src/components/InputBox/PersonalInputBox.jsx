@@ -40,7 +40,7 @@ const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, b
             isIssueTitle={isIssueTitle}
           />
         )}
-        <MessageBox children={errorMsg} fontSize="sm" color="red" />
+        {errorMsg && <MessageBox children={errorMsg} fontSize="sm" color="red" />}
       </Wrap>
     </>
   );
