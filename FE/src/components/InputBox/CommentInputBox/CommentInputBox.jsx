@@ -80,13 +80,13 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
             <MarkdownConverted content={rawContent} isRawOpen={isRawOpen} />
           </CommentContent>
           <ButtonWrap isIssue={isIssue}>
-            {isIssue ? (
+            {isIssue || editContent ? (
               <>
                 <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
                   Cancel
                 </Button>
-                <Button onClick={onPass} disabled={titleContent ? false : true} onClick={() => submitHandler(params)}>
-                  Submit new issue
+                <Button disabled={isIssue ? !titleContent : !rawContent} onClick={isIssue ? submiClicktHandler : editClickHandler}>
+                  {isIssue ? "Submit new issue" : "Update comment"}
                 </Button>
               </>
             ) : (
