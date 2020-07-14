@@ -12,7 +12,7 @@ import useDebounce from "@Hooks/useDebounce";
 const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler }) => {
   const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
-  const [rawContent, setRawContent] = useState("");
+  const [rawContent, setRawContent] = useState(editContent ? editContent : "");
   const [titleContent, setTitleContent] = useState("");
 
   const onSetTitleContent = ({ target }) => setTitleContent(target.value);
