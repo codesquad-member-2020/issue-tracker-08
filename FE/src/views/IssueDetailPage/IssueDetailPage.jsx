@@ -114,6 +114,8 @@ const IssueDetailPage = ({
         console.log(e);
       }
     })();
+
+    if (detailIssue) setIssueCloseInfo({ isClose: detailIssue.isOpen, issueId });
   }, []);
 
   return (
