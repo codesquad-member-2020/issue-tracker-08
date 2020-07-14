@@ -13,6 +13,8 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
 
+  const checkEditCommentInfo = (commentId) => editCommentInfo.isEdit && editCommentInfo.editComment === commentId;
+
   const postHandler = ({ issueId, params }) => {
     (async () => {
       try {
