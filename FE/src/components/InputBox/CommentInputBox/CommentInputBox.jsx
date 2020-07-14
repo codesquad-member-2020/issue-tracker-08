@@ -36,6 +36,10 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
 
   const editParams = { content: rawContent };
 
+  const submiClicktHandler = () => submitHandler(submitParams);
+
+  const editClickHandler = () => onPass({ issueId, commentId, params: editParams });
+
   const onComment = () => {
     const params = { content: rawContent };
     postHandler({ issueId, params });
