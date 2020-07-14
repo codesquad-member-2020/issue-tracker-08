@@ -21,8 +21,21 @@ const IssueDetailPage = ({
 }) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
+  const [issueCloseInfo, setIssueCloseInfo] = useState({ isClose: false, issueId: null });
 
   const checkEditCommentInfo = (commentId) => editCommentInfo.isEdit && editCommentInfo.editComment === commentId;
+
+  const changeIssueOpenClose = () => {
+    (async () => {
+      try {
+        await changeIssueStatus(issueId);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+
+    setIssueCloseInfo({ isClose: !issueCloseInfo.isClose, issueId: issueId });
+  };
 
   const postHandler = ({ issueId, params }) => {
     (async () => {
@@ -115,7 +128,7 @@ const IssueDetailPage = ({
               <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
             )}
             <CommentList />
-            <CommentInputBox postHandler={postHandler} />
+            <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
           </CommentViewBoxWrapper>
           <FilterVerticalList />
         </Content>
