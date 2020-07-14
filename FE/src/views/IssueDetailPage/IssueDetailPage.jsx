@@ -7,9 +7,9 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, postComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, deleteComment }) => {
+const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment }) => {
   const { issueId } = useParams();
 
   const postHandler = ({ issueId, params }) => {
@@ -119,6 +119,7 @@ export default connect(
   {
     getDetailIssue,
     postComment,
+    putComment,
     deleteComment,
   }
 )(IssueDetailPage);
