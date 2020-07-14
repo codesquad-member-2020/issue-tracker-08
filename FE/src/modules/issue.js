@@ -14,6 +14,8 @@ const CHANGE_ISSUE_STATUS_SUCCESS = "issue/CHANGE_ISSUE_STATUS_SUCCESS";
 const POST_ISSUE = "issue/POST_ISSUE";
 const POST_ISSUE_SUCCESS = "issue/POST_ISSUE_SUCCESS";
 
+const PATCH_ISSUE_TITLE = "issue/PATCH_ISSUE_TITLE";
+
 const POST_COMMENT = "issue/POST_COMMENT";
 
 const PUT_COMMENT = "issue/PUT_COMMENT";
@@ -25,6 +27,7 @@ export const getIssue = createRequestThunk(GET_ISSUE, api.getIssue);
 export const getDetailIssue = createRequestThunk(GET_DETAIL_ISSUE, api.getDetailIssue);
 export const postIssue = createRequestThunk(POST_ISSUE, api.postIssue);
 export const changeIssueStatus = createRequestThunk(CHANGE_ISSUE_STATUS, api.changeIssueStatus);
+export const patchIssueTitle = createRequestThunk(PATCH_ISSUE_TITLE, api.patchIssueTitle);
 export const postComment = createRequestThunk(POST_COMMENT, api.postComment);
 export const putComment = createRequestThunk(PUT_COMMENT, api.putComment);
 export const deleteComment = createRequestThunk(DELETE_COMMENT, api.deleteComment);
