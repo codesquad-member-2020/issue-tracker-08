@@ -9,16 +9,7 @@ import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
 import { getDetailIssue, changeIssueStatus, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({
-  getDetailIssue,
-  detailIssue,
-  loadingDetailIssue,
-  postComment,
-  putComment,
-  deleteComment,
-  changeIssueStatus,
-  statusCode,
-}) => {
+const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment, changeIssueStatus }) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
   const [issueCloseInfo, setIssueCloseInfo] = useState({ isClose: false, issueId: null });
