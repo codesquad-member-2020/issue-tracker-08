@@ -26,13 +26,15 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, commentI
 
   const markdownOpen = () => setIsRawOpen(false);
 
-  let params = {
+  const submitParams = {
     title: titleContent,
     content: rawContent,
     assignees: [],
     labels: [],
     milestoneId: null,
   };
+
+  const editParams = { content: rawContent };
 
   const onComment = () => {
     const params = { content: rawContent };
