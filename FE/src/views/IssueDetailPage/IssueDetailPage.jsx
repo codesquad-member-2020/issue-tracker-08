@@ -79,32 +79,30 @@ const IssueDetailPage = ({
 
   const CommentList = () => (
     <>
-      {!loadingDetailIssue &&
-        detailIssue &&
-        detailIssue.comments.map((comment) => {
-          const {
-            comment: {
-              id: { commentId },
-              createdAt,
-              content,
-            },
-            user,
-          } = comment;
+      {detailIssue.comments.map((comment) => {
+        const {
+          comment: {
+            id: { commentId },
+            createdAt,
+            content,
+          },
+          user,
+        } = comment;
 
-          return checkEditCommentInfo(commentId) ? (
-            <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} onPass={editCommentHandler} />
-          ) : (
-            <CommentViewBox
-              key={commentId}
-              commentId={commentId}
-              createdAt={createdAt}
-              content={content}
-              author={user}
-              editClickHandler={editClickHandler}
-              deleteHandler={deleteHandler}
-            />
-          );
-        })}
+        return checkEditCommentInfo(commentId) ? (
+          <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} onPass={editCommentHandler} />
+        ) : (
+          <CommentViewBox
+            key={commentId}
+            commentId={commentId}
+            createdAt={createdAt}
+            content={content}
+            author={user}
+            editClickHandler={editClickHandler}
+            deleteHandler={deleteHandler}
+          />
+        );
+      })}
     </>
   );
 
@@ -125,10 +123,12 @@ const IssueDetailPage = ({
         <Content>
           <CommentViewBoxWrapper>
             {!loadingDetailIssue && detailIssue && (
-              <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
+              <>
+                <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
+                <CommentList />
+                <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
+              </>
             )}
-            <CommentList />
-            <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
           </CommentViewBoxWrapper>
           <FilterVerticalList />
         </Content>
