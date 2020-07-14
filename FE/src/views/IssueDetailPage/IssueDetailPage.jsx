@@ -34,7 +34,7 @@ const IssueDetailPage = ({
       }
     })();
 
-    setIssueCloseInfo({ isClose: !issueCloseInfo.isClose, issueId: issueId });
+    setIssueCloseInfo({ isClose: !issueCloseInfo.isClose, issueId });
   };
 
   const postHandler = ({ issueId, params }) => {
