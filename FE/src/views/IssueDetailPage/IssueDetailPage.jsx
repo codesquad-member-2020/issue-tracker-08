@@ -69,13 +69,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
             user,
           } = comment;
 
-          return (
+          return checkEditCommentInfo(commentId) ? (
+            <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} onPass={editCommentHandler} />
+          ) : (
             <CommentViewBox
               key={commentId}
               commentId={commentId}
               createdAt={createdAt}
               content={content}
               author={user}
+              editClickHandler={editClickHandler}
               deleteHandler={deleteHandler}
             />
           );
