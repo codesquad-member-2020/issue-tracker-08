@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import { getDetailIssue, postComment, putComment, deleteComment } from "@Modules
 
 const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment }) => {
   const { issueId } = useParams();
+  const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
 
   const postHandler = ({ issueId, params }) => {
     (async () => {
