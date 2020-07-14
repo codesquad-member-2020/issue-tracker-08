@@ -33,6 +33,8 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
         console.log(e);
       }
     })();
+
+    setEditCommentInfo({ isEdit: false, editComment: commentId });
   };
 
   const deleteHandler = ({ issueId, commentId }) => {
