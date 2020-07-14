@@ -70,17 +70,17 @@ public class IssueController {
 
     @PatchMapping("/{issue_id}/titles")
     public ResponseEntity<Void> editTitle(@PathVariable(name = "issue_id") Long issueId,
-                                @RequestBody String title) {
+                                @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
-        issueService.editTitle(targetIssueId, title);
+        issueService.editTitle(targetIssueId, issue.getTitle());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{issue_id}/content")
     public ResponseEntity<Void> editContent(@PathVariable(name = "issue_id") Long issueId,
-                                  @RequestBody String content) {
+                                  @RequestBody Issue issue) {
         IssueId targetIssueId = new IssueId(issueId);
-        issueService.editContent(targetIssueId, content);
+        issueService.editContent(targetIssueId, issue.getContent());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
