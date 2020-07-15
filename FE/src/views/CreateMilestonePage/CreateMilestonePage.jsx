@@ -4,12 +4,10 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import Button from "@Style/Button";
-import Text from "@Style/Text";
 
 import Header from "@Header/Header";
-import PersonalInputBox from "@InputBox/PersonalInputBox";
-import DatePickers from "@CreateMilestonePage/DatePickers";
 import CreateMilestoneTitle from "@CreateMilestonePage/CreateMilestoneTitle/CreateMilestoneTitle";
+import CreateMilestoneContent from "@CreateMilestonePage/CreateMilestoneContent/CreateMilestoneContent";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
 const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, milestoneDetail, loadingMilestoneDetail }) => {
@@ -71,8 +69,8 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
   };
 
   const onSetTitle = ({ target }) => setTitleContent(target.value);
-  const onSetDescription = ({ target }) => setDescriptionContent(target.value);
   const onSetDate = ({ target }) => setDateContent(target.value);
+  const onSetDescription = ({ target }) => setDescriptionContent(target.value);
 
   const onPassMilestonePage = () => history.push(`/MilestonePage`);
 
@@ -95,20 +93,12 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
         <Wrapper>
           <ContentWrapper>
             <CreateMilestoneTitle milestoneId={milestoneId} />
-            <Content>
-              <PersonalInputBox
-                title="Title"
-                widthSize="50%"
-                backgroundColor="gray1"
-                placeholder="Title"
-                value={milestoneId && data("title")}
-                onChange={onSetTitle}
-              ></PersonalInputBox>
-              <Text fontWeight="bold">Due date (optional)</Text>
-              <DatePickers defaultValue={milestoneId && data("dueDate")} onChange={onSetDate}></DatePickers>
-              <Text fontWeight="bold">Description (optional)</Text>
-              <DescriptionBox defaultValue={milestoneId && data("description")} onChange={onSetDescription}></DescriptionBox>
-            </Content>
+            <CreateMilestoneContent
+              getDefaultValue={getDefaultValue}
+              onSetTitle={onSetTitle}
+              onSetDescription={onSetDescription}
+              onSetDate={onSetDate}
+            />
             <ButtonWrapper>
               {milestoneId ? (
                 <>
@@ -146,33 +136,6 @@ const ContentWrapper = styled.div`
   max-width: 1000px;
   min-width: 760px;
   flex-direction: column;
-`;
-
-const Content = styled.div`
-  display: flex;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-  flex-direction: column;
-  padding: 20px 0;
-`;
-
-const DescriptionBox = styled.textarea`
-  margin-top: 5px;
-  min-height: 120px;
-  max-height: 300px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.gray2};
-  width: 80%;
-  background-color: ${({ theme }) => theme.colors.gray1};
-  resize: vertical;
-  overflow-y: scroll;
-  &:focus {
-    background-color: white;
-    outline: none;
-    background-color: white;
-    border-color: ${({ theme }) => theme.colors.blue};
-    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
-  }
 `;
 
 const ButtonWrapper = styled.div`
