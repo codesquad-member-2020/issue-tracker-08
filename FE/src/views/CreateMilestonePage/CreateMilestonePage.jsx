@@ -3,11 +3,10 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import Button from "@Style/Button";
-
 import Header from "@Header/Header";
 import CreateMilestoneTitle from "@CreateMilestonePage/CreateMilestoneTitle/CreateMilestoneTitle";
 import CreateMilestoneContent from "@CreateMilestonePage/CreateMilestoneContent/CreateMilestoneContent";
+import CreateMilestoneButtons from "@CreateMilestonePage/CreateMilestoneButtons/CreateMilestoneButtons";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
 const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, milestoneDetail, loadingMilestoneDetail }) => {
@@ -99,25 +98,13 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
               onSetDescription={onSetDescription}
               onSetDate={onSetDate}
             />
-            <ButtonWrapper>
-              {milestoneId ? (
-                <>
-                  <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
-                    Cancel
-                  </Button>
-                  <Button backgroundColor="gray1" color="black" onClick={onPassMilestonePage}>
-                    Close milestone
-                  </Button>
-                  <Button onClick={onSaveMilestone} disabled={titleContent ? false : true}>
-                    Save changes
-                  </Button>
-                </>
-              ) : (
-                <Button onClick={onCreateMilestone} disabled={titleContent ? false : true}>
-                  Create milestone
-                </Button>
-              )}
-            </ButtonWrapper>
+            <CreateMilestoneButtons
+              milestoneId={milestoneId}
+              titleContent={titleContent}
+              onPassMilestonePage={onPassMilestonePage}
+              onSaveMilestone={onSaveMilestone}
+              onCreateMilestone={onCreateMilestone}
+            />
           </ContentWrapper>
         </Wrapper>
       )}
@@ -136,12 +123,6 @@ const ContentWrapper = styled.div`
   max-width: 1000px;
   min-width: 760px;
   flex-direction: column;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px 0;
 `;
 
 export default connect(
