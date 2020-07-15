@@ -7,9 +7,9 @@ import Button from "@Style/Button";
 import Text from "@Style/Text";
 
 import Header from "@Header/Header";
-import NavigationButton from "@NavigationButton/NavigationButton";
 import PersonalInputBox from "@InputBox/PersonalInputBox";
 import DatePickers from "@CreateMilestonePage/DatePickers";
+import CreateMilestoneTitle from "@CreateMilestonePage/CreateMilestoneTitle/CreateMilestoneTitle";
 import { getMilestoneDetail, postMilestone, putMilestone } from "@Modules/milestone";
 
 const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, milestoneDetail, loadingMilestoneDetail }) => {
@@ -92,18 +92,7 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
       {(!milestoneId || data()) && (
         <Wrapper>
           <ContentWrapper>
-            <InfoWrapper>
-              {milestoneId ? (
-                <NavigationButton isMilestone />
-              ) : (
-                <>
-                  <Text fontSize="xl" fontWeight="bold">
-                    New milestone
-                  </Text>
-                  <Text>Create a new milestone to help organize your issues and pull requests. Learn more about milestones and issues.</Text>
-                </>
-              )}
-            </InfoWrapper>
+            <CreateMilestoneTitle milestoneId={milestoneId} />
             <Content>
               <PersonalInputBox
                 title="Title"
@@ -155,14 +144,6 @@ const ContentWrapper = styled.div`
   max-width: 1000px;
   min-width: 760px;
   flex-direction: column;
-`;
-
-const InfoWrapper = styled.div`
-  display: flex;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-  flex-direction: column;
-  padding: 20px 0;
-  align-items: end;
 `;
 
 const Content = styled.div`
