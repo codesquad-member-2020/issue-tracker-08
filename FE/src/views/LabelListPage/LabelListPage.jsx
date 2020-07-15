@@ -21,8 +21,7 @@ const LabelListPage = ({ getLabel, createLabel, editLabel, deleteLabel, labels, 
 
   const LabelList = () => (
     <>
-      {!loadingLabel &&
-        labels &&
+      {hasLabels() &&
         labels.map((label) => (
           <Label key={label.id} label={label} createHandler={createHandler} editHandler={editHandler} deleteHandler={deleteHandler} />
         ))}
