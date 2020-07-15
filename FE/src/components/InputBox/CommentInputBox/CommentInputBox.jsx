@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Button from "@Style/Button";
 import Avatar from "@Style/Avatar";
 
+import CreateButtons from "@InputBox/CommentInputBox/CreateButtons/CreateButtons";
 import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
@@ -96,14 +97,14 @@ const CommentInputBox = ({
           </CommentContent>
           <ButtonWrap isIssue={isIssue}>
             {isIssue || editContent ? (
-              <>
-                <Button backgroundColor="white" color="black" borderColor="white" onClick={onPass}>
-                  Cancel
-                </Button>
-                <Button disabled={isIssue ? !titleContent : !rawContent} onClick={isIssue ? submiClicktHandler : editClickHandler}>
-                  {isIssue ? "Submit new issue" : "Update comment"}
-                </Button>
-              </>
+              <CreateButtons
+                isIssue={isIssue}
+                titleContent={titleContent}
+                rawContent={rawContent}
+                submiClicktHandler={submiClicktHandler}
+                editClickHandler={editClickHandler}
+                cancelClickHandler={cancelClickHandler}
+              />
             ) : (
               <>
                 <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }} onClick={changeIssueClickHandler}>
