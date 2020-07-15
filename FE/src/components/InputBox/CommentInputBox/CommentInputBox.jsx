@@ -73,7 +73,7 @@ const CommentInputBox = ({
   return (
     <>
       <Wrapper>
-        <Avatar src={author ? author.avatarUrl : decodeURIComponent(getCookieValue("avatarUrl"))}></Avatar>
+        <Avatar src={author ? author.avatarUrl : decodeURIComponent(getCookieValue("avatarUrl"))} />
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
           <ButtonTab>
