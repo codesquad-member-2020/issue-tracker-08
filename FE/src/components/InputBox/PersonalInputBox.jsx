@@ -18,21 +18,11 @@ const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, b
             onChange={onChange}
             maxLength={maxLength}
           />
-        ) : value ? (
-          <InputBox
-            type="text"
-            widthSize={widthSize}
-            defaultValue={value}
-            backgroundColor={backgroundColor}
-            placeholder={placeholder}
-            onChange={onChange}
-            maxLength={maxLength}
-            isIssueTitle={isIssueTitle}
-          />
         ) : (
           <InputBox
             type={type ? type : "text"}
             widthSize={widthSize}
+            defaultValue={value}
             backgroundColor={backgroundColor}
             placeholder={placeholder}
             onChange={onChange}
