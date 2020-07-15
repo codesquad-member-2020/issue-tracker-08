@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import IssueDetailTitle from "@IssueDetailPage/IssueDetailTitle/IssueDetailTitle";
+import CommentList from "@IssueDetailPage/CommentList/CommentList";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
@@ -88,35 +89,6 @@ const IssueDetailPage = ({
     })();
   };
 
-  const CommentList = () => (
-    <>
-      {detailIssue.comments.map((comment) => {
-        const {
-          comment: {
-            id: { commentId },
-            createdAt,
-            content,
-          },
-          user,
-        } = comment;
-
-        return checkEditCommentInfo(commentId) ? (
-          <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} onPass={editCommentHandler} />
-        ) : (
-          <CommentViewBox
-            key={commentId}
-            commentId={commentId}
-            createdAt={createdAt}
-            content={content}
-            author={user}
-            editClickHandler={editClickHandler}
-            deleteHandler={deleteHandler}
-          />
-        );
-      })}
-    </>
-  );
-
   useEffect(() => {
     (async () => {
       try {
@@ -147,7 +119,13 @@ const IssueDetailPage = ({
             <Content>
               <CommentViewBoxWrapper>
                 <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
-                <CommentList />
+                <CommentList
+                  detailIssue={detailIssue}
+                  checkEditCommentInfo={checkEditCommentInfo}
+                  editCommentHandler={editCommentHandler}
+                  editClickHandler={editClickHandler}
+                  deleteHandler={deleteHandler}
+                />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
               </CommentViewBoxWrapper>
               <FilterVerticalList />
