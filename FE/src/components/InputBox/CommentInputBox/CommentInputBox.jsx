@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 
 import Avatar from "@Style/Avatar";
 
+import InputContent from "@InputBox/CommentInputBox/InputContent/InputContent";
 import CreateButtons from "@InputBox/CommentInputBox/CreateButtons/CreateButtons";
-import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import SwitchButton from "@InputBox/CommentInputBox/SwitchButton/SwitchButton";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
@@ -76,25 +76,15 @@ const CommentInputBox = ({
         <Avatar src={author ? author.avatarUrl : decodeURIComponent(getCookieValue("avatarUrl"))} />
         <CommentGroup>
           {isIssue && <Title type="text" placeholder="Title" onChange={onSetTitleContent} />}
-          <ButtonTab>
-            <WriteButton onClick={rawOpen} isRawOpen={isRawOpen}>
-              Write
-            </WriteButton>
-            <PreviewButton onClick={markdownOpen} isRawOpen={isRawOpen}>
-              Preview
-            </PreviewButton>
-          </ButtonTab>
-          <CommentContent>
-            <RawContent
-              type="text"
-              ref={inputRef}
-              defaultValue={editContent}
-              placeholder="Leave a comment"
-              onChange={onSetRawContent}
-              isRawOpen={isRawOpen}
-            />
-            <MarkdownConverted content={rawContent} isRawOpen={isRawOpen} />
-          </CommentContent>
+          <InputContent
+            rawOpen={rawOpen}
+            isRawOpen={isRawOpen}
+            markdownOpen={markdownOpen}
+            inputRef={inputRef}
+            editContent={editContent}
+            onSetRawContent={onSetRawContent}
+            rawContent={rawContent}
+          />
           <ButtonWrap isIssue={isIssue}>
             {isIssue || editContent ? (
               <CreateButtons
@@ -158,54 +148,6 @@ const Title = styled.input`
     background-color: white;
     border-color: ${({ theme }) => theme.colors.blue};
     box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.1em ${({ theme }) => theme.colors.skyblue};
-  }
-`;
-
-const CommentContent = styled.div`
-  width: 100%;
-  padding: 10px;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray2};
-  overflow: visible;
-`;
-
-const ButtonTab = styled.div`
-  padding: 10px 0 0 15px;
-  display: flex;
-`;
-
-const WriteButton = styled.button`
-  padding: 5px 10px;
-  border: 1px ${(props) => (props.isRawOpen ? "solid" : "none")} ${({ theme }) => theme.colors.gray2};
-  border-bottom: none;
-  background-color: ${(props) => props.theme.colors.white};
-  cursor: pointer;
-`;
-
-const PreviewButton = styled.button`
-  padding: 5px 10px;
-  border: 1px ${(props) => (props.isRawOpen ? "none" : "solid")} ${({ theme }) => theme.colors.gray2};
-  border-bottom: none;
-  background-color: ${(props) => props.theme.colors.white};
-  cursor: pointer;
-`;
-
-const RawContent = styled.textarea`
-  padding: 5px;
-  background-color: ${({ theme }) => theme.colors.gray1};
-  border: 1px solid ${({ theme }) => theme.colors.gray2};
-  border-radius: 5px;
-  display: ${(props) => (props.isRawOpen ? "block" : "none")};
-  width: -webkit-fill-available;
-  min-height: 200px;
-  max-height: 300px;
-  resize: vertical;
-  overflow-y: scroll;
-  &:focus {
-    background-color: white;
-    outline: none;
-    background-color: white;
-    border-color: ${({ theme }) => theme.colors.blue};
-    box-shadow: inset 0 1px 2px ${({ theme }) => theme.colors.babyblue}, 0 0 0 0.2em ${({ theme }) => theme.colors.skyblue};
   }
 `;
 
