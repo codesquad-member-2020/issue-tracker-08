@@ -61,6 +61,8 @@ const CreateMilestonePage = ({ getMilestoneDetail, postMilestone, putMilestone, 
   const [dateContent, setDateContent] = useState("");
   const [descriptionContent, setDescriptionContent] = useState("");
 
+  const getDefaultValue = (key) => milestoneId && data(key);
+
   const initContent = () => {
     if (!data()) return;
     setTitleContent(data("title"));
