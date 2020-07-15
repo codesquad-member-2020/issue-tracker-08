@@ -9,7 +9,18 @@ import MarkdownConverted from "@InputBox/CommentInputBox/MarkdownConverted";
 import getCookieValue from "@Lib/getCookieValue";
 import useDebounce from "@Hooks/useDebounce";
 
-const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, changeIssueOpenClose, commentId, editContent, author, issueCloseInfo }) => {
+const CommentInputBox = ({
+  isIssue,
+  onPass,
+  submitHandler,
+  postHandler,
+  editCommentHandler,
+  changeIssueOpenClose,
+  commentId,
+  editContent,
+  author,
+  issueCloseInfo,
+}) => {
   const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
@@ -42,7 +53,7 @@ const CommentInputBox = ({ isIssue, onPass, submitHandler, postHandler, changeIs
 
   const submiClicktHandler = () => submitHandler(submitParams);
 
-  const editClickHandler = () => onPass({ issueId, commentId, params: editParams });
+  const editClickHandler = () => editCommentHandler({ issueId, commentId, params: editParams });
 
   const onComment = () => {
     const params = { content: rawContent };
