@@ -3,13 +3,23 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
+import IssueDetailTitle from "@IssueDetailPage/IssueDetailTitle/IssueDetailTitle";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, changeIssueStatus, postComment, putComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, changeIssueStatus, patchIssueTitle, postComment, putComment, deleteComment } from "@Modules/issue";
 
-const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, postComment, putComment, deleteComment, changeIssueStatus }) => {
+const IssueDetailPage = ({
+  getDetailIssue,
+  detailIssue,
+  loadingDetailIssue,
+  patchIssueTitle,
+  postComment,
+  putComment,
+  deleteComment,
+  changeIssueStatus,
+}) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
   const [issueCloseInfo, setIssueCloseInfo] = useState({ isClose: false, issueId: null });
@@ -68,6 +78,16 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
     })();
   };
 
+  const titleSaveHandler = ({ issueId, params }) => {
+    (async () => {
+      try {
+        await patchIssueTitle({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
   const CommentList = () => (
     <>
       {detailIssue.comments.map((comment) => {
@@ -113,25 +133,34 @@ const IssueDetailPage = ({ getDetailIssue, detailIssue, loadingDetailIssue, post
     <>
       <Header />
       <ContentWrapper>
-        <Content>
-          <CommentViewBoxWrapper>
-            {!loadingDetailIssue && detailIssue && (
-              <>
+        {!loadingDetailIssue && detailIssue && (
+          <>
+            <IssueDetailTitle
+              title={detailIssue.title}
+              id={detailIssue.id}
+              isOpen={detailIssue.title}
+              nickname={detailIssue.author.nickname}
+              createdAt={detailIssue.createdAt}
+              numberOfComment={detailIssue.numberOfComment}
+              titleSaveHandler={titleSaveHandler}
+            />
+            <Content>
+              <CommentViewBoxWrapper>
                 <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
                 <CommentList />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
-              </>
-            )}
-          </CommentViewBoxWrapper>
-          <FilterVerticalList />
-        </Content>
+              </CommentViewBoxWrapper>
+              <FilterVerticalList />
+            </Content>
+          </>
+        )}
       </ContentWrapper>
     </>
   );
 };
 
 const ContentWrapper = styled.div`
-  display: flex;
+  display: grid;
   justify-content: center;
   margin-bottom: 50px;
 `;
@@ -161,6 +190,7 @@ export default connect(
   {
     getDetailIssue,
     changeIssueStatus,
+    patchIssueTitle,
     postComment,
     putComment,
     deleteComment,

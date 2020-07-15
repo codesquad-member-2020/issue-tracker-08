@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Text from "@Style/Text";
 
-const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, backgroundColor, placeholder, onChange, maxLength }) => {
+const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, backgroundColor, placeholder, onChange, maxLength, isIssueTitle }) => {
   return (
     <>
       <Wrap>
@@ -27,6 +27,7 @@ const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, b
             placeholder={placeholder}
             onChange={onChange}
             maxLength={maxLength}
+            isIssueTitle={isIssueTitle}
           />
         ) : (
           <InputBox
@@ -36,9 +37,10 @@ const PersonalInputBox = ({ type, errorMsg, isRandom, title, widthSize, value, b
             placeholder={placeholder}
             onChange={onChange}
             maxLength={maxLength}
+            isIssueTitle={isIssueTitle}
           />
         )}
-        <MessageBox children={errorMsg} fontSize="sm" color="red" />
+        {errorMsg && <MessageBox children={errorMsg} fontSize="sm" color="red" />}
       </Wrap>
     </>
   );
@@ -53,7 +55,7 @@ const Wrap = styled.div`
 
 const InputBox = styled.input`
   border: none;
-  margin: 5px 0;
+  margin: ${(props) => (props.isIssueTitle ? "" : "5px 0")};
   height: 40px;
   padding: 10px;
   border-radius: 5px;
