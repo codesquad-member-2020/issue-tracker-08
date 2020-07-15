@@ -3,7 +3,7 @@ import React from "react";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 
-const CommentList = ({ detailIssue, checkEditCommentInfo, editCommentHandler, editClickHandler, deleteHandler }) => {
+const CommentList = ({ detailIssue, checkEditCommentInfo, editCommentHandler, editClickHandler, cancelClickHandler, deleteHandler }) => {
   return (
     <>
       {detailIssue.comments.map((comment) => {
@@ -17,7 +17,14 @@ const CommentList = ({ detailIssue, checkEditCommentInfo, editCommentHandler, ed
         } = comment;
 
         return checkEditCommentInfo(commentId) ? (
-          <CommentInputBox key={commentId} commentId={commentId} editContent={content} author={user} editCommentHandler={editCommentHandler} />
+          <CommentInputBox
+            key={commentId}
+            commentId={commentId}
+            editContent={content}
+            author={user}
+            editCommentHandler={editCommentHandler}
+            cancelClickHandler={cancelClickHandler}
+          />
         ) : (
           <CommentViewBox
             key={commentId}

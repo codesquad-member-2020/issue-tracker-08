@@ -11,10 +11,10 @@ import useDebounce from "@Hooks/useDebounce";
 
 const CommentInputBox = ({
   isIssue,
-  onPass,
   submitHandler,
   postHandler,
   editCommentHandler,
+  cancelClickHandler,
   changeIssueOpenClose,
   commentId,
   editContent,

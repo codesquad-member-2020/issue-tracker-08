@@ -51,6 +51,8 @@ const IssueDetailPage = ({
 
   const editClickHandler = (commentId) => setEditCommentInfo({ isEdit: true, editComment: commentId });
 
+  const cancelClickHandler = (commentId) => setEditCommentInfo({ isEdit: false, editComment: commentId });
+
   const editCommentHandler = ({ issueId, commentId, params }) => {
     (async () => {
       try {
@@ -124,6 +126,7 @@ const IssueDetailPage = ({
                   checkEditCommentInfo={checkEditCommentInfo}
                   editCommentHandler={editCommentHandler}
                   editClickHandler={editClickHandler}
+                  cancelClickHandler={cancelClickHandler}
                   deleteHandler={deleteHandler}
                 />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
