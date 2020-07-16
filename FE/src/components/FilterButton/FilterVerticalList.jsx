@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 import FilterButton from "@FilterButton/FilterButton";
+import { getUser } from "@Modules/user";
+import { getLabel } from "@Modules/label";
+import { getMilestone } from "@Modules/milestone";
+
+const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getUser();
+        await getLabel();
+        await getMilestone();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, []);
+
 
 const FilterVerticalList = () => {
   return (
@@ -24,43 +44,18 @@ const Wrapper = styled.div`
   margin: 10px;
 `;
 
-export default FilterVerticalList;
-
-const assignees = [
+export default connect(
+  ({ user, label, milestone, loading }) => ({
+    users: user.users,
+    labels: label.labels,
+    milestones: milestone.milestones,
+    loadingUser: loading["user/GET_USER"],
+    loadingLabel: loading["label/GET_LABEL"],
+    loadingMilestone: loading["milestone/GET_MILESTONE"],
+  }),
   {
-    name: "jay",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "Good for newcomers",
-  },
-  {
-    name: "sally",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "ever",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "",
-  },
-];
-
-const labels = [
-  {
-    name: "good first issue",
-    color: "#7057ff",
-    description: "Good for newcomers",
-  },
-  {
-    name: "help wanted",
-    color: "#008672",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-];
+    getUser,
+    getLabel,
+    getMilestone,
+  }
+)(FilterVerticalList);
