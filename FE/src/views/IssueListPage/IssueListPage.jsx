@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Button from "@Style/Button";
@@ -13,9 +13,11 @@ import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
+import { resetOption } from "@Modules/option";
 
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   let history = useHistory();
+  const dispatch = useDispatch();
 
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -55,6 +57,8 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
       }
     };
     fn();
+
+    dispatch(resetOption());
   }, []);
 
   return (
