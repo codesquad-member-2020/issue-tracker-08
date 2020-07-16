@@ -7,7 +7,18 @@ import { getUser } from "@Modules/user";
 import { getLabel } from "@Modules/label";
 import { getMilestone } from "@Modules/milestone";
 
-const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
+const FilterVerticalList = ({
+  users,
+  labels,
+  milestones,
+  getUser,
+  getLabel,
+  getMilestone,
+  loadingUser,
+  loadingLabel,
+  loadingMilestone,
+  optionData,
+}) => {
   const assigneeList = () => {
     return [...users].map((user) => {
       return { id: user.id.userId, name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };
