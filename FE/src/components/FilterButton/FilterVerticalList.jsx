@@ -22,6 +22,9 @@ const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getM
     fn();
   }, []);
 
+  const hasData = () => {
+    return !loadingUser && users && !loadingLabel && labels && !loadingMilestone && milestones;
+  };
 
 const FilterVerticalList = () => {
   return (
