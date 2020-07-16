@@ -10,13 +10,13 @@ import { getMilestone } from "@Modules/milestone";
 const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
   const assigneeList = () => {
     return [...users].map((user) => {
-      return { name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };
+      return { id: user.id.userId, name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };
     });
   };
 
   const milestoneList = () => {
     return [...milestones.milestones].map((milestone) => {
-      return { name: milestone.title, color: "#fff", description: milestone.description };
+      return { id: milestone.id, name: milestone.title, color: "#fff", description: milestone.description };
     });
   };
 
