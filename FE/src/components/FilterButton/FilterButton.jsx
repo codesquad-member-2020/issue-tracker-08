@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -9,12 +10,15 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
+import { saveOption } from "@Modules/option";
+
 const FilterButton = ({ filter, title, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState([]);
   const [pendingValue, setPendingValue] = React.useState([]);
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setPendingValue(value);
@@ -26,6 +30,12 @@ const FilterButton = ({ filter, title, data }) => {
       return;
     }
     setValue(pendingValue);
+    dispatch(
+      saveOption(
+        pendingValue.map((value) => value.id),
+        title
+      )
+    );
     if (anchorEl) {
       anchorEl.focus();
     }
