@@ -8,6 +8,17 @@ import { getLabel } from "@Modules/label";
 import { getMilestone } from "@Modules/milestone";
 
 const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
+  const assigneeList = () => {
+    return [...users].map((user) => {
+      return { name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };
+    });
+  };
+
+  const milestoneList = () => {
+    return [...milestones.milestones].map((milestone) => {
+      return { name: milestone.title, color: "#fff", description: milestone.description };
+    });
+  };
 
   useEffect(() => {
     const fn = async () => {
@@ -26,14 +37,17 @@ const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getM
     return !loadingUser && users && !loadingLabel && labels && !loadingMilestone && milestones;
   };
 
-const FilterVerticalList = () => {
   return (
     <>
-      <Wrapper>
-        <FilterButton title="Assignees" data={assignees}></FilterButton>
-        <FilterButton title="Labels" data={labels}></FilterButton>
-        <FilterButton title="Milestone" data={labels}></FilterButton>
-      </Wrapper>
+      {hasData() && (
+        <>
+          <Wrapper>
+            <FilterButton title="Assignees" data={assigneeList()}></FilterButton>
+            <FilterButton title="Labels" data={labels}></FilterButton>
+            <FilterButton title="Milestone" data={milestoneList()}></FilterButton>
+          </Wrapper>
+        </>
+      )}
     </>
   );
 };
