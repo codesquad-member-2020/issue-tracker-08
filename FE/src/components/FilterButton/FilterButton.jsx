@@ -12,10 +12,10 @@ import InputBase from "@material-ui/core/InputBase";
 
 import { saveOption } from "@Modules/option";
 
-const FilterButton = ({ filter, title, data }) => {
+const FilterButton = ({ filter, title, data, initialData = [] }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState(initialData);
   const [pendingValue, setPendingValue] = React.useState([]);
   const theme = useTheme();
   const dispatch = useDispatch();
