@@ -25,10 +25,22 @@ const FilterVerticalList = ({
     });
   };
 
+  const makeAssignee = () => {
+    if (!optionData.assignees) return;
+    return [...optionData.assignees].map((user) => {
+      return { id: user.id, name: user.nickname, color: "#fff", img: user.avatarUrl, description: "" };
+    });
+  };
+
   const milestoneList = () => {
     return [...milestones.milestones].map((milestone) => {
       return { id: milestone.id, name: milestone.title, color: "#fff", description: milestone.description };
     });
+  };
+
+  const makeMilestone = () => {
+    if (!optionData.milestone) return;
+    return [{ id: optionData.milestone.id, name: optionData.milestone.title, color: "#fff", description: optionData.milestone.description }];
   };
 
   useEffect(() => {
@@ -53,9 +65,9 @@ const FilterVerticalList = ({
       {hasData() && (
         <>
           <Wrapper>
-            <FilterButton title="Assignees" data={assigneeList()}></FilterButton>
-            <FilterButton title="Labels" data={labels}></FilterButton>
-            <FilterButton title="Milestone" data={milestoneList()}></FilterButton>
+            <FilterButton title="Assignees" data={assigneeList()} initialData={optionData && makeAssignee()}></FilterButton>
+            <FilterButton title="Labels" data={labels} initialData={optionData && optionData.labels}></FilterButton>
+            <FilterButton title="Milestone" data={milestoneList()} initialData={optionData && makeMilestone()}></FilterButton>
           </Wrapper>
         </>
       )}
