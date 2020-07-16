@@ -4,6 +4,7 @@ import issue from "@Modules/issue";
 import milestone from "@Modules/milestone";
 import label from "@Modules/label";
 import user from "@Modules/user";
+import option from "@Modules/option";
 
 export default combineReducers({
   loading,
@@ -11,4 +12,5 @@ export default combineReducers({
   milestone,
   label,
   user,
+  option,
 });
