@@ -44,7 +44,9 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   const IssueList = () => (
     <>
       {isGetIssues() &&
-        issues.map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
+        issues
+          .reverse()
+          .map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
     </>
   );
 
