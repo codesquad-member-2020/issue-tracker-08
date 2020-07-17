@@ -96,7 +96,6 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
           disableCloseOnSelect={!filter}
           disablePortal
           renderTags={() => null}
-          noOptionsText="No labels"
           renderOption={(option, { selected }) => (
             <>
               <DoneIcon className={classes.iconSelected} style={{ visibility: selected ? "visible" : "hidden" }} />
