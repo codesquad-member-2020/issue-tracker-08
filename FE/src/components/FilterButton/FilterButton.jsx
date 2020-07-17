@@ -58,21 +58,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     })();
   };
 
-  const closeHandler = (event, reason) => {
-    if (reason === "toggleInput") return;
-
-    setValue(pendingValue);
-    if (!issueId) {
-      dispatch(
-        saveOption(
-          pendingValue.map((value) => value.id),
-          title
-        )
-      );
-    }
-
-    if (anchorEl) anchorEl.focus();
-    setAnchorEl(null);
+  const executeSaveHandler = () => {
     if (issueId) {
       switch (title) {
         case "Assignees":
@@ -85,6 +71,25 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           break;
       }
     }
+  };
+
+  const closeHandler = (event, reason) => {
+    if (reason === "toggleInput") return;
+    if (anchorEl) anchorEl.focus();
+    if (title !== "Milestone") setValue(pendingValue);
+    setAnchorEl(null);
+    console.log(pendingValue);
+
+    if (!issueId) {
+      dispatch(
+        saveOption(
+          pendingValue.map((value) => value.id),
+          title
+        )
+      );
+    }
+
+    executeSaveHandler();
   };
 
   const open = Boolean(anchorEl);
