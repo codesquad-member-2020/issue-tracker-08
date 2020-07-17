@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -81,10 +81,6 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
         case "Labels":
           saveLabelHandler({ labels: pendingValue.map((label) => label.id) });
           break;
-        case "Milestone":
-          saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
-          break;
-
         default:
           break;
       }
@@ -99,6 +95,10 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     Labels: "Apply labels to this issue",
     Milestone: "Set milestone",
   };
+
+  useEffect(() => {
+    if (title === "Milestone") saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
+  }, [pendingValue, value]);
 
   return (
     <>
@@ -140,6 +140,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           value={pendingValue}
           onChange={(event, newValue) => {
             setPendingValue(newValue);
+            if (title === "Milestone") setValue(newValue);
           }}
           disableCloseOnSelect={!(filter || title === "Milestone")}
           disablePortal
