@@ -60,16 +60,18 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     if (reason === "toggleInput") return;
 
     setValue(pendingValue);
-    dispatch(
-      saveOption(
-        pendingValue.map((value) => value.id),
-        title
-      )
-    );
+    if (!issueId) {
+      dispatch(
+        saveOption(
+          pendingValue.map((value) => value.id),
+          title
+        )
+      );
+    }
 
     if (anchorEl) anchorEl.focus();
     setAnchorEl(null);
-    if (!filter) {
+    if (issueId) {
       switch (title) {
         case "Assignees":
           saveAssigneeHandler({ assignees: pendingValue.map((assignee) => assignee.id) });
