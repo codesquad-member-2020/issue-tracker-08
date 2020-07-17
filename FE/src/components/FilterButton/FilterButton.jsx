@@ -51,7 +51,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className={classes.root} style={filter ? {} : { width: "221px", paddingBottom: "17px", borderBottom: "1px solid #eee" }}>
         <ButtonBase disableRipple className={classes.button} aria-describedby={id} onClick={handleClick}>
           <span style={filter ? { display: "flex", alignItems: "center", justifyContent: "center" } : {}}>
@@ -96,7 +96,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
           renderTags={() => null}
           noOptionsText="No labels"
           renderOption={(option, { selected }) => (
-            <React.Fragment>
+            <>
               <DoneIcon className={classes.iconSelected} style={{ visibility: selected ? "visible" : "hidden" }} />
               {!option.img && <span className={classes.color} style={{ backgroundColor: option.color }} />}
               {option.img && <img src={option.img} className={classes.color} />}
@@ -106,7 +106,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
                 {option.description}
               </div>
               <CloseIcon className={classes.close} style={{ visibility: selected ? "visible" : "hidden" }} />
-            </React.Fragment>
+            </>
           )}
           options={[...data].sort((a, b) => {
             // Display the selected labels first.
@@ -117,10 +117,11 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
             return ai - bi;
           })}
           getOptionLabel={(option) => option.name}
+          getOptionSelected={(option, value) => option.id === value.id}
           renderInput={(params) => <InputBase ref={params.InputProps.ref} inputProps={params.inputProps} autoFocus className={classes.inputBase} />}
         />
       </Popper>
-    </React.Fragment>
+    </>
   );
 };
 
