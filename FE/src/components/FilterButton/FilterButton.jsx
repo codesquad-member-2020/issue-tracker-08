@@ -251,7 +251,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default connect(
-  {},
+  ({ option, loading }) => ({
+    assignees: option.assignees,
+    loadingDetailIssue: loading["option/SAVE_ASSIGNEES"],
+  }),
   {
     saveAssignees,
   }
