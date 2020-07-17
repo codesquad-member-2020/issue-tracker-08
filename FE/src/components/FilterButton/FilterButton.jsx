@@ -50,6 +50,16 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
 
     if (anchorEl) anchorEl.focus();
     setAnchorEl(null);
+    if (!filter) {
+      switch (title) {
+        case "Assignees":
+          saveAssigneeHandler({ assignees: pendingValue.map((assignee) => assignee.id) });
+          break;
+
+        default:
+          break;
+      }
+    }
   };
 
   const open = Boolean(anchorEl);
