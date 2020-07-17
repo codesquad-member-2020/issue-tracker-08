@@ -15,6 +15,8 @@ import com.codesquad.issuetracker.user.application.UserService;
 import com.codesquad.issuetracker.user.domain.User;
 import com.codesquad.issuetracker.user.domain.UserId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,8 +24,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class IssueService {
@@ -41,7 +43,8 @@ public class IssueService {
     private final MileStoneRepository mileStoneRepository;
 
     public IssueBoard findIssuesByFilter(Filter filter) {
-        List<IssueView> issues = StreamSupport.stream(issueRepository.findAll(IssuePredicate.search(filter), filter.getPageRequest()).spliterator(), false)
+        Page<Issue> pages = issueRepository.findAll(IssuePredicate.search(filter), filter.getPageRequest());
+        List<IssueView> issues = pages.stream()
                 .map(i -> IssueView.of(i,
                         userService.findById(i.getAuthorId()),
                         findMilestone(i.getMilestoneId()),
@@ -56,6 +59,7 @@ public class IssueService {
                 .numberOfMilestones(mileStoneRepository.count())
                 .numberOfOpenIssue(issueRepository.countByIsOpenTrue())
                 .numberOfClosedIssue(issueRepository.countByIsOpenFalse())
+                .numberOfPage(pages.getTotalPages())
                 .build();
     }
 
