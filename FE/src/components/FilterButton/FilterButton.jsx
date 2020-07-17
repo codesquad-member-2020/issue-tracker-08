@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -10,9 +11,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-import { saveOption } from "@Modules/option";
+import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
 
-const FilterButton = ({ filter, title, data, initialData = [] }) => {
+const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState(initialData);
@@ -224,4 +225,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default FilterButton;
+export default connect(
+  {},
+  {
+    saveAssignees,
+  }
+)(FilterButton);
