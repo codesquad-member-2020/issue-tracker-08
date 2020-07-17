@@ -28,6 +28,15 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
     setAnchorEl(event.currentTarget);
   };
 
+  const saveAssigneeHandler = (params) => {
+    (async () => {
+      try {
+        await saveAssignees({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
   const closeHandler = (event, reason) => {
     if (reason === "toggleInput") return;
 
