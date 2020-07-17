@@ -14,7 +14,7 @@ import InputBase from "@material-ui/core/InputBase";
 
 import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
 
-const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) => {
+const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, saveLabels, saveMilestone }) => {
   const { issueId } = useParams();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -37,6 +37,25 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
       }
     })();
   };
+  const saveLabelHandler = (params) => {
+    (async () => {
+      try {
+        await saveLabels({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+  const saveMilestoneHandler = (params) => {
+    (async () => {
+      try {
+        await saveMilestone({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
   const closeHandler = (event, reason) => {
     if (reason === "toggleInput") return;
 
@@ -54,6 +73,12 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
       switch (title) {
         case "Assignees":
           saveAssigneeHandler({ assignees: pendingValue.map((assignee) => assignee.id) });
+          break;
+        case "Labels":
+          saveLabelHandler({ labels: pendingValue.map((label) => label.id) });
+          break;
+        case "Milestone":
+          saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
           break;
 
         default:
@@ -250,12 +275,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default connect(
-  ({ option, loading }) => ({
-    assignees: option.assignees,
-    loadingDetailIssue: loading["option/SAVE_ASSIGNEES"],
-  }),
-  {
-    saveAssignees,
-  }
-)(FilterButton);
+export default connect(null, {
+  saveAssignees,
+  saveLabels,
+  saveMilestone,
+})(FilterButton);
