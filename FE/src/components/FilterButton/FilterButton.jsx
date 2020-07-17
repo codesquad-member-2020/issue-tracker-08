@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
@@ -15,9 +15,9 @@ import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/o
 
 const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState(initialData);
-  const [pendingValue, setPendingValue] = React.useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setValue] = useState(initialData);
+  const [pendingValue, setPendingValue] = useState([]);
   const theme = useTheme();
   const dispatch = useDispatch();
 
