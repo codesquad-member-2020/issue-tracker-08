@@ -139,7 +139,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           onChange={(event, newValue) => {
             setPendingValue(newValue);
           }}
-          disableCloseOnSelect={!filter}
+          disableCloseOnSelect={!(filter || title === "Milestone")}
           disablePortal
           renderTags={() => null}
           renderOption={(option, { selected }) => (
