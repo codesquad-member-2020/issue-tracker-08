@@ -41,7 +41,7 @@ public class IssueService {
     private final MileStoneRepository mileStoneRepository;
 
     public IssueBoard findIssuesByFilter(Filter filter) {
-        List<IssueView> issues = StreamSupport.stream(issueRepository.findAll(IssuePredicate.search(filter)).spliterator(), false)
+        List<IssueView> issues = StreamSupport.stream(issueRepository.findAll(IssuePredicate.search(filter), filter.getPageRequest()).spliterator(), false)
                 .map(i -> IssueView.of(i,
                         userService.findById(i.getAuthorId()),
                         findMilestone(i.getMilestoneId()),
