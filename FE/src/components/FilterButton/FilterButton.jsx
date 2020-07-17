@@ -44,6 +44,12 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
 
+  const headerMsg = {
+    Assignees: "Assign up to 10 people to this issue",
+    Labels: "Apply labels to this issue",
+    Milestone: "Set milestone",
+  };
+
   return (
     <React.Fragment>
       <div className={classes.root} style={filter ? {} : { width: "221px", paddingBottom: "17px", borderBottom: "1px solid #eee" }}>
@@ -71,7 +77,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
         {!filter && !value.length && <div className={classes.tag}>No {title}</div>}
       </div>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" className={classes.popper}>
-        <div className={classes.header}>Apply labels to this pull request</div>
+        <div className={classes.header}>{filter ? `Filter by ${title}` : headerMsg[title]}</div>
         <Autocomplete
           open
           onClose={closeHandler}
