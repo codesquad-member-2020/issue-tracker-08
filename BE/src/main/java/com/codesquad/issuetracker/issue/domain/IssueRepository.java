@@ -4,12 +4,12 @@ import com.codesquad.issuetracker.label.domain.LabelId;
 import com.codesquad.issuetracker.milestone.domain.MilestoneId;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface IssueRepository extends CrudRepository<Issue, IssueId>, QuerydslPredicateExecutor<Issue> {
+public interface IssueRepository extends PagingAndSortingRepository<Issue, IssueId>, QuerydslPredicateExecutor<Issue> {
 
     Issue findFirstByOrderByIdDesc();
 
