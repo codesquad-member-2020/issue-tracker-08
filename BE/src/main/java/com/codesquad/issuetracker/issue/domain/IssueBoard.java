@@ -20,4 +20,6 @@ public class IssueBoard {
     private long numberOfOpenIssue;
 
     private long numberOfClosedIssue;
+
+    private long numberOfPage;
 }
