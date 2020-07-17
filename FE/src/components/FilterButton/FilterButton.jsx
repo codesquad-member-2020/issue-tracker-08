@@ -91,7 +91,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
           onChange={(event, newValue) => {
             setPendingValue(newValue);
           }}
-          disableCloseOnSelect
+          disableCloseOnSelect={!filter}
           disablePortal
           renderTags={() => null}
           noOptionsText="No labels"
