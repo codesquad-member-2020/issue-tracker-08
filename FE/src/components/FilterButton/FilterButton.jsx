@@ -36,9 +36,8 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
         title
       )
     );
-    if (anchorEl) {
-      anchorEl.focus();
-    }
+
+    if (anchorEl) anchorEl.focus();
     setAnchorEl(null);
   };
 
