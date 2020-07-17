@@ -74,7 +74,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
         <div className={classes.header}>Apply labels to this pull request</div>
         <Autocomplete
           open
-          onClose={handleClose}
+          onClose={closeHandler}
           multiple
           classes={{
             paper: classes.paper,
