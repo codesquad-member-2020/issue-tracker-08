@@ -11,10 +11,15 @@ export const postIssue = (params) =>
     method: "post",
     credentials: true,
   });
+
 export const patchIssueTitle = ({ issueId, params }) => axios.patch(`${API_URL.issue}${issueId}/titles`, params);
 export const postComment = ({ issueId, params }) => axios.post(`${API_URL.issue}${issueId}/comments`, params);
 export const putComment = ({ issueId, commentId, params }) => axios.put(`${API_URL.issue}${issueId}/comments/${commentId}`, params);
 export const deleteComment = ({ issueId, commentId }) => axios.delete(`${API_URL.issue}${issueId}/comments/${commentId}`);
+
+export const changeAssignee = ({ issueId, params }) => axios.put(`${API_URL.issue}${issueId}/assignees`, params);
+export const changeLabels = ({ issueId, params }) => axios.put(`${API_URL.issue}${issueId}/labels`, params);
+export const changeMilestone = ({ issueId, params }) => axios.put(`${API_URL.issue}${issueId}/milestone`, params);
 
 export const getMilestone = () => axios.get(API_URL.milestone);
 export const getMilestoneDetail = (milestoneId) => axios.get(`${API_URL.milestone}${milestoneId}`);
