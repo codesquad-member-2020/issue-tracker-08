@@ -37,6 +37,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
       }
     })();
   };
+
   const saveLabelHandler = (params) => {
     (async () => {
       try {
@@ -46,6 +47,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
       }
     })();
   };
+
   const saveMilestoneHandler = (params) => {
     (async () => {
       try {
