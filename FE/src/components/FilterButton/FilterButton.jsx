@@ -26,10 +26,9 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) 
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "toggleInput") {
-      return;
-    }
+  const closeHandler = (event, reason) => {
+    if (reason === "toggleInput") return;
+
     setValue(pendingValue);
     dispatch(
       saveOption(
