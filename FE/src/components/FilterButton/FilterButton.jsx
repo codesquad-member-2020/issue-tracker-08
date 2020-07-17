@@ -137,6 +137,10 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           open
           onClose={closeHandler}
           multiple
+          getOptionDisabled={(option) => {
+            if (title !== "Milestone") return false;
+            return value.length && value[0].id !== option.id;
+          }}
           classes={{
             paper: classes.paper,
             option: classes.option,
