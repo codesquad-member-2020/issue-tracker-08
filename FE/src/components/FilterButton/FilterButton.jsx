@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -14,6 +15,7 @@ import InputBase from "@material-ui/core/InputBase";
 import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
 
 const FilterButton = ({ filter, title, data, initialData = [], saveAssignees }) => {
+  const { issueId } = useParams();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState(initialData);
