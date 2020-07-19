@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import Header from "@Header/Header";
 import { postIssue } from "@Modules/issue";
+import { resetOption } from "@Modules/option";
 
 const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
   let history = useHistory();
+  const dispatch = useDispatch();
 
   const passIssueListPage = () => history.push(`/IssueListPage`);
 
@@ -23,8 +25,13 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
         console.error(e);
       }
     })();
+
     if (!loadingIssue && detailIssue) passIssueDetailPage();
   };
+
+  useEffect(() => {
+    dispatch(resetOption());
+  }, []);
 
   return (
     <>

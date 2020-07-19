@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -9,34 +12,101 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-const FilterButton = ({ filter, title, data }) => {
+import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
+
+const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, saveLabels, saveMilestone }) => {
+  const { issueId } = useParams();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState([]);
-  const [pendingValue, setPendingValue] = React.useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setValue] = useState(initialData);
+  const [pendingValue, setPendingValue] = useState([]);
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setPendingValue(value);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "toggleInput") {
-      return;
+  const saveAssigneeHandler = (params) => {
+    (async () => {
+      try {
+        await saveAssignees({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
+  const saveLabelHandler = (params) => {
+    (async () => {
+      try {
+        await saveLabels({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
+  const saveMilestoneHandler = (params) => {
+    (async () => {
+      try {
+        await saveMilestone({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
+
+  const executeSaveHandler = () => {
+    if (issueId) {
+      switch (title) {
+        case "Assignees":
+          saveAssigneeHandler({ assignees: pendingValue.map((assignee) => assignee.id) });
+          break;
+        case "Labels":
+          saveLabelHandler({ labels: pendingValue.map((label) => label.id) });
+          break;
+        default:
+          break;
+      }
     }
-    setValue(pendingValue);
-    if (anchorEl) {
-      anchorEl.focus();
-    }
+  };
+
+  const closeHandler = (event, reason) => {
+    if (reason === "toggleInput") return;
+    if (anchorEl) anchorEl.focus();
+    if (title !== "Milestone") setValue(pendingValue);
     setAnchorEl(null);
+    console.log(pendingValue);
+
+    if (!issueId) {
+      dispatch(
+        saveOption(
+          pendingValue.map((value) => value.id),
+          title
+        )
+      );
+    }
+
+    executeSaveHandler();
   };
 
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
 
+  const headerMsg = {
+    Assignees: "Assign up to 10 people to this issue",
+    Labels: "Apply labels to this issue",
+    Milestone: "Set milestone",
+  };
+
+  useEffect(() => {
+    if (title === "Milestone") saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
+  }, [pendingValue, value]);
+
   return (
-    <React.Fragment>
+    <>
       <div className={classes.root} style={filter ? {} : { width: "221px", paddingBottom: "17px", borderBottom: "1px solid #eee" }}>
         <ButtonBase disableRipple className={classes.button} aria-describedby={id} onClick={handleClick}>
           <span style={filter ? { display: "flex", alignItems: "center", justifyContent: "center" } : {}}>
@@ -62,11 +132,15 @@ const FilterButton = ({ filter, title, data }) => {
         {!filter && !value.length && <div className={classes.tag}>No {title}</div>}
       </div>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start" className={classes.popper}>
-        <div className={classes.header}>Apply labels to this pull request</div>
+        <div className={classes.header}>{filter ? `Filter by ${title}` : headerMsg[title]}</div>
         <Autocomplete
           open
-          onClose={handleClose}
+          onClose={closeHandler}
           multiple
+          getOptionDisabled={(option) => {
+            if (title !== "Milestone") return false;
+            return value.length && value[0].id !== option.id;
+          }}
           classes={{
             paper: classes.paper,
             option: classes.option,
@@ -75,13 +149,13 @@ const FilterButton = ({ filter, title, data }) => {
           value={pendingValue}
           onChange={(event, newValue) => {
             setPendingValue(newValue);
+            if (title === "Milestone") setValue(newValue);
           }}
-          disableCloseOnSelect
+          disableCloseOnSelect={!(filter || title === "Milestone")}
           disablePortal
           renderTags={() => null}
-          noOptionsText="No labels"
           renderOption={(option, { selected }) => (
-            <React.Fragment>
+            <>
               <DoneIcon className={classes.iconSelected} style={{ visibility: selected ? "visible" : "hidden" }} />
               {!option.img && <span className={classes.color} style={{ backgroundColor: option.color }} />}
               {option.img && <img src={option.img} className={classes.color} />}
@@ -91,7 +165,7 @@ const FilterButton = ({ filter, title, data }) => {
                 {option.description}
               </div>
               <CloseIcon className={classes.close} style={{ visibility: selected ? "visible" : "hidden" }} />
-            </React.Fragment>
+            </>
           )}
           options={[...data].sort((a, b) => {
             // Display the selected labels first.
@@ -102,10 +176,11 @@ const FilterButton = ({ filter, title, data }) => {
             return ai - bi;
           })}
           getOptionLabel={(option) => option.name}
+          getOptionSelected={(option, value) => option.id === value.id}
           renderInput={(params) => <InputBase ref={params.InputProps.ref} inputProps={params.inputProps} autoFocus className={classes.inputBase} />}
         />
       </Popper>
-    </React.Fragment>
+    </>
   );
 };
 
@@ -143,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 3px 12px rgba(27,31,35,.15)",
     borderRadius: 3,
     width: 300,
-    zIndex: 1,
+    zIndex: 2,
     fontSize: 13,
     color: "#586069",
     backgroundColor: "#f6f8fa",
@@ -214,4 +289,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default FilterButton;
+export default connect(null, {
+  saveAssignees,
+  saveLabels,
+  saveMilestone,
+})(FilterButton);

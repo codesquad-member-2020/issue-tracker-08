@@ -1,16 +1,76 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 import FilterButton from "@FilterButton/FilterButton";
+import { getUser } from "@Modules/user";
+import { getLabel } from "@Modules/label";
+import { getMilestone } from "@Modules/milestone";
 
-const FilterVerticalList = () => {
+const FilterVerticalList = ({
+  users,
+  labels,
+  milestones,
+  getUser,
+  getLabel,
+  getMilestone,
+  loadingUser,
+  loadingLabel,
+  loadingMilestone,
+  optionData,
+}) => {
+  const assigneeList = () => {
+    return [...users].map((user) => {
+      return { id: user.id.userId, name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };
+    });
+  };
+
+  const makeAssignee = () => {
+    if (!optionData.assignees) return;
+    return [...optionData.assignees].map((user) => {
+      return { id: user.id, name: user.nickname, color: "#fff", img: user.avatarUrl, description: "" };
+    });
+  };
+
+  const milestoneList = () => {
+    return [...milestones.milestones].map((milestone) => {
+      return { id: milestone.id, name: milestone.title, color: "#fff", description: milestone.description };
+    });
+  };
+
+  const makeMilestone = () => {
+    if (!optionData.milestone) return;
+    return [{ id: optionData.milestone.id, name: optionData.milestone.title, color: "#fff", description: optionData.milestone.description }];
+  };
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        await getUser();
+        await getLabel();
+        await getMilestone();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, []);
+
+  const hasData = () => {
+    return !loadingUser && users && !loadingLabel && labels && !loadingMilestone && milestones;
+  };
+
   return (
     <>
-      <Wrapper>
-        <FilterButton title="Assignees" data={assignees}></FilterButton>
-        <FilterButton title="Labels" data={labels}></FilterButton>
-        <FilterButton title="Milestone" data={labels}></FilterButton>
-      </Wrapper>
+      {hasData() && (
+        <>
+          <Wrapper>
+            <FilterButton title="Assignees" data={assigneeList()} initialData={optionData && makeAssignee()}></FilterButton>
+            <FilterButton title="Labels" data={labels} initialData={optionData && optionData.labels}></FilterButton>
+            <FilterButton title="Milestone" data={milestoneList()} initialData={optionData && makeMilestone()}></FilterButton>
+          </Wrapper>
+        </>
+      )}
     </>
   );
 };
@@ -24,43 +84,18 @@ const Wrapper = styled.div`
   margin: 10px;
 `;
 
-export default FilterVerticalList;
-
-const assignees = [
+export default connect(
+  ({ user, label, milestone, loading }) => ({
+    users: user.users,
+    labels: label.labels,
+    milestones: milestone.milestones,
+    loadingUser: loading["user/GET_USER"],
+    loadingLabel: loading["label/GET_LABEL"],
+    loadingMilestone: loading["milestone/GET_MILESTONE"],
+  }),
   {
-    name: "jay",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "Good for newcomers",
-  },
-  {
-    name: "sally",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "ever",
-    color: "#fff",
-    img: "https://avatars1.githubusercontent.com/u/30427711?s=60&v=4",
-    description: "",
-  },
-];
-
-const labels = [
-  {
-    name: "good first issue",
-    color: "#7057ff",
-    description: "Good for newcomers",
-  },
-  {
-    name: "help wanted",
-    color: "#008672",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-];
+    getUser,
+    getLabel,
+    getMilestone,
+  }
+)(FilterVerticalList);

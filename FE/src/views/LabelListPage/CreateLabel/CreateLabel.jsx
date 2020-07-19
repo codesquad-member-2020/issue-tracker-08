@@ -23,7 +23,7 @@ const CreateLabel = ({ isEdit, close, defaultColor, isColorDark, labelId, name, 
     name: inputName,
     description: inputDesc,
     color: backgroundColor,
-    isFontColorBlack: isBackDark,
+    isFontColorBlack: !isBackDark,
   };
 
   const isDisabled = () => initLabelName === inputName || isInvalidColor;

@@ -23,7 +23,7 @@ const Label = ({ label: { id, name, description, color, isFontColorBlack }, crea
           editHandler={editHandler}
           close={editLabelOpenHandler}
           defaultColor={color}
-          isColorDark={isFontColorBlack}
+          isColorDark={!isFontColorBlack}
           labelId={id}
           name={name}
           description={description}
@@ -31,7 +31,7 @@ const Label = ({ label: { id, name, description, color, isFontColorBlack }, crea
       ) : (
         <Wrapper>
           <BadgeWrapper>
-            <Badge big color={isFontColorBlack ? "white" : "black"} backgroundColor={color} style={{ display: "inline-block" }}>
+            <Badge big color={isFontColorBlack ? "black" : "white"} backgroundColor={color} style={{ display: "inline-block" }}>
               {name}
             </Badge>
           </BadgeWrapper>

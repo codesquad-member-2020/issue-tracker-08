@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Avatar from "@Style/Avatar";
 
@@ -27,6 +28,9 @@ const CommentInputBox = ({
   const [rawContent, setRawContent] = useState(editContent ? editContent : "");
   const [titleContent, setTitleContent] = useState("");
   const inputRef = useRef();
+  const {
+    option: { assignees, labels, milestoneId },
+  } = useSelector((state) => state);
 
   // const debounceRawContent = useDebounce(rawContent);
 
@@ -40,19 +44,21 @@ const CommentInputBox = ({
 
   const checkIssueClose = () => issueCloseInfo.isClose && issueCloseInfo.issueId === issueId;
 
-  const submitParams = {
-    title: titleContent,
-    content: rawContent,
-    assignees: [],
-    labels: [],
-    milestoneId: null,
+  const submitParams = () => {
+    return {
+      title: titleContent,
+      content: rawContent,
+      assignees: assignees,
+      labels: labels,
+      milestoneId: milestoneId[0],
+    };
   };
 
   const editParams = { content: rawContent };
 
   const changeIssueClickHandler = () => changeIssueOpenClose();
 
-  const submiClicktHandler = () => submitHandler(submitParams);
+  const submiClicktHandler = () => submitHandler(submitParams());
 
   const editClickHandler = () => editCommentHandler({ issueId, commentId, params: editParams });
 
