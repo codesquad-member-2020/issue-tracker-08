@@ -35,6 +35,7 @@ const IssueDetailPage = ({
       }
     })();
 
+    window.location.reload();
   };
 
   const postHandler = ({ issueId, params }) => {
