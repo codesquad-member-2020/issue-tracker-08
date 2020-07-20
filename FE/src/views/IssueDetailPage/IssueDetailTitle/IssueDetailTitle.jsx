@@ -73,7 +73,7 @@ const IssueDetailTitle = ({ title, id, isOpen, nickname, createdAt, numberOfComm
                 style={{ marginLeft: "5px" }}
                 onClick={onSetIsTitleEdit}
               >
-                Cancle
+                Cancel
               </Button>
             </ButtonWrapper>
           </>
