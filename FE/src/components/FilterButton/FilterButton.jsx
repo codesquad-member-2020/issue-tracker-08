@@ -78,7 +78,6 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     if (anchorEl) anchorEl.focus();
     if (title !== "Milestone") setValue(pendingValue);
     setAnchorEl(null);
-    console.log(pendingValue);
 
     if (!issueId) {
       dispatch(
