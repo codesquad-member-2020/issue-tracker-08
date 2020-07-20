@@ -63,8 +63,7 @@ const CommentInputBox = ({
   const editClickHandler = () => editCommentHandler({ issueId, commentId, params: editParams });
 
   const onComment = () => {
-    const params = { content: rawContent };
-    postHandler({ issueId, params });
+    postHandler({ issueId, params: editParams });
     window.location.reload();
   };
 
