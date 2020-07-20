@@ -1,24 +1,22 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import FilterButton from "@FilterButton/FilterButton";
 import { getUser } from "@Modules/user";
 import { getLabel } from "@Modules/label";
 import { getMilestone } from "@Modules/milestone";
 
-const FilterVerticalList = ({
-  users,
-  labels,
-  milestones,
-  getUser,
-  getLabel,
-  getMilestone,
-  loadingUser,
-  loadingLabel,
-  loadingMilestone,
-  optionData,
-}) => {
+const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
+  const optionData = useSelector(({ issue: { detailIssue } }) => {
+    return {
+      assignees: detailIssue.assignees,
+      labels: detailIssue.labels,
+      milestone: detailIssue.milestone,
+    };
+  });
+
   const assigneeList = () => {
     return [...users].map((user) => {
       return { id: user.id.userId, name: user.nickname, color: "#fff", img: user.avatar_url, description: "" };

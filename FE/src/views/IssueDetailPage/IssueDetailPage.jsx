@@ -120,7 +120,7 @@ const IssueDetailPage = ({
                 />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} />
               </CommentViewBoxWrapper>
-              <FilterVerticalList optionData={{ assignees: detailIssue.assignees, labels: detailIssue.labels, milestone: detailIssue.milestone }} />
+              <FilterVerticalList />
             </Content>
           </>
         )}
