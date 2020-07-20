@@ -106,15 +106,7 @@ const IssueDetailPage = ({
       <ContentWrapper>
         {!loadingDetailIssue && detailIssue && (
           <>
-            <IssueDetailTitle
-              title={detailIssue.title}
-              id={detailIssue.id}
-              isOpen={detailIssue.title}
-              nickname={detailIssue.author.nickname}
-              createdAt={detailIssue.createdAt}
-              numberOfComment={detailIssue.numberOfComment}
-              titleSaveHandler={titleSaveHandler}
-            />
+            <IssueDetailTitle titleSaveHandler={titleSaveHandler} />
             <Content>
               <CommentViewBoxWrapper>
                 <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />

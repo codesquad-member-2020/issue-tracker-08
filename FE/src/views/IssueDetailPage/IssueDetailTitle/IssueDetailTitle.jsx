@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import TimeAgo from "react-timeago";
 import engStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
@@ -13,9 +14,10 @@ import PersonalInputBox from "@InputBox/PersonalInputBox";
 
 const formatter = buildFormatter(engStrings);
 
-const IssueDetailTitle = ({ title, id, isOpen, nickname, createdAt, numberOfComment, titleSaveHandler }) => {
+const IssueDetailTitle = ({ titleSaveHandler }) => {
   let history = useHistory();
   const { issueId } = useParams();
+  const { title, isOpen, createdAt, numberOfComment, author } = useSelector(({ issue }) => issue.detailIssue);
 
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [titleContent, setTitleContent] = useState(title);
@@ -99,7 +101,7 @@ const IssueDetailTitle = ({ title, id, isOpen, nickname, createdAt, numberOfComm
           </Badge>
         )}
         <Text fontWeight="bold" color="gray4">
-          {nickname}
+          {author.nickname}
         </Text>
         <Text color="gray4">
           &nbsp;opened this issue <TimeAgo date={createdAt} formatter={formatter} /> · {numberOfComment} comments
