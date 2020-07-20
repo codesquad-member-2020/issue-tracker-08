@@ -43,7 +43,7 @@ const IssueDetailTitle = ({ title, id, isOpen, nickname, createdAt, numberOfComm
                 {title}
               </Text>
               <Text color="gray3" fontSize="xxl" fontWeight="semiBold">
-                &nbsp;#{id}
+                &nbsp;#{issueId}
               </Text>
             </Title>
             <ButtonWrapper>
