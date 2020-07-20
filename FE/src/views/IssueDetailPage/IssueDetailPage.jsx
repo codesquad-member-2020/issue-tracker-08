@@ -23,7 +23,6 @@ const IssueDetailPage = ({
 }) => {
   const { issueId } = useParams();
   const [editCommentInfo, setEditCommentInfo] = useState({ isEdit: false, editComment: null });
-  const [issueCloseInfo, setIssueCloseInfo] = useState({ isClose: false, issueId: null });
 
   const checkEditCommentInfo = (commentId) => editCommentInfo.isEdit && editCommentInfo.editComment === commentId;
 
@@ -36,7 +35,6 @@ const IssueDetailPage = ({
       }
     })();
 
-    setIssueCloseInfo({ isClose: !issueCloseInfo.isClose, issueId });
   };
 
   const postHandler = ({ issueId, params }) => {
@@ -99,8 +97,6 @@ const IssueDetailPage = ({
         console.log(e);
       }
     })();
-
-    if (detailIssue) setIssueCloseInfo({ isClose: detailIssue.isOpen, issueId });
   }, []);
 
   return (
@@ -129,7 +125,7 @@ const IssueDetailPage = ({
                   cancelClickHandler={cancelClickHandler}
                   deleteHandler={deleteHandler}
                 />
-                <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} issueCloseInfo={issueCloseInfo} />
+                <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} />
               </CommentViewBoxWrapper>
               <FilterVerticalList optionData={{ assignees: detailIssue.assignees, labels: detailIssue.labels, milestone: detailIssue.milestone }} />
             </Content>

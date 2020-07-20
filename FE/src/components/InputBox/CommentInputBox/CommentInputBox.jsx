@@ -21,7 +21,6 @@ const CommentInputBox = ({
   commentId,
   editContent,
   author,
-  issueCloseInfo,
 }) => {
   const { issueId } = useParams();
   const [isRawOpen, setIsRawOpen] = useState(true);
@@ -41,8 +40,6 @@ const CommentInputBox = ({
   const rawOpen = () => setIsRawOpen(true);
 
   const markdownOpen = () => setIsRawOpen(false);
-
-  const checkIssueClose = () => issueCloseInfo.isClose && issueCloseInfo.issueId === issueId;
 
   const submitParams = () => {
     return {
@@ -101,12 +98,7 @@ const CommentInputBox = ({
                 cancelClickHandler={cancelClickHandler}
               />
             ) : (
-              <SwitchButton
-                rawContent={rawContent}
-                checkIssueClose={checkIssueClose}
-                changeIssueClickHandler={changeIssueClickHandler}
-                onComment={onComment}
-              />
+              <SwitchButton rawContent={rawContent} changeIssueClickHandler={changeIssueClickHandler} onComment={onComment} />
             )}
           </ButtonWrap>
         </CommentGroup>
