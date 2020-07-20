@@ -101,7 +101,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
   };
 
   useEffect(() => {
-    if (title === "Milestone") saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
+    if (title === "Milestone" && issueId) saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
   }, [pendingValue, value]);
 
   return (
