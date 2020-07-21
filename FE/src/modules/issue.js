@@ -34,6 +34,7 @@ export const deleteComment = createRequestThunk(DELETE_COMMENT, api.deleteCommen
 
 const initialState = {
   issues: null,
+  issueInfo: null,
   detailIssue: null,
   statusCode: null,
 };
@@ -43,6 +44,13 @@ const issue = handleActions(
     [GET_ISSUE_SUCCESS]: (state, action) => ({
       ...state,
       issues: action.payload.data.issues,
+      issueInfo: {
+        numberOfLabels: action.payload.data.numberOfLabels,
+        numberOfMilestones: action.payload.data.numberOfMilestones,
+        numberOfOpenIssue: action.payload.data.numberOfOpenIssue,
+        numberOfClosedIssue: action.payload.data.numberOfClosedIssue,
+        numberOfPage: action.payload.data.numberOfPage,
+      },
     }),
     [GET_DETAIL_ISSUE_SUCCESS]: (state, action) => ({
       ...state,
