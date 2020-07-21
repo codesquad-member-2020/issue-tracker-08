@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+
+import Button from "@Style/Button";
 
 const Pagination = ({ numberOfPage, currentPage }) => {
   let history = useHistory();
@@ -19,11 +23,17 @@ const Pagination = ({ numberOfPage, currentPage }) => {
     <>
       <Wrapper>
         <PageLists>
+          <PrevPageButton onClick={() => onPass(prevPage)}>
+            <ArrowBackIosIcon />
+          </PrevPageButton>
           {pageNumbers.map((number) => (
             <PageButton key={number} onClick={() => onPass(number)}>
               {number}
             </PageButton>
           ))}
+          <NextPageButton onClick={() => onPass(nextPage)}>
+            <ArrowForwardIosIcon />
+          </NextPageButton>
         </PageLists>
       </Wrapper>
     </>
@@ -36,8 +46,14 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const PageLists = styled.ul`
+const PageLists = styled.div`
   display: flex;
+`;
+
+const PrevPageButton = styled(Button)`
+  &::after {
+    content: "Previous";
+  }
 `;
 
 const PageButton = styled.button`
@@ -48,6 +64,12 @@ const PageButton = styled.button`
   padding: 0;
   border: none;
   background: none;
+`;
+
+const NextPageButton = styled(Button)`
+  &::before {
+    content: "Next";
+  }
 `;
 
 export default Pagination;
