@@ -54,6 +54,8 @@ const PageLists = styled.div`
 `;
 
 const PrevPageButton = styled(Button)`
+  height: 2rem;
+  border: none;
   &::after {
     content: "Previous";
   }
@@ -69,6 +71,8 @@ const PageButton = styled.button`
 `;
 
 const NextPageButton = styled(Button)`
+  height: 2rem;
+  border: none;
   &::before {
     content: "Next";
   }
