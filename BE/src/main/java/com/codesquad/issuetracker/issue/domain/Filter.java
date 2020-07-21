@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 @Getter
 @Setter
@@ -33,6 +34,6 @@ public class Filter {
     }
 
     public PageRequest getPageRequest() {
-        return PageRequest.of(page, PAGE_SIZE);
+        return PageRequest.of(page, PAGE_SIZE, Sort.by("id").descending());
     }
 }
