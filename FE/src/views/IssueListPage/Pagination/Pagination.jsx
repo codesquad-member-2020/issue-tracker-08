@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-const Pagination = ({ numberOfPage }) => {
+const Pagination = ({ numberOfPage, currentPage }) => {
   let history = useHistory();
 
   const pageNumbers = Array.from(Array(numberOfPage), (_, i) => i + 1);
+  const prevPage = Number(currentPage) - 1;
+  const nextPage = Number(currentPage) + 1;
 
   const onPass = (number) =>
     history.push({
