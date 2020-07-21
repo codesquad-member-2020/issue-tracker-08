@@ -26,7 +26,7 @@ const Pagination = ({ numberOfPage, currentPage = 1 }) => {
     <>
       <Wrapper>
         <PageLists>
-          <PrevPageButton onClick={() => onPass(prevPage)} disabled={isPrevDisabled}>
+          <PrevPageButton onClick={() => onPass(prevPage)} disabled={isPrevDisabled} backgroundColor="white" color="blue">
             <ArrowBackIosIcon />
           </PrevPageButton>
           {pageNumbers.map((number) => (
@@ -34,7 +34,7 @@ const Pagination = ({ numberOfPage, currentPage = 1 }) => {
               {number}
             </PageButton>
           ))}
-          <NextPageButton onClick={() => onPass(nextPage)} disabled={isNextDisabled}>
+          <NextPageButton onClick={() => onPass(nextPage)} disabled={isNextDisabled} backgroundColor="white" color="blue">
             <ArrowForwardIosIcon />
           </NextPageButton>
         </PageLists>
