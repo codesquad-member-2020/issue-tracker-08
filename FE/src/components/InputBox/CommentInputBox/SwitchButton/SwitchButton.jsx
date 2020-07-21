@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import Button from "@Style/Button";
 
-const SwitchButton = ({ rawContent, checkIssueClose, changeIssueClickHandler, onComment }) => {
+const SwitchButton = ({ rawContent, changeIssueClickHandler, onComment }) => {
+  const isOpen = useSelector(({ issue }) => issue.detailIssue.isOpen);
+
   return (
     <>
       <Button backgroundColor="white" color="black" style={{ marginRight: "5px" }} onClick={changeIssueClickHandler}>
-        {checkIssueClose() ? (
-          "Reopen issue"
-        ) : (
+        {isOpen ? (
           <>
             <CloseIssueIcon>
               <path
@@ -19,6 +20,8 @@ const SwitchButton = ({ rawContent, checkIssueClose, changeIssueClickHandler, on
             </CloseIssueIcon>
             Close issue
           </>
+        ) : (
+          "Reopen issue"
         )}
       </Button>
       <Button onClick={onComment} disabled={!rawContent}>
