@@ -10,8 +10,8 @@ const Pagination = ({ numberOfPage, currentPage = 1 }) => {
   let history = useHistory();
 
   const pageNumbers = Array.from(Array(numberOfPage), (_, i) => i + 1);
-  const prevPage = Number(currentPage) - 1;
-  const nextPage = Number(currentPage) + 1;
+  const prevPage = currentPage - 1;
+  const nextPage = currentPage + 1;
 
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= numberOfPage;
