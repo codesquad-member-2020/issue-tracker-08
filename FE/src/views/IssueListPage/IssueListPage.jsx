@@ -16,6 +16,7 @@ import { getIssue } from "@Modules/issue";
 import { resetOption } from "@Modules/option";
 
 const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
+const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   let history = useHistory();
   const dispatch = useDispatch();
 
@@ -160,6 +161,7 @@ const SearchInputIcon = styled(SearchIcon)`
 export default connect(
   ({ issue, loading }) => ({
     issues: issue.issues,
+    issueInfo: issue.issueInfo,
     loadingIssue: loading["issue/GET_ISSUE"],
   }),
   {
