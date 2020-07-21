@@ -61,10 +61,9 @@ const PrevPageButton = styled(Button)`
 
 const PageButton = styled.button`
   cursor: pointer;
-  font-size: 2rem;
-  color: ${(props) => props.theme.uiColorOrange};
-  margin: 0 0.3rem;
-  padding: 0;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  margin: 0 0.2rem;
+  padding: 5px 12px;
   border: none;
   background: none;
 `;
