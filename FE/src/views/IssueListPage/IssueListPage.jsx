@@ -8,6 +8,7 @@ import Button from "@Style/Button";
 
 import Issue from "@IssueListPage/Issue/Issue";
 import IssueListHeader from "@IssueListPage/IssueListHeader/IssueListHeader";
+import Pagination from "@IssueListPage/Pagination/Pagination";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
@@ -86,6 +87,7 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
+      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage}></Pagination>}
     </>
   );
 };
