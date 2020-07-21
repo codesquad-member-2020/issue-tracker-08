@@ -10,11 +10,17 @@ import { getMilestone } from "@Modules/milestone";
 
 const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getMilestone, loadingUser, loadingLabel, loadingMilestone }) => {
   const optionData = useSelector(({ issue: { detailIssue } }) => {
-    return {
-      assignees: detailIssue.assignees,
-      labels: detailIssue.labels,
-      milestone: detailIssue.milestone,
-    };
+    return detailIssue
+      ? {
+          assignees: detailIssue.assignees,
+          labels: detailIssue.labels,
+          milestone: detailIssue.milestone,
+        }
+      : {
+          assignees: [],
+          labels: [],
+          milestone: null,
+        };
   });
 
   const assigneeList = () => {
