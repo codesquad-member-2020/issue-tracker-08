@@ -34,11 +34,63 @@ const Pagination = ({ numberOfPage, currentPage = 1 }) => {
           <PrevPageButton onClick={() => onPass(prevPage)} disabled={isPrevDisabled} backgroundColor="white" color="blue">
             <ArrowBackIosIcon />
           </PrevPageButton>
-          {pageNumbers.map((number) => (
-            <PageButton key={number} onClick={() => onPass(number)}>
-              {number}
-            </PageButton>
-          ))}
+          {!isManyPage &&
+            pageNumbers.map((number) => (
+              <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                {number}
+              </PageButton>
+            ))}
+          {isManyPage && isFrontPage && (
+            <>
+              {pageNumbers.slice(0, currentPage + 2).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+              ...
+              {pageNumbers.slice(18, numberOfPage).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+            </>
+          )}
+          {isManyPage && isMiddlePage && (
+            <>
+              {pageNumbers.slice(0, 2).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+              ...
+              {pageNumbers.slice(currentPage - 3, currentPage + 2).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+              ...
+              {pageNumbers.slice(18, numberOfPage).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+            </>
+          )}
+          {isManyPage && isEndPage && (
+            <>
+              {pageNumbers.slice(0, 2).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+              ...
+              {pageNumbers.slice(currentPage - 2, numberOfPage).map((number) => (
+                <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+                  {number}
+                </PageButton>
+              ))}
+            </>
+          )}
           <NextPageButton onClick={() => onPass(nextPage)} disabled={isNextDisabled} backgroundColor="white" color="blue">
             <ArrowForwardIosIcon />
           </NextPageButton>
