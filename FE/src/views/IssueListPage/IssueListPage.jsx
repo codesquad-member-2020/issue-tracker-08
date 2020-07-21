@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Button from "@Style/Button";
 
 import Issue from "@IssueListPage/Issue/Issue";
 import IssueListHeader from "@IssueListPage/IssueListHeader/IssueListHeader";
+import Pagination from "@IssueListPage/Pagination/Pagination";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
@@ -15,8 +16,12 @@ import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
 import { resetOption } from "@Modules/option";
 
-const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
+const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   let history = useHistory();
+  let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const currentPage = searchParams.get("page");
+
   const dispatch = useDispatch();
 
   const [checkedItems, setCheckedItems] = useState(new Set());
@@ -44,16 +49,14 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
   const IssueList = () => (
     <>
       {isGetIssues() &&
-        issues
-          .reverse()
-          .map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
+        issues.map((issue) => <Issue isAllChecked={isAllChecked} key={issue.id} issue={issue} checkedItemHandler={checkedItemHandler}></Issue>)}
     </>
   );
 
   useEffect(() => {
     const fn = async () => {
       try {
-        await getIssue();
+        await getIssue({ page: currentPage });
       } catch (e) {
         console.log(e);
       }
@@ -61,7 +64,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
     fn();
 
     dispatch(resetOption());
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -82,6 +85,7 @@ const IssueListPage = ({ getIssue, issues, loadingIssue }) => {
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
+      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={parseInt(currentPage)}></Pagination>}
     </>
   );
 };
@@ -160,6 +164,7 @@ const SearchInputIcon = styled(SearchIcon)`
 export default connect(
   ({ issue, loading }) => ({
     issues: issue.issues,
+    issueInfo: issue.issueInfo,
     loadingIssue: loading["issue/GET_ISSUE"],
   }),
   {
