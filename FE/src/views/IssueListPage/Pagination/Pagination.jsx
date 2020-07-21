@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import Button from "@Style/Button";
 
-const Pagination = ({ numberOfPage, currentPage }) => {
+const Pagination = ({ numberOfPage, currentPage = 1 }) => {
   let history = useHistory();
 
   const pageNumbers = Array.from(Array(numberOfPage), (_, i) => i + 1);
