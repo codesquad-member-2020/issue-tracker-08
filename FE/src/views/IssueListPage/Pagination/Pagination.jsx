@@ -13,6 +13,11 @@ const Pagination = ({ numberOfPage, currentPage = 1 }) => {
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
 
+  const isManyPage = numberOfPage >= 10;
+  const isFrontPage = currentPage < 7;
+  const isMiddlePage = currentPage >= 7 && currentPage <= numberOfPage - 6;
+  const isEndPage = currentPage > numberOfPage - 6;
+
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= numberOfPage;
 
