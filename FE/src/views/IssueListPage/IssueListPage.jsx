@@ -87,7 +87,7 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
         </NavBar>
       </NavBarWrap>
       <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
-      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage}></Pagination>}
+      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={currentPage}></Pagination>}
     </>
   );
 };
