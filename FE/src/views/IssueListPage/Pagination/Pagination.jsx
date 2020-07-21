@@ -73,6 +73,15 @@ const PageButton = styled.button`
   padding: 5px 12px;
   border: none;
   background: none;
+  &.default {
+    color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.white};
+  }
+  &.focus {
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.blue};
+    border-radius: 6px;
+  }
 `;
 
 const NextPageButton = styled(Button)`
