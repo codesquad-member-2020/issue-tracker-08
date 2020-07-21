@@ -13,6 +13,9 @@ const Pagination = ({ numberOfPage, currentPage }) => {
   const prevPage = Number(currentPage) - 1;
   const nextPage = Number(currentPage) + 1;
 
+  const isPrevDisabled = currentPage <= 1;
+  const isNextDisabled = currentPage >= numberOfPage;
+
   const onPass = (number) =>
     history.push({
       pathname: "/IssueListPage",
@@ -23,7 +26,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
     <>
       <Wrapper>
         <PageLists>
-          <PrevPageButton onClick={() => onPass(prevPage)}>
+          <PrevPageButton onClick={() => onPass(prevPage)} disabled={isPrevDisabled}>
             <ArrowBackIosIcon />
           </PrevPageButton>
           {pageNumbers.map((number) => (
@@ -31,7 +34,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
               {number}
             </PageButton>
           ))}
-          <NextPageButton onClick={() => onPass(nextPage)}>
+          <NextPageButton onClick={() => onPass(nextPage)} disabled={isNextDisabled}>
             <ArrowForwardIosIcon />
           </NextPageButton>
         </PageLists>
