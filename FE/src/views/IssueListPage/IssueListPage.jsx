@@ -57,7 +57,7 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   useEffect(() => {
     const fn = async () => {
       try {
-        await getIssue();
+        await getIssue({ page: currentPage });
       } catch (e) {
         console.log(e);
       }
@@ -65,7 +65,7 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
     fn();
 
     dispatch(resetOption());
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
