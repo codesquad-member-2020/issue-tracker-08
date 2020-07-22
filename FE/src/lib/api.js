@@ -13,6 +13,7 @@ export const postIssue = (params) =>
   });
 
 export const patchIssueTitle = ({ issueId, params }) => axios.patch(`${API_URL.issue}${issueId}/titles`, params);
+export const patchIssueContent = ({ issueId, params }) => axios.patch(`${API_URL.issue}${issueId}/content`, params);
 export const postComment = ({ issueId, params }) => axios.post(`${API_URL.issue}${issueId}/comments`, params);
 export const putComment = ({ issueId, commentId, params }) => axios.put(`${API_URL.issue}${issueId}/comments/${commentId}`, params);
 export const deleteComment = ({ issueId, commentId }) => axios.delete(`${API_URL.issue}${issueId}/comments/${commentId}`);
