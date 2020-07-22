@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import FilterButton from "@FilterButton/FilterButton";
+import FilterVerticalList from "@FilterButton/FilterVerticalList";
 
 const IssueListHeader = ({ allCheckedHandler }) => {
   const [bChecked, setChecked] = useState(false);
@@ -15,10 +15,7 @@ const IssueListHeader = ({ allCheckedHandler }) => {
     <>
       <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
       <FilterButtonWrapper>
-        {bChecked ? <FilterButton filter title="Mark as" data={labels} /> : <FilterButton filter title="Author" data={labels} />}
-        <FilterButton filter title="Label" data={labels} />
-        <FilterButton filter title="Milestones" data={labels} />
-        <FilterButton filter title="Assignee" data={labels} />
+        <FilterVerticalList isFilter bChecked={bChecked} />
       </FilterButtonWrapper>
     </>
   );
@@ -33,31 +30,3 @@ const FilterButtonWrapper = styled.div`
 `;
 
 export default IssueListHeader;
-
-const labels = [
-  {
-    name: "good first issue",
-    color: "#7057ff",
-    description: "Good for newcomers",
-  },
-  {
-    name: "help wanted",
-    color: "#008672",
-    description: "Extra attention is needed",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-  {
-    name: "priority: critical",
-    color: "#b60205",
-    description: "",
-  },
-];
