@@ -18,6 +18,8 @@ module.exports = merge(common, {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
           chunks: "all",
+          minSize: 10000,
+          maxSize: 250000,
         },
       },
     },
