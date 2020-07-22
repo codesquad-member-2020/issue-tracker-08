@@ -9,13 +9,14 @@ import FilterVerticalList from "@FilterButton/FilterVerticalList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
-import { getDetailIssue, changeIssueStatus, patchIssueTitle, postComment, putComment, deleteComment } from "@Modules/issue";
+import { getDetailIssue, changeIssueStatus, patchIssueTitle, patchIssueContent, postComment, putComment, deleteComment } from "@Modules/issue";
 
 const IssueDetailPage = ({
   getDetailIssue,
   detailIssue,
   loadingDetailIssue,
   patchIssueTitle,
+  patchIssueContent,
   postComment,
   putComment,
   deleteComment,
@@ -90,6 +91,20 @@ const IssueDetailPage = ({
     })();
   };
 
+  const saveContentHandler = ({ issueId, commentId, params }) => {
+    (async () => {
+      try {
+        await patchIssueContent({ issueId, params });
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+
+    setEditCommentInfo({ isEdit: false, editComment: commentId });
+
+    detailIssue.content = params.content;
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -109,7 +124,24 @@ const IssueDetailPage = ({
             <IssueDetailTitle titleSaveHandler={titleSaveHandler} />
             <Content>
               <CommentViewBoxWrapper>
-                <CommentViewBox owner createdAt={detailIssue.createdAt} content={detailIssue.content} author={detailIssue.author} />
+                {checkEditCommentInfo(0) ? (
+                  <CommentInputBox
+                    commentId={0}
+                    editContent={detailIssue.content}
+                    author={detailIssue.author}
+                    editCommentHandler={saveContentHandler}
+                    cancelClickHandler={cancelClickHandler}
+                  />
+                ) : (
+                  <CommentViewBox
+                    owner
+                    commentId={0}
+                    createdAt={detailIssue.createdAt}
+                    content={detailIssue.content}
+                    author={detailIssue.author}
+                    editClickHandler={editClickHandler}
+                  />
+                )}
                 <CommentList
                   detailIssue={detailIssue}
                   checkEditCommentInfo={checkEditCommentInfo}
@@ -161,6 +193,7 @@ export default connect(
     getDetailIssue,
     changeIssueStatus,
     patchIssueTitle,
+    patchIssueContent,
     postComment,
     putComment,
     deleteComment,
