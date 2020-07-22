@@ -64,6 +64,13 @@ const FilterVerticalList = ({ users, labels, milestones, getUser, getLabel, getM
     return !loadingUser && users && !loadingLabel && labels && !loadingMilestone && milestones;
   };
 
+  const markList = () => {
+    return [
+      { id: 0, name: "Open", color: "#fff", description: "" },
+      { id: 1, name: "Closed", color: "#fff", description: "" },
+    ];
+  };
+
   return (
     <>
       {hasData() && (
