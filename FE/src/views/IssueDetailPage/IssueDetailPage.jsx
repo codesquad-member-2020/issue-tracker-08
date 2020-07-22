@@ -102,7 +102,7 @@ const IssueDetailPage = ({
 
     setEditCommentInfo({ isEdit: false, editComment: commentId });
 
-    window.location.reload();
+    detailIssue.content = params.content;
   };
 
   useEffect(() => {
