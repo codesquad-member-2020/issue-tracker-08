@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import IssueDetailTitle from "@IssueDetailPage/IssueDetailTitle/IssueDetailTitle";
 import CommentList from "@IssueDetailPage/CommentList/CommentList";
-import FilterVerticalList from "@FilterButton/FilterVerticalList";
+import FilterList from "@FilterButton/FilterList";
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
 import Header from "@Header/Header";
 import CommentViewBox from "@CommentViewBox/CommentViewBox";
@@ -152,7 +152,7 @@ const IssueDetailPage = ({
                 />
                 <CommentInputBox postHandler={postHandler} changeIssueOpenClose={changeIssueOpenClose} />
               </CommentViewBoxWrapper>
-              <FilterVerticalList />
+              <FilterList />
             </Content>
           </>
         )}

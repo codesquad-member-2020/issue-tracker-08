@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import FilterVerticalList from "@FilterButton/FilterVerticalList";
+import FilterList from "@FilterButton/FilterList";
 
 const IssueListHeader = ({ allCheckedHandler }) => {
   const [bChecked, setChecked] = useState(false);
@@ -15,7 +15,7 @@ const IssueListHeader = ({ allCheckedHandler }) => {
     <>
       <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
       <FilterButtonWrapper>
-        <FilterVerticalList isFilter bChecked={bChecked} />
+        <FilterList isFilter bChecked={bChecked} />
       </FilterButtonWrapper>
     </>
   );
