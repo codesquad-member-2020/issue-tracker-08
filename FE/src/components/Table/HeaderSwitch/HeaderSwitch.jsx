@@ -51,10 +51,10 @@ const HeaderLink = styled(Text)`
   svg {
     margin-right: 5px;
   }
-  color: ${(props) => (props.isOpen ? props.theme.colors.black : props.theme.colors.gray3)};
-  font-weight: ${(props) => (props.isOpen ? props.theme.fontWeights.bold : "")};
+  color: ${({ isOpen, theme }) => (isOpen ? theme.colors.black : theme.colors.gray3)};
+  font-weight: ${({ isOpen, theme }) => (isOpen ? theme.fontWeights.bold : "")};
   &:hover {
-    color: ${(props) => (props.isOpen ? "" : props.theme.colors.black)};
+    color: ${({ isOpen, theme }) => (isOpen ? "" : theme.colors.black)};
   }
 `;
 
