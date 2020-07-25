@@ -31,6 +31,10 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   const isGetIssues = () => !loadingIssue && issues;
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
+  const onSwitch = (isOpen) => {
+    setIsOpenView(isOpen);
+    addQueryParams(history, location, "isOpen", isOpen);
+  };
 
   const checkedItemHandler = (id, isChecked) => {
     if (isChecked) setCheckedItems(checkedItems.add(id));
