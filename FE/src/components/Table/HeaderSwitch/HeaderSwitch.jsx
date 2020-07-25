@@ -5,7 +5,7 @@ import DoneIcon from "@material-ui/icons/Done";
 
 import Text from "@Style/Text";
 
-const MilestoneHeader = ({ openCount, closeCount, open, close }) => {
+const HeaderSwitch = ({ openCount, closeCount, open, close }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [isClose, setIsClose] = useState(false);
 
@@ -14,6 +14,7 @@ const MilestoneHeader = ({ openCount, closeCount, open, close }) => {
     setIsOpen(true);
     setIsClose(false);
   };
+
   const onClose = () => {
     close();
     setIsOpen(false);
@@ -57,4 +58,4 @@ const HeaderLink = styled(Text)`
   }
 `;
 
-export default MilestoneHeader;
+export default HeaderSwitch;

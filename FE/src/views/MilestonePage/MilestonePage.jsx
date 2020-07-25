@@ -8,8 +8,8 @@ import Button from "@Style/Button";
 import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import Milestone from "@MilestonePage/Milestone/Milestone";
-import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
+import HeaderSwitch from "@Table/HeaderSwitch/HeaderSwitch";
 import { getMilestone, patchMilestone, deleteMilestone } from "@Modules/milestone";
 
 const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, milestones, loadingMilestone }) => {
