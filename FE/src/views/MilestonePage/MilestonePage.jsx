@@ -87,12 +87,12 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
           <Button onClick={onPassCreateMilestonePage}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
-      <Table
-        tableHeader={<MilestoneHeader openCount={openCount} closeCount={closeCount} open={open} close={close} />}
-        tableList={
-          isOpenView ? <MilestoneOpenList loadingMilestone={loadingMilestone} /> : <MilestoneCloseList loadingMilestone={loadingMilestone} />
-        }
-      />
+      {isLoaded && (
+        <Table
+          tableHeader={<HeaderSwitch openCount={openCount} closeCount={closeCount} open={open} close={close} />}
+          tableList={isOpenView ? <MilestoneList isOpen={true} /> : <MilestoneList isOpen={false} />}
+        />
+      )}
     </>
   );
 };
