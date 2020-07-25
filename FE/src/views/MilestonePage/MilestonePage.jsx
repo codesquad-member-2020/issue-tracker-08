@@ -26,27 +26,14 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
   const open = () => setIsOpenView(true);
   const close = () => setIsOpenView(false);
 
-  const MilestoneOpenList = () => (
+  const MilestoneList = ({ isOpen }) => (
     <>
-      {isLoaded &&
-        milestones.milestones
-          .filter((milestone) => milestone.isOpen)
-          .sort((a, b) => b.id - a.id)
-          .map((milestone) => (
-            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
-          ))}
-    </>
-  );
-
-  const MilestoneCloseList = () => (
-    <>
-      {isLoaded &&
-        milestones.milestones
-          .filter((milestone) => !milestone.isOpen)
-          .sort((a, b) => b.id - a.id)
-          .map((milestone) => (
-            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
-          ))}
+      {milestones.milestones
+        .filter((milestone) => milestone.isOpen === isOpen)
+        .sort((a, b) => b.id - a.id)
+        .map((milestone) => (
+          <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
+        ))}
     </>
   );
 
