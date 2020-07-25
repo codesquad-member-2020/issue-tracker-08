@@ -4,7 +4,7 @@ import styled from "styled-components";
 import FilterList from "@FilterButton/FilterList";
 import HeaderSwitch from "@Table/HeaderSwitch/HeaderSwitch";
 
-const IssueListHeader = ({ allCheckedHandler, openCount, closeCount }) => {
+const IssueListHeader = ({ allCheckedHandler, openCount, closeCount, onSwitch }) => {
   const [bChecked, setChecked] = useState(false);
 
   const checkHandler = ({ target }) => {
@@ -16,7 +16,7 @@ const IssueListHeader = ({ allCheckedHandler, openCount, closeCount }) => {
     <>
       <LeftBoxsWrapper>
         <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
-        <HeaderSwitch openCount={openCount} closeCount={closeCount} open={open} close={close} />
+        <HeaderSwitch openCount={openCount} closeCount={closeCount} onSwitch={onSwitch} />
       </LeftBoxsWrapper>
       <FilterButtonWrapper>
         <FilterList isFilter bChecked={bChecked} />
