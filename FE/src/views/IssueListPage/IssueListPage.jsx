@@ -22,9 +22,11 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const currentPage = searchParams.get("page");
+  const initBOpen = searchParams.get("isOpen") === "false" ? false : true;
 
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isOpenView, setIsOpenView] = useState(initBOpen);
 
   const isGetIssues = () => !loadingIssue && issues;
   const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
