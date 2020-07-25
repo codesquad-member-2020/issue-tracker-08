@@ -8,7 +8,7 @@ import { getUser } from "@Modules/user";
 import { getLabel } from "@Modules/label";
 import { getMilestone } from "@Modules/milestone";
 
-const FilterVerticalList = ({
+const FilterList = ({
   isFilter,
   bChecked,
   users,
@@ -94,9 +94,9 @@ const FilterVerticalList = ({
               ) : (
                 <FilterButton filter title="Author" data={assigneeList()} initialData={optionData && makeAssignee()} />
               )}
-              <FilterButton filter title="Label" data={labels} initialData={optionData && optionData.labels} />
-              <FilterButton filter title="Milestones" data={milestoneList()} initialData={optionData && makeMilestone()} />
-              <FilterButton filter title="Assignee" data={assigneeList()} initialData={optionData && makeAssignee()} />
+              <FilterButton filter title="Labels" data={labels} initialData={optionData && optionData.labels} />
+              <FilterButton filter title="Milestone" data={milestoneList()} initialData={optionData && makeMilestone()} />
+              <FilterButton filter title="Assignees" data={assigneeList()} initialData={optionData && makeAssignee()} />
             </>
           ) : (
             <Wrapper>
@@ -134,4 +134,4 @@ export default connect(
     getLabel,
     getMilestone,
   }
-)(FilterVerticalList);
+)(FilterList);

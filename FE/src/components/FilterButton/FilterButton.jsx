@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
@@ -22,6 +22,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
   const [pendingValue, setPendingValue] = useState([]);
   const theme = useTheme();
   const dispatch = useDispatch();
+  const filtetOption = useSelector(({ option }) => option);
 
   const handleClick = (event) => {
     setPendingValue(value);
@@ -88,6 +89,10 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
       );
     }
 
+    console.log(filtetOption);
+    if (filter) {
+    }
+
     executeSaveHandler();
   };
 
@@ -148,7 +153,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           value={pendingValue}
           onChange={(event, newValue) => {
             setPendingValue(newValue);
-            if (title === "Milestone") setValue(newValue);
+            if (filter || title === "Milestone") setValue(newValue);
           }}
           disableCloseOnSelect={!(filter || title === "Milestone")}
           disablePortal
