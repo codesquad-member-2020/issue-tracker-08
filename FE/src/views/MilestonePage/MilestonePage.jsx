@@ -23,8 +23,8 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
   const closeCount = isLoaded && milestones.numberOfClosedMilestone;
 
   const [isOpenView, setIsOpenView] = useState(true);
-  const open = () => setIsOpenView(true);
-  const close = () => setIsOpenView(false);
+
+  const onSwitch = (isOpen) => setIsOpenView(isOpen);
 
   const MilestoneList = ({ isOpen }) => (
     <>
@@ -89,7 +89,7 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
       </NavBarWrap>
       {isLoaded && (
         <Table
-          tableHeader={<HeaderSwitch openCount={openCount} closeCount={closeCount} open={open} close={close} />}
+          tableHeader={<HeaderSwitch openCount={openCount} closeCount={closeCount} onSwitch={onSwitch} />}
           tableList={isOpenView ? <MilestoneList isOpen={true} /> : <MilestoneList isOpen={false} />}
         />
       )}
