@@ -17,17 +17,18 @@ import { getIssue } from "@Modules/issue";
 import { resetOption } from "@Modules/option";
 
 const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
+  const dispatch = useDispatch();
   let history = useHistory();
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const currentPage = searchParams.get("page");
 
-  const dispatch = useDispatch();
-
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [isAllChecked, setIsAllChecked] = useState(false);
 
   const isGetIssues = () => !loadingIssue && issues;
+  const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
+
 
   const checkedItemHandler = (id, isChecked) => {
     if (isChecked) setCheckedItems(checkedItems.add(id));
@@ -43,8 +44,6 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
       setIsAllChecked(false);
     }
   };
-
-  const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
 
   const IssueList = () => (
     <>
