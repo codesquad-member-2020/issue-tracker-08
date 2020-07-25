@@ -1,34 +1,31 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import DoneIcon from "@material-ui/icons/Done";
 
 import Text from "@Style/Text";
 
-const HeaderSwitch = ({ openCount, closeCount, open, close }) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isClose, setIsClose] = useState(false);
+const HeaderSwitch = ({ openCount, closeCount, onSwitch }) => {
+  let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const initBOpen = searchParams.get("isOpen") === "false" ? false : true;
 
-  const onOpen = () => {
-    open();
-    setIsOpen(true);
-    setIsClose(false);
-  };
+  const [bOpen, setBOpen] = useState(initBOpen);
 
-  const onClose = () => {
-    close();
-    setIsOpen(false);
-    setIsClose(true);
+  const onOpenClose = (isOpen) => {
+    onSwitch(isOpen);
+    setBOpen(isOpen);
   };
 
   return (
     <>
       <Wrapper>
-        <HeaderLink as="a" onClick={onOpen} isOpen={isOpen}>
+        <HeaderLink as="a" onClick={() => onOpenClose(true)} isOpen={bOpen}>
           <EventNoteIcon fontSize="small" />
           {openCount} Open
         </HeaderLink>
-        <HeaderLink as="a" onClick={onClose} isOpen={isClose}>
+        <HeaderLink as="a" onClick={() => onOpenClose(false)} isOpen={!bOpen}>
           <DoneIcon fontSize="small" />
           {closeCount} Close
         </HeaderLink>
