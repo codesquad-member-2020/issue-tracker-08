@@ -14,6 +14,7 @@ import { getMilestone, patchMilestone, deleteMilestone } from "@Modules/mileston
 
 const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
+  let location = useLocation();
   const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage`);
 
   const isLoaded = !loadingMilestone && milestones;
@@ -48,8 +49,6 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
           ))}
     </>
   );
-
-  let location = useLocation();
 
   const getHandler = async () => {
     try {
