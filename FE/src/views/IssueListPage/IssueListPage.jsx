@@ -15,6 +15,7 @@ import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
 import { resetOption } from "@Modules/option";
+import { addQueryParams } from "@Lib/addQueryParams";
 
 const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   const dispatch = useDispatch();
@@ -89,8 +90,22 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
           <Button onClick={onPassCreateIssuePage}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
-      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={parseInt(currentPage)}></Pagination>}
+      {isGetIssues() && (
+        <>
+          <Table
+            tableHeader={
+              <IssueListHeader
+                allCheckedHandler={allCheckedHandler}
+                openCount={issueInfo.numberOfOpenIssue}
+                closeCount={issueInfo.numberOfClosedIssue}
+                onSwitch={onSwitch}
+              />
+            }
+            tableList={<IssueList />}
+          />
+          <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={parseInt(currentPage)} />
+        </>
+      )}
     </>
   );
 };
