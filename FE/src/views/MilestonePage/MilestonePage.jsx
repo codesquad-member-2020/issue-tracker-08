@@ -90,7 +90,7 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
       {isLoaded && (
         <Table
           tableHeader={<HeaderSwitch openCount={openCount} closeCount={closeCount} onSwitch={onSwitch} />}
-          tableList={isOpenView ? <MilestoneList isOpen={true} /> : <MilestoneList isOpen={false} />}
+          tableList={<MilestoneList isOpen={isOpenView} />}
         />
       )}
     </>
