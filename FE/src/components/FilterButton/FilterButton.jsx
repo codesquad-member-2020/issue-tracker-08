@@ -105,6 +105,13 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     Milestone: "Set milestone",
   };
 
+  const titleMap = {
+    Author: "author",
+    Labels: "label",
+    Milestone: "milestone",
+    Assignees: "assignee",
+  };
+
   useEffect(() => {
     if (title === "Milestone" && issueId) saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
   }, [pendingValue, value]);
