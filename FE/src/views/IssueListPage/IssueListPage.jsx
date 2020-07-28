@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
-import { connect, useDispatch } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import Button from "@Style/Button";
@@ -14,8 +14,8 @@ import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
-import { resetOption } from "@Modules/option";
-import { addQueryParams } from "@Lib/addQueryParams";
+import { resetOption, saveQuery, resetQuery } from "@Modules/option";
+import { startQueryParams } from "@Lib/addQueryParams";
 
 const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   const dispatch = useDispatch();
@@ -39,7 +39,10 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
 
   const onSwitch = (isOpen) => {
     setIsOpenView(isOpen);
-    addQueryParams(history, location, "isOpen", isOpen);
+
+    dispatch(resetQuery());
+    dispatch(saveQuery({ isOpen, page: 1 }));
+    startQueryParams(history, location, { isOpen, page: 1 });
   };
 
   const checkedItemHandler = (id, isChecked) => {
