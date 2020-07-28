@@ -32,7 +32,7 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
         .filter((milestone) => milestone.isOpen === isOpen)
         .sort((a, b) => b.id - a.id)
         .map((milestone) => (
-          <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
+          <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler} />
         ))}
     </>
   );
