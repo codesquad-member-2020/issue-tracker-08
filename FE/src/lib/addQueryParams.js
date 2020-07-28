@@ -21,9 +21,19 @@ export const addQueryParams = (history, location, params) => {
   });
 };
 
+export const startQueryParams = (history, location, params) => {
+  const searchParams = new URLSearchParams(location.search);
+
+  const esc = encodeURIComponent;
+  const query =
+    typeof params === "object"
+      ? Object.keys(params)
+          .map((k) => `${esc(k)}=${esc(params[k])}`)
+          .join("&")
+      : esc(params);
 
   history.push({
     pathname: "/IssueListPage",
-    search: newSearchParams,
+    search: query,
   });
 };
