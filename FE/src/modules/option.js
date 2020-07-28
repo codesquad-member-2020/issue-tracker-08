@@ -4,6 +4,7 @@ import * as api from "@Lib/api";
 const SAVE_OPTION = "option/SAVE_OPTION";
 const RESET_OPTION = "option/RESET_OPTION";
 const SAVE_QUERY = "option/SAVE_QUERY";
+const RESET_QUERY = "option/RESET_QUERY";
 
 const SAVE_ASSIGNEES = "option/SAVE_ASSIGNEES";
 const SAVE_LABELS = "option/SAVE_LABELS";
@@ -12,6 +13,7 @@ const SAVE_MILESTONE = "option/SAVE_MILESTONE";
 export const saveOption = (data, title) => ({ type: SAVE_OPTION, data, title });
 export const resetOption = () => ({ type: RESET_OPTION });
 export const saveQuery = (data) => ({ type: SAVE_QUERY, data });
+export const resetQuery = () => ({ type: RESET_QUERY });
 
 export const saveAssignees = createRequestThunk(SAVE_ASSIGNEES, api.changeAssignee);
 export const saveLabels = createRequestThunk(SAVE_LABELS, api.changeLabels);
@@ -63,6 +65,8 @@ const option = (state = initialState, action) => {
           page: data.page ? data.page : state.queryParams.page,
         },
       };
+    case RESET_QUERY:
+      return { ...state, queryParams: initialState.queryParams };
     default:
       return state;
   }
