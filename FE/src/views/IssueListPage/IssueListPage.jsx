@@ -22,8 +22,13 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   let history = useHistory();
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const currentPage = searchParams.get("page");
+  const currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
   const initBOpen = searchParams.get("isOpen") === "false" ? false : true;
+  const author = searchParams.get("author") ? searchParams.get("autor") : null;
+  const label = searchParams.get("label") ? searchParams.get("label") : null;
+  const milestone = searchParams.get("milestone") ? searchParams.get("milestone") : null;
+  const assignee = searchParams.get("assignee") ? searchParams.get("assignee") : null;
+  const filtetOption = useSelector(({ option }) => option.queryParams);
 
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [isAllChecked, setIsAllChecked] = useState(false);
