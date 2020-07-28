@@ -3,14 +3,15 @@ import * as api from "@Lib/api";
 
 const SAVE_OPTION = "option/SAVE_OPTION";
 const RESET_OPTION = "option/RESET_OPTION";
-// const MAKE_MSG = "option/MAKE_MSG";
+const SAVE_QUERY = "option/SAVE_QUERY";
+
 const SAVE_ASSIGNEES = "option/SAVE_ASSIGNEES";
 const SAVE_LABELS = "option/SAVE_LABELS";
 const SAVE_MILESTONE = "option/SAVE_MILESTONE";
 
 export const saveOption = (data, title) => ({ type: SAVE_OPTION, data, title });
 export const resetOption = () => ({ type: RESET_OPTION });
-// export const makeMsg = (data, title) => ({ type: MAKE_MSG, data, title });
+export const saveQuery = (data) => ({ type: SAVE_QUERY, data });
 
 export const saveAssignees = createRequestThunk(SAVE_ASSIGNEES, api.changeAssignee);
 export const saveLabels = createRequestThunk(SAVE_LABELS, api.changeLabels);
@@ -22,7 +23,15 @@ const initialState = {
   labels: [],
   milestoneId: null,
   is: null,
-  // msg: "",
+  queryParams: {
+    isOpen: true,
+    author: null,
+    label: null,
+    milestone: null,
+    assignee: null,
+    sort: null,
+    page: 1,
+  },
 };
 
 const titleMap = {
@@ -39,9 +48,21 @@ const option = (state = initialState, action) => {
     case SAVE_OPTION:
       return { ...state, [titleMap[title]]: data };
     case RESET_OPTION:
-      return { ...initialState };
-    // case MAKE_MSG:
-    //   return { ...state, msg: msg.concat(' ', `${title}:${data}`) };
+      return { ...state, author: null, assignees: [], labels: [], milestoneId: null, is: null };
+    case SAVE_QUERY:
+      return {
+        ...state,
+        queryParams: {
+          // ...state.queryParams,
+          isOpen: data.isOpen ? data.isOpen : state.queryParams.isOpen,
+          author: data.author ? data.author : state.queryParams.author,
+          label: data.label ? data.label : state.queryParams.label,
+          milestone: data.milestone ? data.milestone : state.queryParams.milestone,
+          assignee: data.assignee ? data.assignee : state.queryParams.assignee,
+          sort: data.sortStr ? data.sortStr : state.queryParams.sort,
+          page: data.page ? data.page : state.queryParams.page,
+        },
+      };
     default:
       return state;
   }
