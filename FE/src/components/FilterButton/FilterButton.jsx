@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -12,7 +12,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
+import { saveOption, saveAssignees, saveLabels, saveMilestone, saveQuery } from "@Modules/option";
+import { addQueryParams } from "@Lib/addQueryParams";
 
 const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, saveLabels, saveMilestone }) => {
   const { issueId } = useParams();
@@ -22,6 +23,8 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
   const [pendingValue, setPendingValue] = useState([]);
   const theme = useTheme();
   const dispatch = useDispatch();
+  let history = useHistory();
+  let location = useLocation();
 
   const handleClick = (event) => {
     setPendingValue(value);
@@ -100,8 +103,22 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
     Milestone: "Set milestone",
   };
 
+  const titleMap = {
+    Author: "author",
+    Labels: "label",
+    Milestone: "milestone",
+    Assignees: "assignee",
+  };
+
   useEffect(() => {
     if (title === "Milestone" && issueId) saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
+    if (filter && pendingValue.length) {
+      const filterQuery = {
+        [titleMap[title]]: pendingValue[0].id ? pendingValue[0].id : null,
+      };
+      addQueryParams(history, location, filterQuery);
+      dispatch(saveQuery(filterQuery));
+    }
   }, [pendingValue, value]);
 
   return (
@@ -148,7 +165,7 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
           value={pendingValue}
           onChange={(event, newValue) => {
             setPendingValue(newValue);
-            if (title === "Milestone") setValue(newValue);
+            if (filter || title === "Milestone") setValue(newValue);
           }}
           disableCloseOnSelect={!(filter || title === "Milestone")}
           disablePortal

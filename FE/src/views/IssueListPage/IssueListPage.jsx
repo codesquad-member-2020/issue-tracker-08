@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
-import { connect, useDispatch } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import Button from "@Style/Button";
@@ -14,20 +14,36 @@ import FilterButton from "@FilterButton/FilterButton";
 import Header from "@Header/Header";
 import Table from "@Table/Table";
 import { getIssue } from "@Modules/issue";
-import { resetOption } from "@Modules/option";
+import { resetOption, saveQuery, resetQuery } from "@Modules/option";
+import { startQueryParams } from "@Lib/addQueryParams";
 
 const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
+  const dispatch = useDispatch();
   let history = useHistory();
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const currentPage = searchParams.get("page");
-
-  const dispatch = useDispatch();
+  const currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
+  const initBOpen = searchParams.get("isOpen") === "false" ? false : true;
+  const author = searchParams.get("author") ? searchParams.get("autor") : null;
+  const label = searchParams.get("label") ? searchParams.get("label") : null;
+  const milestone = searchParams.get("milestone") ? searchParams.get("milestone") : null;
+  const assignee = searchParams.get("assignee") ? searchParams.get("assignee") : null;
+  const filtetOption = useSelector(({ option }) => option.queryParams);
 
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isOpenView, setIsOpenView] = useState(initBOpen);
 
   const isGetIssues = () => !loadingIssue && issues;
+  const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
+
+  const onSwitch = (isOpen) => {
+    setIsOpenView(isOpen);
+
+    dispatch(resetQuery());
+    dispatch(saveQuery({ isOpen, page: 1 }));
+    startQueryParams(history, location, { isOpen, page: 1 });
+  };
 
   const checkedItemHandler = (id, isChecked) => {
     if (isChecked) setCheckedItems(checkedItems.add(id));
@@ -44,8 +60,6 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
     }
   };
 
-  const onPassCreateIssuePage = () => history.push(`/CreateIssuePage`);
-
   const IssueList = () => (
     <>
       {isGetIssues() &&
@@ -56,7 +70,14 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
   useEffect(() => {
     const fn = async () => {
       try {
-        await getIssue({ page: currentPage });
+        await getIssue({
+          isOpen: initBOpen,
+          author,
+          label,
+          milestone,
+          assignee,
+          page: currentPage,
+        });
       } catch (e) {
         console.log(e);
       }
@@ -64,7 +85,7 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
     fn();
 
     dispatch(resetOption());
-  }, [currentPage]);
+  }, [initBOpen, author, label, milestone, assignee, currentPage]);
 
   return (
     <>
@@ -84,8 +105,22 @@ const IssueListPage = ({ getIssue, issues, issueInfo, loadingIssue }) => {
           <Button onClick={onPassCreateIssuePage}>New Issue</Button>
         </NavBar>
       </NavBarWrap>
-      <Table tableHeader={<IssueListHeader allCheckedHandler={allCheckedHandler} />} tableList={<IssueList />} />
-      {isGetIssues() && <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={parseInt(currentPage)}></Pagination>}
+      {isGetIssues() && (
+        <>
+          <Table
+            tableHeader={
+              <IssueListHeader
+                allCheckedHandler={allCheckedHandler}
+                openCount={issueInfo.numberOfOpenIssue}
+                closeCount={issueInfo.numberOfClosedIssue}
+                onSwitch={onSwitch}
+              />
+            }
+            tableList={<IssueList />}
+          />
+          <Pagination numberOfPage={issueInfo.numberOfPage} currentPage={parseInt(currentPage)} />
+        </>
+      )}
     </>
   );
 };

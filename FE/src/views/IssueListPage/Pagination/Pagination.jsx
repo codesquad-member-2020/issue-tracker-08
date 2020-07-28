@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import Button from "@Style/Button";
+import { addQueryParams } from "@Lib/addQueryParams";
 
 const Pagination = ({ numberOfPage, currentPage }) => {
   let history = useHistory();
+  let location = useLocation();
   currentPage = currentPage ? currentPage : 1;
 
   const pageNumbers = Array.from(Array(numberOfPage), (_, i) => i + 1);
@@ -22,14 +24,10 @@ const Pagination = ({ numberOfPage, currentPage }) => {
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= numberOfPage;
 
-  const onPass = (number) =>
-    history.push({
-      pathname: "/IssueListPage",
-      search: `?page=${number}`,
-    });
+  const addPageQuery = (pageNumber) => addQueryParams(history, location, { page: pageNumber });
 
   const page = (number) => (
-    <PageButton key={number} onClick={() => onPass(number)} className={currentPage === number ? "focus" : "default"}>
+    <PageButton key={number} onClick={() => addPageQuery(number)} className={currentPage === number ? "focus" : "default"}>
       {number}
     </PageButton>
   );
@@ -38,7 +36,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
     <>
       <Wrapper>
         <PageLists>
-          <PrevPageButton onClick={() => onPass(prevPage)} disabled={isPrevDisabled} backgroundColor="white" color="blue">
+          <PrevPageButton onClick={() => addPageQuery(prevPage)} disabled={isPrevDisabled} backgroundColor="white" color="blue">
             <ArrowBackIosIcon />
           </PrevPageButton>
           {!isManyPage && pageNumbers.map((number) => page(number))}
@@ -46,7 +44,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
             <>
               {pageNumbers.slice(0, currentPage + 2).map((number) => page(number))}
               ...
-              {pageNumbers.slice(18, numberOfPage).map((number) => page(number))}
+              {pageNumbers.slice(numberOfPage - 3, numberOfPage).map((number) => page(number))}
             </>
           )}
           {isManyPage && isMiddlePage && (
@@ -55,17 +53,17 @@ const Pagination = ({ numberOfPage, currentPage }) => {
               ...
               {pageNumbers.slice(currentPage - 3, currentPage + 2).map((number) => page(number))}
               ...
-              {pageNumbers.slice(18, numberOfPage).map((number) => page(number))}
+              {pageNumbers.slice(numberOfPage - 3, numberOfPage).map((number) => page(number))}
             </>
           )}
           {isManyPage && isEndPage && (
             <>
               {pageNumbers.slice(0, 2).map((number) => page(number))}
               ...
-              {pageNumbers.slice(currentPage - 2, numberOfPage).map((number) => page(number))}
+              {pageNumbers.slice(currentPage - 3, numberOfPage).map((number) => page(number))}
             </>
           )}
-          <NextPageButton onClick={() => onPass(nextPage)} disabled={isNextDisabled} backgroundColor="white" color="blue">
+          <NextPageButton onClick={() => addPageQuery(nextPage)} disabled={isNextDisabled} backgroundColor="white" color="blue">
             <ArrowForwardIosIcon />
           </NextPageButton>
         </PageLists>

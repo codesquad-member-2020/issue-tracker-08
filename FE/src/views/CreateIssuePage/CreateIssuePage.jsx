@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 
 import CommentInputBox from "@InputBox/CommentInputBox/CommentInputBox";
-import FilterVerticalList from "@FilterButton/FilterVerticalList";
+import FilterList from "@FilterButton/FilterList";
 import Header from "@Header/Header";
 import { postIssue } from "@Modules/issue";
 import { resetOption } from "@Modules/option";
@@ -41,7 +41,7 @@ const CreateIssuePage = ({ postIssue, detailIssue, loadingIssue }) => {
           <IssueBoxWrapper>
             <CommentInputBox isIssue onPass={passIssueListPage} submitHandler={submitHandler} />
           </IssueBoxWrapper>
-          <FilterVerticalList />
+          <FilterList />
         </Content>
       </ContentWrapper>
     </>

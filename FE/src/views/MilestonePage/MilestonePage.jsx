@@ -8,12 +8,13 @@ import Button from "@Style/Button";
 import Header from "@Header/Header";
 import NavigationButton from "@NavigationButton/NavigationButton";
 import Milestone from "@MilestonePage/Milestone/Milestone";
-import MilestoneHeader from "@MilestonePage/MilestoneHeader/MilestoneHeader";
 import Table from "@Table/Table";
+import HeaderSwitch from "@Table/HeaderSwitch/HeaderSwitch";
 import { getMilestone, patchMilestone, deleteMilestone } from "@Modules/milestone";
 
 const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, milestones, loadingMilestone }) => {
   let history = useHistory();
+  let location = useLocation();
   const onPassCreateMilestonePage = () => history.push(`/CreateMilestonePage`);
 
   const isLoaded = !loadingMilestone && milestones;
@@ -22,34 +23,19 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
   const closeCount = isLoaded && milestones.numberOfClosedMilestone;
 
   const [isOpenView, setIsOpenView] = useState(true);
-  const open = () => setIsOpenView(true);
-  const close = () => setIsOpenView(false);
 
-  const MilestoneOpenList = () => (
+  const onSwitch = (isOpen) => setIsOpenView(isOpen);
+
+  const MilestoneList = ({ isOpen }) => (
     <>
-      {isLoaded &&
-        milestones.milestones
-          .filter((milestone) => milestone.isOpen)
-          .sort((a, b) => b.id - a.id)
-          .map((milestone) => (
-            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
-          ))}
+      {milestones.milestones
+        .filter((milestone) => milestone.isOpen === isOpen)
+        .sort((a, b) => b.id - a.id)
+        .map((milestone) => (
+          <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler} />
+        ))}
     </>
   );
-
-  const MilestoneCloseList = () => (
-    <>
-      {isLoaded &&
-        milestones.milestones
-          .filter((milestone) => !milestone.isOpen)
-          .sort((a, b) => b.id - a.id)
-          .map((milestone) => (
-            <Milestone key={milestone.id} milestone={milestone} patchHandler={patchHandler} deleteHandler={deleteHandler}></Milestone>
-          ))}
-    </>
-  );
-
-  let location = useLocation();
 
   const getHandler = async () => {
     try {
@@ -101,12 +87,12 @@ const MilestonePage = ({ getMilestone, patchMilestone, deleteMilestone, mileston
           <Button onClick={onPassCreateMilestonePage}>New Milestone</Button>
         </NavBar>
       </NavBarWrap>
-      <Table
-        tableHeader={<MilestoneHeader openCount={openCount} closeCount={closeCount} open={open} close={close} />}
-        tableList={
-          isOpenView ? <MilestoneOpenList loadingMilestone={loadingMilestone} /> : <MilestoneCloseList loadingMilestone={loadingMilestone} />
-        }
-      />
+      {isLoaded && (
+        <Table
+          tableHeader={<HeaderSwitch openCount={openCount} closeCount={closeCount} onSwitch={onSwitch} />}
+          tableList={<MilestoneList isOpen={isOpenView} />}
+        />
+      )}
     </>
   );
 };

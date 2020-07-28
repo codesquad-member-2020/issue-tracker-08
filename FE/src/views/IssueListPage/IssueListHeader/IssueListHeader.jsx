@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import FilterVerticalList from "@FilterButton/FilterVerticalList";
+import FilterList from "@FilterButton/FilterList";
+import HeaderSwitch from "@Table/HeaderSwitch/HeaderSwitch";
 
-const IssueListHeader = ({ allCheckedHandler }) => {
+const IssueListHeader = ({ allCheckedHandler, openCount, closeCount, onSwitch }) => {
   const [bChecked, setChecked] = useState(false);
 
   const checkHandler = ({ target }) => {
@@ -13,15 +14,24 @@ const IssueListHeader = ({ allCheckedHandler }) => {
 
   return (
     <>
-      <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
+      <LeftBoxsWrapper>
+        <Checkbox checked={bChecked} onChange={(e) => checkHandler(e)} />
+        <HeaderSwitch openCount={openCount} closeCount={closeCount} onSwitch={onSwitch} />
+      </LeftBoxsWrapper>
       <FilterButtonWrapper>
-        <FilterVerticalList isFilter bChecked={bChecked} />
+        <FilterList isFilter bChecked={bChecked} />
       </FilterButtonWrapper>
     </>
   );
 };
 
-const Checkbox = styled.input.attrs({ type: "checkbox" })``;
+const LeftBoxsWrapper = styled.div`
+  display: flex;
+`;
+
+const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  margin-right: 15px;
+`;
 
 const FilterButtonWrapper = styled.div`
   width: 40%;
