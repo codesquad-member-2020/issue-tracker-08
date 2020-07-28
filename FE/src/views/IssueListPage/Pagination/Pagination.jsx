@@ -24,7 +24,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= numberOfPage;
 
-  const addPageQuery = (pageNumber) => addQueryParams(history, location, "page", pageNumber);
+  const addPageQuery = (pageNumber) => addQueryParams(history, location, { page: pageNumber });
 
   const page = (number) => (
     <PageButton key={number} onClick={() => addPageQuery(number)} className={currentPage === number ? "focus" : "default"}>
@@ -44,7 +44,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
             <>
               {pageNumbers.slice(0, currentPage + 2).map((number) => page(number))}
               ...
-              {pageNumbers.slice(18, numberOfPage).map((number) => page(number))}
+              {pageNumbers.slice(numberOfPage - 3, numberOfPage).map((number) => page(number))}
             </>
           )}
           {isManyPage && isMiddlePage && (
@@ -53,7 +53,7 @@ const Pagination = ({ numberOfPage, currentPage }) => {
               ...
               {pageNumbers.slice(currentPage - 3, currentPage + 2).map((number) => page(number))}
               ...
-              {pageNumbers.slice(18, numberOfPage).map((number) => page(number))}
+              {pageNumbers.slice(numberOfPage - 3, numberOfPage).map((number) => page(number))}
             </>
           )}
           {isManyPage && isEndPage && (
