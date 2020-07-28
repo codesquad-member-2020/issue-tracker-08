@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useTheme, fade, makeStyles } from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -12,7 +12,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import InputBase from "@material-ui/core/InputBase";
 
-import { saveOption, saveAssignees, saveLabels, saveMilestone } from "@Modules/option";
+import { saveOption, saveAssignees, saveLabels, saveMilestone, saveQuery } from "@Modules/option";
+import { addQueryParams } from "@Lib/addQueryParams";
 
 const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, saveLabels, saveMilestone }) => {
   const { issueId } = useParams();
@@ -22,7 +23,8 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
   const [pendingValue, setPendingValue] = useState([]);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const filtetOption = useSelector(({ option }) => option);
+  let history = useHistory();
+  let location = useLocation();
 
   const handleClick = (event) => {
     setPendingValue(value);
@@ -89,10 +91,6 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
       );
     }
 
-    console.log(filtetOption);
-    if (filter) {
-    }
-
     executeSaveHandler();
   };
 
@@ -114,6 +112,13 @@ const FilterButton = ({ filter, title, data, initialData = [], saveAssignees, sa
 
   useEffect(() => {
     if (title === "Milestone" && issueId) saveMilestoneHandler({ milestoneId: pendingValue.length ? pendingValue[0].id : null });
+    if (filter && pendingValue.length) {
+      const filterQuery = {
+        [titleMap[title]]: pendingValue[0].id ? pendingValue[0].id : null,
+      };
+      addQueryParams(history, location, filterQuery);
+      dispatch(saveQuery(filterQuery));
+    }
   }, [pendingValue, value]);
 
   return (
