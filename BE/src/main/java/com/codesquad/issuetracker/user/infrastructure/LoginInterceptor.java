@@ -33,10 +33,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        log.debug("Remote Host:{}", request.getRemoteHost());
-        log.debug("Remote Address:{}", request.getRemoteAddr());
-
-        if ((request.getRequestURI().equals("/issues") && request.getMethod().equals("POST"))) {
+        // GET을 제외한 요청은 로그인 여부를 판단한다.
+        if (!request.getMethod().equals("GET")) {
             Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElseThrow(UnauthorizedException::new);
             String jwtToken = getJwtToken(cookies);
 

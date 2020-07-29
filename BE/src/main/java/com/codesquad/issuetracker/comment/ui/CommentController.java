@@ -25,8 +25,7 @@ public class CommentController {
                                          HttpServletRequest request) {
 
         Long commentId = commentService.getNextIdentity();
-//        Long userId = (Long) request.getAttribute("id");
-        Long userId = 1L;
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.save(compositeCommentId, comment.getContent());
@@ -40,8 +39,7 @@ public class CommentController {
                                          @RequestBody Comment comment,
                                          HttpServletRequest request) {
 
-//        Long userId = (Long) request.getAttribute("id");
-        Long userId = 1L;
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.update(compositeCommentId, comment.getContent());
@@ -54,8 +52,7 @@ public class CommentController {
                                                @PathVariable("comment_id") Long commentId,
                                                HttpServletRequest request) {
 
-//        Long userId = (Long) request.getAttribute("id");
-        Long userId = 1L;
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.changeStatus(compositeCommentId);
@@ -68,8 +65,7 @@ public class CommentController {
                                          @PathVariable("comment_id") Long commentId,
                                          HttpServletRequest request) {
 
-//        Long userId = (Long) request.getAttribute("id");
-        Long userId = 1L;
+        Long userId = (Long) request.getAttribute("id");
         CommentId compositeCommentId = new CommentId(commentId, issueId, userId);
 
         commentService.delete(compositeCommentId);
